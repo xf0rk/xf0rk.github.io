@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html style="display: none;" lang="zh">
+    <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <!--
+        © Material Theme
+        https://github.com/viosey/hexo-theme-material
+        Version: 1.4.0 -->
+    <script>window.materialVersion = "1.4.0"</script>
+
+    <!-- Title -->
+    
+    <title>
+        
+            安全建设之 WAF 防御 | 
+        
+        L0gs 4 xF0rk
+    </title>
+
+    <!-- dns prefetch -->
+    <meta http-equiv="x-dns-prefetch-control" content="on">
+    
+    
+    
+    
+    
+        <link rel="dns-prefetch" href="https://www.google-analytics.com">
+    
+    
+    
+        <link rel="dns-prefetch" href="https://busuanzi.ibruce.info">
+    
+    
+    
+    
+
+    <!-- Meta & Info -->
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#2196F3">
+    <meta name="author" content="xF0rk">
+    <meta name="description" itemprop="description" content="">
+    <meta name="keywords" content=",安全建设,WAF 防御">
+
+    <!-- Site Verification -->
+    
+    
+
+    <!-- Favicons -->
+    <link rel="icon shortcut" type="image/ico" href="/img/favicon.jpg">
+    <link rel="icon" sizes="192x192" href="/img/favicon.jpg">
+    <link rel="apple-touch-icon" href="/img/favicon.jpg">
+
+    <!--iOS -->
+    <meta name="apple-mobile-web-app-title" content="Title">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="480">
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="L0gs 4 xF0rk">
+
+    <!-- The Open Graph protocol -->
+    <meta property="og:url" content="https://l0gs.xf0rk.space">
+    <meta property="og:type" content="blog">
+    <meta property="og:title" content="安全建设之 WAF 防御 | L0gs 4 xF0rk">
+    <meta property="og:image" content="/img/favicon.jpg">
+    <meta property="og:description" content="">
+    <meta property="og:article:tag" content="安全建设"> <meta property="og:article:tag" content="WAF 防御"> 
+
+    
+        <meta property="article:published_time" content="12月 21, 2018">
+        <meta property="article:modified_time" content="4月 14, 2019">
+    
+
+    <!-- The Twitter Card protocol -->
+    <meta name="twitter:title" content="安全建设之 WAF 防御 | L0gs 4 xF0rk">
+    <meta name="twitter:description" content="">
+    <meta name="twitter:image" content="/img/favicon.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://l0gs.xf0rk.space">
+
+    <!-- Add canonical link for SEO -->
+    
+        <link rel="canonical" href="https://l0gs.xf0rk.space/2018/12/21/step-into-modsecurity/index.html">
+    
+
+    <!-- Structured-data for SEO -->
+    
+        
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "L0gs 4 xF0rk",
+        "logo": "/img/favicon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "xF0rk",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/favicon.jpg"
+        },
+        "description": "归来仍少年"
+    },
+    "headline": "安全建设之 WAF 防御",
+    "url": "https://l0gs.xf0rk.space/2018/12/21/step-into-modsecurity/index.html",
+    "datePublished": "12月 21, 2018",
+    "dateModified": "4月 14, 2019",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://l0gs.xf0rk.space"
+    }
+}
+</script>
+
+
+    
+
+    <!--[if lte IE 9]>
+        <link rel="stylesheet" href="/css/ie-blocker.css">
+
+        
+            <script src="/js/ie-blocker.zhCN.js"></script>
+        
+    <![endif]-->
+
+    <!-- Import lsloader -->
+    <script>(function(){window.lsloader={jsRunSequence:[],jsnamemap:{},cssnamemap:{}};lsloader.removeLS=function(key){try{localStorage.removeItem(key)}catch(e){}};lsloader.setLS=function(key,val){try{localStorage.setItem(key,val)}catch(e){}};lsloader.getLS=function(key){var val="";try{val=localStorage.getItem(key)}catch(e){val=""}return val};versionString="/*"+materialVersion+"*/";lsloader.clean=function(){try{var keys=[];for(var i=0;i<localStorage.length;i++){keys.push(localStorage.key(i))}keys.forEach(function(key){var data=lsloader.getLS(key);if(data&&data.indexOf(versionString)===-1){lsloader.removeLS(key)}})}catch(e){}};lsloader.clean();lsloader.load=function(jsname,jspath,cssonload){cssonload=cssonload||function(){};var code;code=this.getLS(jsname);if(code&&code.indexOf(versionString)===-1){this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}if(code){var versionNumber=code.split(versionString)[0];if(versionNumber!=jspath){console.log("reload:"+jspath);this.removeLS(jsname);this.requestResource(jsname,jspath,cssonload);return}code=code.split(versionString)[1];if(/\.js?.+$/.test(versionNumber)){this.jsRunSequence.push({name:jsname,code:code});this.runjs(jspath,jsname,code)}else{document.getElementById(jsname).appendChild(document.createTextNode(code));cssonload()}}else{this.requestResource(jsname,jspath,cssonload)}};lsloader.requestResource=function(name,path,cssonload){var that=this;if(/\.js?.+$/.test(path)){this.iojs(path,name,function(path,name,code){that.setLS(name,path+versionString+code);that.runjs(path,name,code)})}else if(/\.css?.+$/.test(path)){this.iocss(path,name,function(code){document.getElementById(name).appendChild(document.createTextNode(code));that.setLS(name,path+versionString+code)},cssonload)}};lsloader.iojs=function(path,jsname,callback){var that=this;that.jsRunSequence.push({name:jsname,code:""});try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(path,jsname,xhr.response);return}}that.jsfallback(path,jsname)}};xhr.send(null)}catch(e){that.jsfallback(path,jsname)}};lsloader.iocss=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.iofonts=function(path,jsname,callback,cssonload){var that=this;try{var xhr=new XMLHttpRequest;xhr.open("get",path,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){callback(xhr.response);cssonload();return}}that.cssfallback(path,jsname,cssonload)}};xhr.send(null)}catch(e){that.cssfallback(path,jsname,cssonload)}};lsloader.runjs=function(path,name,code){if(!!name&&!!code){for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code=code}}}if(!!this.jsRunSequence[0]&&!!this.jsRunSequence[0].code&&this.jsRunSequence[0].status!="failed"){var script=document.createElement("script");script.appendChild(document.createTextNode(this.jsRunSequence[0].code));script.type="text/javascript";document.getElementsByTagName("head")[0].appendChild(script);this.jsRunSequence.shift();if(this.jsRunSequence.length>0){this.runjs()}}else if(!!this.jsRunSequence[0]&&this.jsRunSequence[0].status=="failed"){var that=this;var script=document.createElement("script");script.src=this.jsRunSequence[0].path;script.type="text/javascript";this.jsRunSequence[0].status="loading";script.onload=function(){that.jsRunSequence.shift();if(that.jsRunSequence.length>0){that.runjs()}};document.body.appendChild(script)}};lsloader.tagLoad=function(path,name){this.jsRunSequence.push({name:name,code:"",path:path,status:"failed"});this.runjs()};lsloader.jsfallback=function(path,name){if(!!this.jsnamemap[name]){return}else{this.jsnamemap[name]=name}for(var k in this.jsRunSequence){if(this.jsRunSequence[k].name==name){this.jsRunSequence[k].code="";this.jsRunSequence[k].status="failed";this.jsRunSequence[k].path=path}}this.runjs()};lsloader.cssfallback=function(path,name,cssonload){if(!!this.cssnamemap[name]){return}else{this.cssnamemap[name]=1}var link=document.createElement("link");link.type="text/css";link.href=path;link.rel="stylesheet";link.onload=link.onerror=cssonload;var root=document.getElementsByTagName("script")[0];root.parentNode.insertBefore(link,root)};lsloader.runInlineScript=function(scriptId,codeId){var code=document.getElementById(codeId).innerText;this.jsRunSequence.push({name:scriptId,code:code});this.runjs()};lsloader.loadCombo=function(jslist){var updateList="";var requestingModules={};for(var k in jslist){var LS=this.getLS(jslist[k].name);if(!!LS){var version=LS.split(versionString)[0];var code=LS.split(versionString)[1]}else{var version=""}if(version==jslist[k].path){this.jsRunSequence.push({name:jslist[k].name,code:code,path:jslist[k].path})}else{this.jsRunSequence.push({name:jslist[k].name,code:null,path:jslist[k].path,status:"comboloading"});requestingModules[jslist[k].name]=true;updateList+=(updateList==""?"":";")+jslist[k].path}}var that=this;if(!!updateList){var xhr=new XMLHttpRequest;xhr.open("get",combo+updateList,true);xhr.onreadystatechange=function(){if(xhr.readyState==4){if(xhr.status>=200&&xhr.status<300||xhr.status==304){if(xhr.response!=""){that.runCombo(xhr.response,requestingModules);return}}else{for(var i in that.jsRunSequence){if(requestingModules[that.jsRunSequence[i].name]){that.jsRunSequence[i].status="failed"}}that.runjs()}}};xhr.send(null)}this.runjs()};lsloader.runCombo=function(comboCode,requestingModules){comboCode=comboCode.split("/*combojs*/");comboCode.shift();for(var k in this.jsRunSequence){if(!!requestingModules[this.jsRunSequence[k].name]&&!!comboCode[0]){this.jsRunSequence[k].status="comboJS";this.jsRunSequence[k].code=comboCode[0];this.setLS(this.jsRunSequence[k].name,this.jsRunSequence[k].path+versionString+comboCode[0]);comboCode.shift()}}this.runjs()}})();</script>
+
+    <!-- Import CSS & jQuery -->
+    
+        <style id="css/material.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/material.min.css","/css/material.min.css?fJTiM/K1J3dWIruo3pxtAw==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        <style id="css/style.min.css"></style><script>if(typeof window.lsLoadCSSMaxNums === "undefined")window.lsLoadCSSMaxNums = 0;window.lsLoadCSSMaxNums++;lsloader.load("css/style.min.css","/css/style.min.css?oCSEO3ST+aEypEwttTDI9g==",function(){if(typeof window.lsLoadCSSNums === "undefined")window.lsLoadCSSNums = 0;window.lsLoadCSSNums++;if(window.lsLoadCSSNums == window.lsLoadCSSMaxNums)document.documentElement.style.display="";})</script>
+        
+        
+            <style>
+    
+    
+    .footer-sns-twitter {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNiA3OGMtMjIuNCA1LjItNTUuOCA0MC4yLTYwLjYgNjMuNC0xLjQgNi40LTIgMTI5LjgtMS42IDM2Ny42LjYgMjk4LjYgMSAzNTguOCAzLjQgMzYzIDExIDIwLjIgMjEuNiAzMi40IDM3LjIgNDMgMTUgMTAuMiAxNy40IDExLjIgMzMgMTMgMTEuMiAxLjQgMTM2IDIgMzY1IDEuNiAzMTQtLjYgMzQ4LjYtMSAzNTUtMy44IDE1LjgtNy4yIDMzLjgtMjIgNDMuMi0zNS40IDUuMi03LjQgMTAuOC0xNi42IDEyLjYtMjAuNCAyLjgtNi40IDMuMi00MC44IDMuOC0zNTQgLjQtMjIzLS4yLTM1My40LTEuNC0zNjUtMi0xNy0yLjYtMTguNi0xMy0zNC04LjYtMTIuNi0xNC4yLTE4LjQtMjUuMi0yNS44LTcuOC01LjQtMTcuNC0xMS0yMS42LTEyLjQtNi0yLjItNzIuOC0yLjYtMzY1LjQtMi42LTE5Ni44LjItMzYxIC44LTM2NC40IDEuOHptNTMyLjggMjA1YzEwIDQgMjMgMTAuOCAyOC44IDE1LjIgMTIuNiA5LjIgMTYuNiAxMC42IDI5LjQgOS40IDYuNi0uNiAxMy0zLjIgMjAuNC04LjIgMTEuMi03LjYgMTkuNC05LjIgMjMuNi01IDMuNiAzLjYgMi44IDktMi44IDE4LjYtNy4yIDEyLjQtNiAxOC44IDQuMiAyNC4yIDQuNCAyLjIgOC4yIDUuNiA4LjYgNy40IDEgNC44LTEyLjYgMjQuMi0yMiAzMS44LTExLjggOS4yLTE3LjIgMjIuNi0xOS42IDQ3LjgtNC44IDUwLjQtNy44IDY2LjYtMTYuNCA4NS40LTMgNy03IDE3LjgtOC44IDI0LTEuOCA2LjQtNSAxNC42LTcuNCAxOC40LTIuMiAzLjgtNy40IDEzLTExLjQgMjAuNC0xNy4yIDMwLjgtNDMuNCA2MS40LTcxLjQgODMuOC0yNS42IDIwLjQtNDYgMzMuMi02NC4yIDQwLjItOC40IDMuMi0xOCA3LjYtMjEuNCA5LjYtNy40IDQuNi0yMi40IDguNi01Ny4yIDE1LTYyLjIgMTEuNi03OS4yIDExLjQtMTM1LjYtMS0zMi40LTctMzguNi05LTUyLTE2LjgtMjEuNC0xMi42LTI0LjItMTQuOC0yNC4yLTE5LjQgMC02LjIgMTAuMi05LjIgMzUtMTAuNCAyMi40LTEgMjguNi0yLjYgNTctMTQuMiAyMy44LTkuOCAyOS40LTEyLjggMzAuNC0xNi44IDIuMi04LjItMy0xMy4yLTI2LjgtMjUuNC0yNS44LTEzLjItMzIuMi0xOC40LTQzLjgtMzUuOC05LTEzLjYtMTAtMjEuMi0zLjYtMzMuNiA1LjQtMTAuOCAzLjYtMTUtMTEuOC0yNS40LTktNi0xNC0xMS42LTIwLjgtMjIuNi0yMy40LTM3LjgtMjUtNTAuOC03LjItNTkuOCA0LjgtMi40IDkuNC01LjQgMTAuMi02LjYgMi44LTQuMi0uNC0xNS42LTguNC0yOS0xMS42LTE5LjYtMTMuMi0yNS44LTEzLjItNTUuMiAwLTI4LjggMi42LTM3LjggMTItNDAuMiA5LTIuMiAxNC44IDEgMzUuNiAyMC4yIDI0LjggMjIuOCA0My42IDM2LjYgNjIuOCA0NS44IDggMy44IDE3LjggOS4yIDIyIDEyIDQuMiAyLjggMTQuOCA3IDIzLjQgOS4yIDguNiAyLjIgMjQuMiA2LjggMzQuOCAxMC4yIDEzLjQgNC40IDIzLjYgNi40IDMzIDYuNiAxMi44LjIgMTQuMi0uMiAxOC42LTUuNCA0LTQuOCA0LjgtNy44IDQuOC0xOS4yIDAtMTQuNCA1LjYtMzkuNiAxMS4yLTUwLjYgNC4yLTguNCAyOS4yLTM0LjIgMzkuOC00MS40IDcuOC01LjQgMzUuNi0xNiA1Mi0yMCAxNC4yLTMuNiAzMi42LTEuMiA1Mi40IDYuOHoiLz48L3N2Zz4=);
+    }
+    
+    
+    
+    
+    
+    
+    .footer-sns-github {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiPjxwYXRoIGQ9Ik0xMzguNCA3OGMtNi40IDEuNC0yNi40IDE0LjItMzYgMjIuOC04IDcuMi0yMiAyOS44LTI0LjQgMzkuMi0xLjYgNi40LTIgMTEzLjItMS42IDM2OCAuNiAyOTkuNCAxIDM1OS44IDMuNCAzNjQgMTEgMjAuMiAyMS42IDMyLjQgMzcuMiA0MyAxNS42IDEwLjYgMTcuMiAxMS4yIDM0LjIgMTMuMiAxMC42IDEuMiA2My40IDEuNiAxMjcuNiAxLjRsMTA5LjYtLjYgNi02LjggNi4yLTYuOC0xLjItMjUuMmMtLjgtMTUuOC0uMi0zMy40IDEuNC00Ny4yIDMtMjUuNCAxLjQtMzYuMi02LTQzLjItNS00LjYtNi4yLTQuOC0zMC42LTQuMi0yNy42LjgtMjQgMS42LTY4LjgtMTYtOC42LTMuNC0yMi42LTE4LTI4LjQtMjkuOC0xMS40LTIyLjgtMjctNDUtMzkuMi01NS42LTE0LTEyLjItMTkuOC0yMC44LTE5LjgtMjguNiAwLTExLjYgMTMuNi0xMi42IDMzLjItMi40IDE2LjYgOC44IDIwLjggMTIuNCA0MC44IDM2LjIgMjQuMiAyOC42IDMxIDMzLjYgNTQgMzkuNiAxNS4yIDQgNDIuMiAzIDUxLjQtMS44IDktNC42IDE4LTE1LjIgMjQuNC0yOS4yIDExLjQtMjQuMiA3LjQtMzEuMi0yMC42LTM2LjgtOS44LTItMjkuMi04LTQzLjQtMTMuNC00MC40LTE1LjgtNjQuNi0zNy40LTg1LjQtNzYuMi0xMS42LTIxLjgtMTUuNC0zMy0xOC4yLTUzLjYtNC4yLTMyLjItNC44LTYwLjItMS40LTg0IDMuNC0yMy44IDYuOC0zMi44IDIwLjItNTQgNC02IDguOC0xNS42IDExLTIxLjQgMy44LTEwIDMuOC0xMS42IDEtMzAtNS4yLTM0LjItMy4yLTUyLjQgNy42LTcwLjIgNy4yLTEyLjIgMTUtMTcuMiAyNC4yLTE1LjggMTIuOCAyLjIgNTIgMTcuNCA2Ni44IDI2LjIgMjYgMTUgMjkgMTUuNCA4Mi40IDcuMiAyNC42LTMuOCAzMy44LTQuMiA2MC0zLjIgMTcgLjYgNDEuNCAzIDU0IDUuMiAzOC40IDYuNiA0OS42IDUuMiA3My0xMCA2LjYtNC4yIDE3LjQtOS40IDI0LTExLjYgNi42LTIuMiAxNi01LjggMjEtOC4yIDEzLTYgMjgtNS42IDM1LjYuOCAxMi40IDEwLjQgMTguNiA0MS40IDE0LjQgNzEuNi00LjQgMzAuNi0zIDM5LjQgOC40IDUzLjggMy40IDQuNCAxMS4yIDE5LjIgMTcuNCAzMy4yTDc3NSA0NDN2NzhsLTEwIDI4Yy0xNS4yIDQzLjItMzYuOCA3My4yLTY2LjIgOTIuOC0xMy40IDguOC01NyAyNS40LTc2LjggMjktMjguMiA1LjItMzMuMiAxMi42LTIyIDMyLjIgMTEuMiAxOS40IDEyLjQgMzIuOCAxMS42IDEyOS42bC0uNiA4NS44IDUuNCA0LjZjMy42IDMgOS4yIDUuMiAxNiA2IDUuOC44IDYwLjIgMSAxMjAuNi42IDEwOC40LS42IDExMC4yLS42IDExOS01IDI0LTExLjYgNDAtMjcuNCA1MS42LTUwLjZsNS40LTExIC42LTM0N2MuNC0yMjMtLjItMzUzLjQtMS40LTM2NS0yLTE3LTIuNi0xOC42LTEzLTM0LTEwLjYtMTUuNC0yMi44LTI2LjItNDMuMi0zNy4yLTQuMi0yLjQtNjQuNi0yLjgtMzY2LTMuMi0xOTguNiAwLTM2NCAuNC0zNjcuNiAxLjR6Ii8+PC9zdmc+);
+    }
+    
+    
+    
+    
+    
+</style>
+
+        
+        <!-- Config CSS -->
+
+<!-- Other Styles -->
+<style>
+  body, html {
+    font-family: Roboto, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  }
+
+  a {
+    color: #2196F3;
+  }
+
+  .mdl-card__media,
+  #search-label,
+  #search-form-label:after,
+  #scheme-Paradox .hot_tags-count,
+  #scheme-Paradox .sidebar_archives-count,
+  #scheme-Paradox .sidebar-colored .sidebar-header,
+  #scheme-Paradox .sidebar-colored .sidebar-badge{
+    background-color: #2196F3 !important;
+  }
+
+  /* Sidebar User Drop Down Menu Text Color */
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:hover,
+  #scheme-Paradox .sidebar-colored .sidebar-nav>.dropdown>.dropdown-menu>li>a:focus {
+    color: #2196F3 !important;
+  }
+
+  #post_entry-right-info,
+  .sidebar-colored .sidebar-nav li:hover > a,
+  .sidebar-colored .sidebar-nav li:hover > a i,
+  .sidebar-colored .sidebar-nav li > a:hover,
+  .sidebar-colored .sidebar-nav li > a:hover i,
+  .sidebar-colored .sidebar-nav li > a:focus i,
+  .sidebar-colored .sidebar-nav > .open > a,
+  .sidebar-colored .sidebar-nav > .open > a:hover,
+  .sidebar-colored .sidebar-nav > .open > a:focus,
+  #ds-reset #ds-ctx .ds-ctx-entry .ds-ctx-head a {
+    color: #2196F3 !important;
+  }
+
+  .toTop {
+    background: #757575 !important;
+  }
+
+  .material-layout .material-post>.material-nav,
+  .material-layout .material-index>.material-nav,
+  .material-nav a {
+    color: #757575;
+  }
+
+  #scheme-Paradox .MD-burger-layer {
+    background-color: #757575;
+  }
+
+  #scheme-Paradox #post-toc-trigger-btn {
+    color: #757575;
+  }
+
+  .post-toc a:hover {
+    color: #2196F3;
+    text-decoration: underline;
+  }
+
+</style>
+
+
+<!-- Theme Background Related-->
+
+    <style>
+      body{
+        background-color: #F5F5F5;
+      }
+
+      /* blog_info bottom background */
+      #scheme-Paradox .material-layout .something-else .mdl-card__supporting-text{
+        background-color: #fff;
+      }
+    </style>
+
+
+
+
+<!-- Fade Effect -->
+
+    <style>
+      .fade {
+        transition: all 800ms linear;
+        -webkit-transform: translate3d(0,0,0);
+        -moz-transform: translate3d(0,0,0);
+        -ms-transform: translate3d(0,0,0);
+        -o-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+        opacity: 1;
+      }
+
+      .fade.out{
+        opacity: 0;
+      }
+    </style>
+
+
+<!-- Import Font -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+        <script>lsloader.load("js/jquery.min.js","/js/jquery.min.js?qcusAULNeBksqffqUM2+Ig==")</script>
+    
+    
+    <script>function Queue(){this.dataStore=[];this.offer=b;this.poll=d;this.execNext=a;this.debug=false;this.startDebug=c;function b(e){if(this.debug){console.log("Offered a Queued Function.")}if(typeof e==="function"){this.dataStore.push(e)}else{console.log("You must offer a function.")}}function d(){if(this.debug){console.log("Polled a Queued Function.")}return this.dataStore.shift()}function a(){var e=this.poll();if(e!==undefined){if(this.debug){console.log("Run a Queued Function.")}e()}}function c(){this.debug=true}}var queue=new Queue();</script>
+
+    <!-- Analytics -->
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-122679153-1', 'auto');ga('send', 'pageview');
+</script>
+
+    <!-- Custom Head -->
+    
+</head>
+
+
+    
+        <body id="scheme-Paradox" class="lazy">
+            <div class="material-layout  mdl-js-layout has-drawer is-upgraded">
+                
+
+                <!-- Main Container -->
+                <main class="material-layout__content" id="main">
+
+                    <!-- Top Anchor -->
+                    <div id="top"></div>
+
+                    
+                        <!-- Hamburger Button -->
+                        <button class="MD-burger-icon sidebar-toggle">
+                            <span class="MD-burger-layer"></span>
+                        </button>
+                    
+
+                    <!-- Post TOC -->
+
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn" class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#WAF-概念简述"><span class="post-toc-number">1.</span> <span class="post-toc-text">WAF 概念简述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ModSecurity-部署"><span class="post-toc-number">2.</span> <span class="post-toc-text">ModSecurity 部署</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#编译-libmodsecurity-模块"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">编译 libmodsecurity 模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#编译-nginx-connector-模块"><span class="post-toc-number">2.2.</span> <span class="post-toc-text">编译 nginx connector 模块</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#配置-ModSecurity-规则"><span class="post-toc-number">2.3.</span> <span class="post-toc-text">配置 ModSecurity 规则</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ModSecurity-规则测试"><span class="post-toc-number">2.4.</span> <span class="post-toc-text">ModSecurity 规则测试</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ModSecurity-配置简介"><span class="post-toc-number">3.</span> <span class="post-toc-text">ModSecurity 配置简介</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ModSecurity-日志配置"><span class="post-toc-number">3.1.</span> <span class="post-toc-text">ModSecurity 日志配置</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ModSecurity-CRS-规则"><span class="post-toc-number">4.</span> <span class="post-toc-text">ModSecurity CRS 规则</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CRS-部署使用"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">CRS 部署使用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#CRS-规则说明"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">CRS 规则说明</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
+    
+
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
+    
+        <!-- Custom Thumbnail -->
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(https://l0gs.xf0rk.space/2018/12/21/step-into-modsecurity/modsecurity_banner.png)">
+    
+            <p class="article-headline-p">
+                安全建设之 WAF 防御
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar">
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xF0rk</strong>
+        <span>12月 21, 2018</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
+    
+
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/WAF-防御/">WAF 防御</a></li><li class="mdl-menu__item"><a class="post_tag-link" href="/tags/安全建设/">安全建设</a>
+    </li></ul>
+    
+
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
+        
+            <!-- Busuanzi Views -->
+            <a class="post_share-link" href="#">
+                <li class="mdl-menu__item">
+                    <span id="busuanzi_container_page_pv">
+                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
+                    </span>
+                </li>
+            </a>
+        
+    
+
+    <!-- Share Weibo -->
+    
+
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=安全建设之 WAF 防御&url=https://l0gs.xf0rk.space/2018/12/21/step-into-modsecurity/index.html&via=xF0rk" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
+
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
+</div>
+
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
+    
+        <blockquote><p>WAF (Web Application Firewall)，Web 应用防火墙，通过解析 HTTP/HTTPS 请求内容，并执行一系列的安全检测策略，对目标 Web 应用提供安全防护，同时记录相关安全防御日志。文章将介绍 ModSecurity 相关部署配置概念、防御规则及简单地定制化实践。</p>
+</blockquote>
+<h2 id="WAF-概念简述"><a href="#WAF-概念简述" class="headerlink" title="WAF 概念简述"></a>WAF 概念简述</h2><p>WAF 根据产品形态不同，通常可以分为硬件设备类、软件产品类及云 WAF 类别，相关产品代表如下</p>
+<ul>
+<li>硬件设备类，如绿盟、安恒、启明星辰等厂商生产的 WAF；</li>
+<li>软件产品类，如 <code>ModSecurity</code> 、网站安全狗等；</li>
+<li>云 WAF，如阿里云盾、知道创宇加速乐等；</li>
+</ul>
+<p>根据工作原理不同可分为反向代理模式、云 AGENT 模式及容器安全模块形式</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">工作模式</th>
+<th style="text-align:left">工作原理</th>
+<th style="text-align:left">优劣分析</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">反向代理模式</td>
+<td style="text-align:left">修改DNS，让域名解析到反向代理服务器。所有流量经过反向代理进行检测，检测无问题之后再转发给后端的Web服务器</td>
+<td style="text-align:left">集中式流量出入口，可针对大数据分析，动态添加一层，增加网络开销，站点后端 Web 较多的情况，转发规则比较复杂，流量都被捕捉，涉及敏感数据需要保护</td>
+</tr>
+<tr>
+<td style="text-align:left">云 AGENT 模式</td>
+<td style="text-align:left">所有请求通过 Web 服务器模块转发到云端进行安全检测，NGINX 根据云端检测结果进行转发，若检测为攻击则执行配置的动作</td>
+<td style="text-align:left">安全规则统一管理，规则更新只需要更新后端的决策系统，不涉及 Web 服务器端规则更新，根据业务配置规则，需要较高成本，Web 服务器变更时不便于更新</td>
+</tr>
+<tr>
+<td style="text-align:left">容器安全模块</td>
+<td style="text-align:left">所有请求流量均先经过检测引擎的检测，若未发现攻击，则进行正常业务响应，否则按照配置的动作进行响应</td>
+<td style="text-align:left">网络结构简单，仅部署容器安全模块，但维护困难，大规模服务器集群，任何更新涉及多台服务器，需部署操作，成本高，无集中化数据中心，安全事件汇总不方便</td>
+</tr>
+</tbody>
+</table>
+<h2 id="ModSecurity-部署"><a href="#ModSecurity-部署" class="headerlink" title="ModSecurity 部署"></a>ModSecurity 部署</h2><blockquote>
+<p><code>Nginx</code> 加载 <code>ModSecurity</code> 模块安装有两种方式：一种是编译为 <code>Nginx</code> 静态模块，另一种是通过 <code>ModSecurity-Nginx Connector</code> 加载动态模块，下面将实践 <code>ModSecurity-Nginx Connector</code> 动态模块的安装和配置</p>
+</blockquote>
+<p>安装编译 <code>libmodsecurity</code> 依赖库</p>
+<pre><code>yum install -y pt-utils autoconf automake build-essential git libcurl4-openssl-dev libgeoip-dev liblmdb-dev libpcre++-dev libtool libxml2-dev libyajl-dev pkgconf wget zlib1g-dev doxygen libxml2-devel pcre-devel
+</code></pre><h3 id="编译-libmodsecurity-模块"><a href="#编译-libmodsecurity-模块" class="headerlink" title="编译 libmodsecurity 模块"></a>编译 libmodsecurity 模块</h3><p>下载 <code>libmodsecurity</code> 源码并编译模块</p>
+<pre><code>git clone --depth 1 -b v3/master --single-branch https://github.com/SpiderLabs/ModSecurity
+cd ModSecurity
+git submodule init
+git submodule update
+./build.sh
+./configure
+make
+make install
+</code></pre><blockquote>
+<p>若编译安装过程出现如下错误提示，可直接忽略</p>
+<pre><code>fatal: No names found, cannot describe anything.
+</code></pre></blockquote>
+<h3 id="编译-nginx-connector-模块"><a href="#编译-nginx-connector-模块" class="headerlink" title="编译 nginx connector 模块"></a>编译 nginx connector 模块</h3><p>下载 <code>nginx connector</code> 模块，并编译成动态模块</p>
+<pre><code>git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git
+</code></pre><blockquote>
+<p>目标机器已安装 <code>Nginx</code> ，需确认 <code>Nginx</code> 版本，并下载指定版本的 <code>Nginx</code> 源码进行编译，否则可下载任意版本 <code>Nginx</code> 源码进行编译</p>
+</blockquote>
+<p>下载 <code>Nginx</code> 源码进行编译，编译过程加入 <code>ModSecurity</code> 依赖库模块</p>
+<pre><code>wget http://nginx.org/download/nginx-1.14.1.tar.gz
+tar zxvf nginx-1.14.1.tar.gz
+cd nginx-1.14.1
+./configure --add-dynamic-module=../ModSecurity-nginx
+make modules
+</code></pre><blockquote>
+<p>网上部分文档编译过程 <code>configure</code> 添加编译参数 <code>--with-compat</code> 启用模块兼容性，导致编译后的 <code>so</code> 模块无法使用(错误提示如下)，去除该选项即可</p>
+<pre><code>nginx: [emerg] module &quot;/usr/local/nginx/conf/modules/ngx_http_modsecurity_module.so&quot; is not binary compatible in /usr/local/nginx/conf/nginx.conf:11
+</code></pre></blockquote>
+<p>将编译成功的 ModSecurity 模块复制到 Nginx 安装目录中，在 Nginx 配置文件中添加如下配置，加载 ModSecurity 模块</p>
+<pre><code>load_module modules/ngx_http_modsecurity_module.so;
+</code></pre><h3 id="配置-ModSecurity-规则"><a href="#配置-ModSecurity-规则" class="headerlink" title="配置 ModSecurity 规则"></a>配置 ModSecurity 规则</h3><p>下载 <code>ModSecurity</code> 配置规则</p>
+<pre><code>mkdir modseucirty
+wget -P xxx/modsecurity/ https://raw.githubusercontent.com/SpiderLabs/ModSecurity/v3/master/modsecurity.conf-recommended
+mv xxx/modsecurity/modsecurity.conf-recommended xxx/modsecurity/modsecurity.conf
+</code></pre><blockquote>
+<p>在对 <code>ModSecurity</code> 进行配置时，需要将原 <code>ModSecurity</code> 文件夹中的 <code>unicode.mapping</code> 复制到与上述 <code>modsecurity.conf</code> 文件相同的文件夹中，否则启动 <code>Nginx</code> 过程会提示文件缺失，如下所示</p>
+<pre><code>nginx: [emerg] &quot;modsecurity_rules_file&quot; directive Rules error. File: /usr/local/nginx/conf/modsec/modsecurity.conf. Line: 236. Column: 17. Failed to locate the unicode map file from: unicode.mapping Looking at: &#39;unicode.mapping&#39;, &#39;unicode.mapping&#39;, &#39;/usr/local/nginx/conf/modsec/unicode.mapping&#39;, &#39;/usr/local/nginx/conf/modsec/unicode.mapping&#39;.  in /usr/local/nginx/conf/nginx.conf:41
+</code></pre></blockquote>
+<p>修改 <code>ModSecurity</code> 配置文件 <code>modsecurity.conf</code> 中检测模式 <code>SecRuleEngine DetectionOnly</code> 为 <code>SecRuleEngine On</code>，如下图所示</p>
+<pre><code># -- Rule engine initialization ----------------------------------------------
+
+# Enable ModSecurity, attaching it to every transaction. Use detection
+# only to start with, because that minimises the chances of post-installation
+# disruption.
+#
+#SecRuleEngine DetectionOnly
+SecRuleEngine On
+</code></pre><p>在 <code>Nginx</code> <code>Server</code> 配置中开启 <code>ModSecurity</code> 配置，如下所示</p>
+<pre><code>nginx.conf 配置文件
+
+server {
+    listen       80;
+    server_name  localhost;
+
+    modsecurity on;
+    modsecurity_rules_file /usr/local/nginx/conf/modsec/main.conf;
+
+    location / {
+        root   html;
+        index  index.html index.htm;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   html;
+    }
+}
+
+----------------------------------------------------------------------------------------------
+
+main.conf 配置文件
+
+Include &quot;/usr/local/nginx/conf/modsec/modsecurity.conf&quot;
+# 添加测试规则，当请求中包含参数 testparam 同时其值为 test 时，拦截请求并返回 403
+SecRule ARGS:testparam &quot;@contains test&quot; &quot;id:1234,deny,status:403&quot;
+</code></pre><h3 id="ModSecurity-规则测试"><a href="#ModSecurity-规则测试" class="headerlink" title="ModSecurity 规则测试"></a>ModSecurity 规则测试</h3><p><code>ModSecurity</code> 规则测试如下图所示，当携带参数 <code>?testparam=test</code> 发起请求时，请求被拒绝</p>
+<img src="/2018/12/21/step-into-modsecurity/modsecurity_testparam_demo.png">
+<h2 id="ModSecurity-配置简介"><a href="#ModSecurity-配置简介" class="headerlink" title="ModSecurity 配置简介"></a>ModSecurity 配置简介</h2><h3 id="ModSecurity-日志配置"><a href="#ModSecurity-日志配置" class="headerlink" title="ModSecurity 日志配置"></a>ModSecurity 日志配置</h3><p><code>ModSecurity</code> 应用中的日志包括 <code>Debug</code>（调试日志）、<code>Audit</code>（审计日志）两大类，调试日志记录 <code>ModSecurity</code> 规则匹配、检测过程，并依据调试日志相关参数的不同，其所记录的日志字段均不同，调试日志配置如下所示</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">调试日志配置</th>
+<th style="text-align:left">参数说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SecDebugLog</td>
+<td style="text-align:left">调试日志记录路径</td>
+</tr>
+<tr>
+<td style="text-align:left">SecDebugLogLevel</td>
+<td style="text-align:left">调试日志记录等级</td>
+</tr>
+</tbody>
+</table>
+<p>调试日志记录等级分为 7 个等级，如下所示</p>
+<ul>
+<li>0 不输出日志</li>
+<li>1 输出错误日志，例如致命的处理错误、阻塞的会话</li>
+<li>2 记录警告日志，例如非阻塞的规则匹配</li>
+<li>3 输出通知日志，例如非致命的处理错误</li>
+<li>4 信息</li>
+<li>5 详情</li>
+<li>9 输出所有调试日志</li>
+</ul>
+<p>审计日志，可用于输出所有 HTTP 会话日志，其日志数据如下所示</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">日志属性</th>
+<th style="text-align:left">参数说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">SecAuditEngine</td>
+<td style="text-align:left">控制审计日志输出，其可选值为 On、Off、RelevantOnly</td>
+</tr>
+<tr>
+<td style="text-align:left">SecAuditLogRelevantStatus</td>
+<td style="text-align:left">待审计的 HTTP 状态码，例如 ^(?:5&#124;4(?!04)) 用于过滤 5xx 或 4xx，排除 404</td>
+</tr>
+<tr>
+<td style="text-align:left">SecAuditLogParts</td>
+<td style="text-align:left">ABCDEFGHIJKZ 所需记录的 HTTP 请求字段</td>
+</tr>
+<tr>
+<td style="text-align:left">SecAuditLogType</td>
+<td style="text-align:left">审计日志类型，可选值为 Serial、Concurrent</td>
+</tr>
+<tr>
+<td style="text-align:left">SecAuditLog</td>
+<td style="text-align:left">记录审计日志路径</td>
+</tr>
+<tr>
+<td style="text-align:left">SecAuditLogStorageDir</td>
+<td style="text-align:left">Concurrent 审计日志时所输出的目录</td>
+</tr>
+</tbody>
+</table>
+<p><code>SecAuditLogParts</code> 取值为 <code>ABCDEFGHIJKZ</code> 说明如下所示</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">日志属性</th>
+<th style="text-align:left">参数说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:left">审计日志头</td>
+</tr>
+<tr>
+<td style="text-align:center">B</td>
+<td style="text-align:left">请求头</td>
+</tr>
+<tr>
+<td style="text-align:center">C</td>
+<td style="text-align:left">请求 Body</td>
+</tr>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:left">保留</td>
+</tr>
+<tr>
+<td style="text-align:center">E</td>
+<td style="text-align:left">响应 Body</td>
+</tr>
+<tr>
+<td style="text-align:center">F</td>
+<td style="text-align:left">响应头</td>
+</tr>
+<tr>
+<td style="text-align:center">G</td>
+<td style="text-align:left">保留</td>
+</tr>
+<tr>
+<td style="text-align:center">H</td>
+<td style="text-align:left">审计标记，包含额外审计会话数据</td>
+</tr>
+<tr>
+<td style="text-align:center">I</td>
+<td style="text-align:left">保留</td>
+</tr>
+<tr>
+<td style="text-align:center">J</td>
+<td style="text-align:left">保留</td>
+</tr>
+<tr>
+<td style="text-align:center">K</td>
+<td style="text-align:left">所匹配的规则集合</td>
+</tr>
+<tr>
+<td style="text-align:center">Z</td>
+<td style="text-align:left">终结标记</td>
+</tr>
+</tbody>
+</table>
+<p>如下为一段审计日志示例</p>
+<pre><code>---Xd59KAAO---A--
+[26/Nov/2018:09:46:59 +0800] 154319681942.596956 10.211.55.2 58760 10.211.55.2 80
+---Xd59KAAO---B--
+GET /?testparam=test HTTP/1.1
+Host: 10.211.55.14
+Connection: keep-alive
+Cache-Control: max-age=0
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7
+If-None-Match: &quot;5bf974af-264&quot;
+If-Modified-Since: Sat, 24 Nov 2018 15:56:31 GMT
+
+---Xd59KAAO---C--
+
+---Xd59KAAO---D--
+
+---Xd59KAAO---E--
+&lt;html&gt;\x0d\x0a&lt;head&gt;&lt;title&gt;403 Forbidden&lt;/title&gt;&lt;/head&gt;\x0d\x0a&lt;body bgcolor=&quot;white&quot;&gt;\x0d\x0a&lt;center&gt;&lt;h1&gt;403 Forbidden&lt;/h1&gt;&lt;/center&gt;\x0d\x0a&lt;hr&gt;&lt;center&gt;nginx/1.14.1&lt;/center&gt;\x0d\x0a&lt;/body&gt;\x0d\x0a&lt;/html&gt;\x0d\x0a&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;\x0d\x0a&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;\x0d\x0a&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;\x0d\x0a&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;\x0d\x0a&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;\x0d\x0a&lt;!-- a padding to disable MSIE and Chrome friendly error page --&gt;\x0d\x0a
+
+---Xd59KAAO---F--
+HTTP/1.1 403
+Server: nginx/1.14.1
+Date: Mon, 26 Nov 2018 01:46:59 GMT
+Content-Length: 571
+Content-Type: text/html
+Connection: keep-alive
+
+---Xd59KAAO---H--
+
+---Xd59KAAO---I--
+
+---Xd59KAAO---J--
+
+---Xd59KAAO---Z--
+
+</code></pre><blockquote><p>在测试 ModSecurity 功能时，想通过 WAF 输出的审计日志来学习和测试相应防护规则，结果发现将 SecRuleEngine 设置为 DetectionOnly 后，ModSecurity 并没有在审计日志中输出匹配过程和规则；正确的做法应该是通过记录调试日志，来跟踪规则匹配、执行。</p>
+</blockquote>
+<h2 id="ModSecurity-CRS-规则"><a href="#ModSecurity-CRS-规则" class="headerlink" title="ModSecurity CRS 规则"></a>ModSecurity CRS 规则</h2><p>ModSecurity <a href="https://github.com/SpiderLabs/owasp-modsecurity-crs" target="_blank" rel="noopener">CRS</a> 是由 OWASP 社区所维护的攻击检测规则，可在 ModSecurity 中直接使用，其检测规则覆盖 OWASP Top 10 中常见漏洞和一些框架层面的漏洞。</p>
+<h3 id="CRS-部署使用"><a href="#CRS-部署使用" class="headerlink" title="CRS 部署使用"></a>CRS 部署使用</h3><p>下载 CRS 规则到本地，可通过如下命令进行操作</p>
+<pre><code>git clone git@github.com:SpiderLabs/owasp-modsecurity-crs.git
+</code></pre><p>在 CRS 的 <code>crs-set.conf.example</code> 中说明 CRS 的配置需要在 WebServer 中包含如下三种配置文件</p>
+<pre><code># The order of file inclusion in your webserver configuration should always be:
+# 1. modsecurity.conf
+# 2. crs-setup.conf (this file)
+# 3. rules/*.conf (the CRS rule files)
+#
+# Please refer to the INSTALL file for detailed installation instructions.
+</code></pre><p>将下载目录下的 <code>rules</code> 移动到 <code>/usr/local/nginx/conf/modsec</code> 目录下，通知将 <code>crs-set.conf.example</code> 重命名为 <code>crs-set.conf</code> 并移动到 <code>/usr/local/nginx/conf/modsec</code>，部署玩 CRS 后的目录如下所示</p>
+<pre><code>[root@Centos7 modsec]# pwd
+/usr/local/nginx/conf/modsec
+[root@Centos7 modsec]# ls
+crs-setup.conf  main.conf  modsecurity.conf  rules  unicode.mapping
+[root@Centos7 modsec]#
+</code></pre><p>在上述 <code>/usr/local/nginx/conf/modsec/main.conf</code> 配置文件中添加 CRS 配置，添加后的文件内容如下所示</p>
+<pre><code>[root@Centos7 modsec]# cat main.conf
+Include &quot;/usr/local/nginx/conf/modsec/modsecurity.conf&quot;
+Include &quot;/usr/local/nginx/conf/modsec/crs-setup.conf&quot;
+Include &quot;/usr/local/nginx/conf/modsec/rules/*.conf&quot;
+</code></pre><p>测试 CRS 规则，访问连接 <code>http://10.211.55.14/?id=1&#39;or&#39;1=1</code>，如下所示，触发了 CRS 中的 SQL 注入防御规则</p>
+<blockquote><p>需注意 ModSecurity CRS 规则默认将本机加入白名单，所以直接通过 <code>curl http://localhost?id=1&#39;or&#39;1=1</code> 测试是无法触发 CRS 防御规则。</p>
+</blockquote>
+<img src="/2018/12/21/step-into-modsecurity/modsecurity_crs.png">
+<p>触发 <code>REQUEST-920-PROTOCOL-ENFORCEMENT</code>、<code>REQUEST-942-APPLICATION-ATTACK-SQLI.conf</code> 等规则检测，并且被默认拦截，其匹配记录如下所示</p>
+<pre><code>ModSecurity: Warning. Matched &quot;Operator `Rx&#39; with parameter `^[\d.:]+$&#39; against variable `REQUEST_HEADERS:Host&#39; (Value: `10.211.55.14&#39; ) [file &quot;/usr/local/nginx/conf/modsec/rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf&quot;] [line &quot;777&quot;] [id &quot;920350&quot;] [rev &quot;2&quot;] [msg &quot;Host header is a numeric IP address&quot;] [data &quot;10.211.55.14&quot;] [severity &quot;4&quot;] [ver &quot;OWASP_CRS/3.0.0&quot;] [maturity &quot;9&quot;] [accuracy &quot;9&quot;] [tag &quot;application-multi&quot;] [tag &quot;language-multi&quot;] [tag &quot;platform-multi&quot;] [tag &quot;attack-protocol&quot;] [tag &quot;OWASP_CRS/PROTOCOL_VIOLATION/IP_HOST&quot;] [tag &quot;WASCTC/WASC-21&quot;] [tag &quot;OWASP_TOP_10/A7&quot;] [tag &quot;PCI/6.5.10&quot;] [hostname &quot;10.211.55.2&quot;] [uri &quot;/&quot;] [unique_id &quot;154530934235.756485&quot;] [ref &quot;o0,12v37,12&quot;]
+ModSecurity: Warning. detected SQLi using libinjection. [file &quot;/usr/local/nginx/conf/modsec/rules/REQUEST-942-APPLICATION-ATTACK-SQLI.conf&quot;] [line &quot;43&quot;] [id &quot;942100&quot;] [rev &quot;1&quot;] [msg &quot;SQL Injection Attack Detected via libinjection&quot;] [data &quot;Matched Data: s&amp;s found within ARGS:id: 1&#39;or&#39;1=1&quot;] [severity &quot;2&quot;] [ver &quot;OWASP_CRS/3.0.0&quot;] [maturity &quot;1&quot;] [accuracy &quot;8&quot;] [hostname &quot;10.211.55.2&quot;] [uri &quot;/&quot;] [unique_id &quot;154530934235.756485&quot;] [ref &quot;v9,8&quot;]
+ModSecurity: Access denied with code 403 (phase 2). Matched &quot;Operator `Ge&#39; with parameter `5&#39; against variable `TX:ANOMALY_SCORE&#39; (Value: `8&#39; ) [file &quot;/usr/local/nginx/conf/modsec/rules/REQUEST-949-BLOCKING-EVALUATION.conf&quot;] [line &quot;44&quot;] [id &quot;949110&quot;] [rev &quot;&quot;] [msg &quot;Inbound Anomaly Score Exceeded (Total Score: 8)&quot;] [data &quot;&quot;] [severity &quot;2&quot;] [ver &quot;&quot;] [maturity &quot;0&quot;] [accuracy &quot;0&quot;] [tag &quot;application-multi&quot;] [tag &quot;language-multi&quot;] [tag &quot;platform-multi&quot;] [tag &quot;attack-generic&quot;] [hostname &quot;10.211.55.2&quot;] [uri &quot;/&quot;] [unique_id &quot;154530934235.756485&quot;] [ref &quot;&quot;]
+ModSecurity: Warning. Matched &quot;Operator `Ge&#39; with parameter `5&#39; against variable `TX:INBOUND_ANOMALY_SCORE&#39; (Value: `8&#39; ) [file &quot;/usr/local/nginx/conf/modsec/rules/RESPONSE-980-CORRELATION.conf&quot;] [line &quot;65&quot;] [id &quot;980130&quot;] [rev &quot;&quot;] [msg &quot;Inbound Anomaly Score Exceeded (Total Inbound Score: 8 - SQLI=5,XSS=0,RFI=0,LFI=0,RCE=0,PHPI=0,HTTP=0,SESS=0): SQL Injection Attack Detected via libinjection&quot;] [data &quot;&quot;] [severity &quot;0&quot;] [ver &quot;&quot;] [maturity &quot;0&quot;] [accuracy &quot;0&quot;] [tag &quot;event-correlation&quot;] [hostname &quot;10.211.55.2&quot;] [uri &quot;/&quot;] [unique_id &quot;154530934235.756485&quot;] [ref &quot;&quot;]
+</code></pre><h3 id="CRS-规则说明"><a href="#CRS-规则说明" class="headerlink" title="CRS 规则说明"></a>CRS 规则说明</h3><p><code>/usr/local/nginx/conf/modsec/rules/*.conf</code> 目录下的 CRS 防御规则文件及相关说明如下所示</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">规则文件</th>
+<th style="text-align:left">规则说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">REQUEST-900-EXCLUSION-RULES-BEFORE-CRS</td>
+<td style="text-align:left">定制化个人防护规则，调整规则防护场景</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-901-INITIALIZATION</td>
+<td style="text-align:left">CRS 配置初始化</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-910-IP-REPUTATION</td>
+<td style="text-align:left">IP 信誉库</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-911-METHOD-ENFORCEMENT</td>
+<td style="text-align:left">HTTP 请求方法检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-912-DOS-PROTECTION</td>
+<td style="text-align:left">拒绝服务规则</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-913-SCANNER-DETECTION</td>
+<td style="text-align:left">扫描器检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-920-PROTOCOL-ENFORCEMENT</td>
+<td style="text-align:left">URL Scheme 协议检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-921-PROTOCOL-ATTACK</td>
+<td style="text-align:left">HTTP 协议攻击检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-930-APPLICATION-ATTACK-LFI</td>
+<td style="text-align:left">LFI 本地文件包含漏洞检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-931-APPLICATION-ATTACK-RFI</td>
+<td style="text-align:left">RFI 远程文件包含检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-932-APPLICATION-ATTACK-RCE</td>
+<td style="text-align:left">RCE 远程命令执行检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-933-APPLICATION-ATTACK-PHP</td>
+<td style="text-align:left">PHP 攻击检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-941-APPLICATION-ATTACK-XSS</td>
+<td style="text-align:left">XSS 攻击检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-942-APPLICATION-ATTACK-SQLI</td>
+<td style="text-align:left">SQL 注入攻击检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-943-APPLICATION-ATTACK-SESSION-FIXATION</td>
+<td style="text-align:left">会话固定攻击检测</td>
+</tr>
+<tr>
+<td style="text-align:left">REQUEST-949-BLOCKING-EVALUATION</td>
+<td style="text-align:left">基于风险值检测入站请求</td>
+</tr>
+<tr>
+<td style="text-align:left">RESPONSE-950-DATA-LEAKAGES</td>
+<td style="text-align:left">数据泄漏检测</td>
+</tr>
+<tr>
+<td style="text-align:left">RESPONSE-951-DATA-LEAKAGES-SQL</td>
+<td style="text-align:left">SQL 数据泄漏检测</td>
+</tr>
+<tr>
+<td style="text-align:left">RESPONSE-952-DATA-LEAKAGES-JAVA</td>
+<td style="text-align:left">JAVA 数据泄漏</td>
+</tr>
+<tr>
+<td style="text-align:left">RESPONSE-953-DATA-LEAKAGES-PHP</td>
+<td style="text-align:left">PHP 数据泄漏</td>
+</tr>
+<tr>
+<td style="text-align:left">RESPONSE-954-DATA-LEAKAGES-IIS</td>
+<td style="text-align:left">IIS 数据泄漏</td>
+</tr>
+<tr>
+<td style="text-align:left">RESPONSE-959-BLOCKING-EVALUATION</td>
+<td style="text-align:left">基于风险值检测出站请求</td>
+</tr>
+<tr>
+<td style="text-align:left">RESPONSE-980-CORRELATION</td>
+<td style="text-align:left">入站、出站风险值关联</td>
+</tr>
+<tr>
+<td style="text-align:left">RESPONSE-999-EXCLUSION-RULES-AFTER-CRS</td>
+<td style="text-align:left">定制化个人防护规则，重载、更新、移除检测规则</td>
+</tr>
+</tbody>
+</table>
+<p>如下所示，CRS 支持两种运行模式，CRS 默认采用的为异常评分模式</p>
+<ul>
+<li>异常评分模式，每条防御规则都有相应的风险评分，若匹配成功，则直接累加对应的风险值，当所有规则都匹配完成后比较入站、出站的风险值，若比设定的风险阈值还高，则默认返回 403；</li>
+<li>检测拦截模式，若请求匹配到了防御规则，则依据所配置的行为进行响应，同时将忽略其后所有的防御规则，该模式节约资源、性能；</li>
+</ul>
+<p>若 CRS 要切换成检测拦截模式，需将 <code>crs-setup.conf</code> 中异常评分模式配置注释，同时开启检测拦截模式配置，如下所示</p>
+<pre><code>#SecDefaultAction &quot;phase:1,log,auditlog,pass&quot;
+#SecDefaultAction &quot;phase:2,log,auditlog,pass&quot;
+
+SecDefaultAction &quot;phase:1,log,auditlog,deny,status:403&quot;
+SecDefaultAction &quot;phase:2,log,auditlog,deny,status:403&quot;
+</code></pre><p>在异常评分模式中，CRS 包含 规则等级（Paranoia）、异常阈值（Anomaly） 两个量化值，随着规则等级越来越高，其所启用的安全防御规则就越来越多，同时误报也会越来越多，规则等级分为以下几类，规则等级高于 PL2 在审计日志中会输出规则等级标签</p>
+<ul>
+<li>1（PL1），默认风险等级，启用了大部分防御规则，误报较少</li>
+<li>2（PL2），比 PL1 启用更多防御规则，例如基于正则的 SQL 注入和 XSS，比 PL1 误报多</li>
+<li>3（PL3），比 PL2 启用更多防御规则，面向经验丰富用户，满足较高安全性场景</li>
+<li>4（PL4），最严格的风险等级，会产生一定数量的误报</li>
+</ul>
+<p>基于异常告警模式，每条检测规则都包含一定的风险值，不同危害风险值不同，如下所示，可根据业务场景自主调整</p>
+<ul>
+<li>CRITICAL，致命，风险值为 5</li>
+<li>ERROR，错误，风险值为 4</li>
+<li>WARNING，警告，风险值为 3</li>
+<li>NOTICE，通知，风险值为 2</li>
+</ul>
+<p>根据对 CRS 防御规则的熟知程度慢慢深入，相关异常阈值和规则等级设置可参考下表所示，即异常告警阈值慢慢降低，规则等级慢慢严格</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">阶段编号</th>
+<th style="text-align:left">阶段名称</th>
+<th style="text-align:center">异常阈值</th>
+<th style="text-align:center">规则等级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left">初始阶段</td>
+<td style="text-align:center">高</td>
+<td style="text-align:center">低</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left">实验阶段</td>
+<td style="text-align:center">高</td>
+<td style="text-align:center">高</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left">标准阶段</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">低</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left">高安全性阶段</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">高</td>
+</tr>
+</tbody>
+</table>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li>如何搭建一个靠谱的WAF <a href="http://www.91ri.org/12766.html" target="_blank" rel="noopener">查看原文</a></li>
+<li>【门神】WAF应用层实现的架构漫谈 <a href="https://security.tencent.com/index.php/blog/msg/63" target="_blank" rel="noopener">查看原文</a></li>
+<li>主流WAF架构分析与探索 <a href="https://security.tencent.com/index.php/blog/msg/56" target="_blank" rel="noopener">查看原文</a></li>
+</ol>
+
+    
+
+    
+</div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+        <a href="/2019/04/14/develop-secure-web-application/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2018/10/04/about-the-backdoor/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
+
+
+                    
+                        <!-- Overlay For Active Sidebar -->
+<div class="sidebar-overlay"></div>
+
+<!-- Material sidebar -->
+<aside id="sidebar" class="sidebar sidebar-colored sidebar-fixed-left" role="navigation">
+    <div id="sidebar-main">
+        <!-- Sidebar Header -->
+        <div class="sidebar-header header-cover" style="background-image: url(/img/sidebar_header.png);">
+    <!-- Top bar -->
+    <div class="top-bar"></div>
+
+    <!-- Sidebar toggle button -->
+    <button type="button" class="sidebar-toggle mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" style="display: initial;" data-upgraded=",MaterialButton,MaterialRipple">
+        <i class="material-icons">clear_all</i>
+        <span class="mdl-button__ripple-container">
+            <span class="mdl-ripple">
+            </span>
+        </span>
+    </button>
+
+    <!-- Sidebar Avatar -->
+    <div class="sidebar-image">
+        <img src="/img/avatar.png" alt="xF0rk's avatar">
+    </div>
+
+    <!-- Sidebar Email -->
+    <a data-toggle="dropdown" class="sidebar-brand" href="#settings-dropdown">
+        xf0rk@outlook.com
+        <b class="caret"></b>
+    </a>
+</div>
+
+
+        <!-- Sidebar Navigation  -->
+        <ul class="nav sidebar-nav">
+    <!-- User dropdown  -->
+    <li class="dropdown">
+        <ul id="settings-dropdown" class="dropdown-menu">
+            
+                <li>
+                    <a href="mailto:xf0rk@outlook.com" target="_blank" title="与我联系">
+                        
+                            <i class="material-icons sidebar-material-icons sidebar-indent-left1pc-element">email</i>
+                        
+                        与我联系
+                    </a>
+                </li>
+            
+        </ul>
+    </li>
+
+    <!-- Homepage -->
+    
+        <li id="sidebar-first-li">
+            <a href="/">
+                
+                    <i class="material-icons sidebar-material-icons">home</i>
+                
+                主页
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Archives  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">inbox</i>
+                
+                    归档
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            <li>
+                <a class="sidebar_archives-link" href="/archives/2019/04/">四月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a>
+            </li></ul>
+        </li>
+        
+    
+
+    <!-- Categories  -->
+    
+        <li class="dropdown">
+            <a href="#" class="ripple-effect dropdown-toggle" data-toggle="dropdown">
+                
+                    <i class="material-icons sidebar-material-icons">chrome_reader_mode</i>
+                
+                分类
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                <a class="sidebar_archives-link" href="/categories/安全应急/">安全应急<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/安全建设/">安全建设<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/漏洞分析/">漏洞分析<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔杂谈/">随笔杂谈<span class="sidebar_archives-count">1</span></a>
+            </li></ul>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+
+    <!-- Article Number  -->
+    
+        <li>
+            <a href="/archives">
+                文章总数
+                <span class="sidebar-badge">6</span>
+            </a>
+        </li>
+        
+    
+
+    <!-- Pages  -->
+    
+        <li>
+            <a href="/timeline" title="时间轴">
+                
+                    <i class="material-icons sidebar-material-icons">timeline</i>
+                
+                时间轴
+            </a>
+        </li>
+        
+    
+        <li>
+            <a href="/tags" title="标签云">
+                
+                    <i class="material-icons sidebar-material-icons">loyalty</i>
+                
+                标签云
+            </a>
+        </li>
+        
+            <li class="divider"></li>
+        
+    
+        <li>
+            <a href="/about" title="关于我">
+                
+                    <i class="material-icons sidebar-material-icons">person</i>
+                
+                关于我
+            </a>
+        </li>
+        
+    
+</ul>
+
+
+        <!-- Sidebar Footer -->
+        <!-- Sidebar Divider -->
+
+
+    </div>
+
+    <!-- Sidebar Image -->
+    
+
+</aside>
+
+                    
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
+
+                    
+
+                    <!--Footer-->
+<footer class="mdl-mini-footer" id="bottom">
+    
+        <!-- Paradox Footer Left Section -->
+        <div class="mdl-mini-footer--left-section sns-list">
+    <!-- Twitter -->
+    
+        <a href="https://twitter.com/xF0rk" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-twitter">
+                <span class="visuallyhidden">Twitter</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- Facebook -->
+    
+
+    <!-- Google + -->
+    
+
+    <!-- Weibo -->
+    
+
+    <!-- Instagram -->
+    
+
+    <!-- Tumblr -->
+    
+
+    <!-- Github -->
+    
+        <a href="https://github.com/xf0rk" target="_blank">
+            <button class="mdl-mini-footer--social-btn social-btn footer-sns-github">
+                <span class="visuallyhidden">Github</span>
+            </button><!--
+     --></a>
+    
+
+    <!-- LinkedIn -->
+    
+
+    <!-- Zhihu -->
+    
+
+    <!-- Bilibili -->
+    
+
+    <!-- Telegram -->
+    
+</div>
+
+
+        <!--Copyright-->
+        <div id="copyright">
+            Copyright&nbsp;©&nbsp;2018&nbsp;-<script type="text/javascript">var fd = new Date();document.write("&nbsp;" + fd.getFullYear() + "&nbsp;");</script>L0gs 4 xF0rk
+        </div>
+
+        <!-- Paradox Footer Right Section -->
+
+        <div class="mdl-mini-footer--right-section">
+            <div>
+                <div class="footer-develop-div">Powered by <a href="https://hexo.io" target="_blank" class="footer-develop-a">Hexo</a></div>
+            </div>
+        </div>
+    
+</footer>
+
+
+                    <!-- Import File -->
+
+
+    <script>lsloader.load("js/lazyload.min.js","/js/lazyload.min.js?1BcfzuNXqV+ntF6gq+5X3Q==")</script>
+    <script>lsloader.load("js/js.min.js","/js/js.min.js?oAl/+lvaqTFV31JXTmbrNA==")</script>
+
+
+
+    <script>lsloader.load("js/nprogress.js","/js/nprogress.js?pl3Qhb9lvqR1FlyLUna1Yw==")</script>
+
+
+<script type="text/ls-javascript" id="NProgress-script">
+    NProgress.configure({
+        showSpinner: true
+    });
+    NProgress.start();
+    $('#nprogress .bar').css({
+        'background': '#29d'
+    });
+    $('#nprogress .peg').css({
+        'box-shadow': '0 0 10px #29d, 0 0 15px #29d'
+    });
+    $('#nprogress .spinner-icon').css({
+        'border-top-color': '#29d',
+        'border-left-color': '#29d'
+    });
+    setTimeout(function() {
+        NProgress.done();
+        $('.fade').removeClass('out');
+    }, 800);
+</script>
+
+
+
+
+
+
+
+    <!-- Busuanzi -->
+    <script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+
+<!-- UC Browser Compatible -->
+<script>
+	var agent = navigator.userAgent.toLowerCase();
+	if(agent.indexOf('ucbrowser')>0) {
+		document.write('<link rel="stylesheet" href="/css/uc.css">');
+	   alert('由于 UC 浏览器使用极旧的内核，而本网站使用了一些新的特性。\n为了您能更好的浏览，推荐使用 Chrome 或 Firefox 浏览器。');
+	}
+</script>
+
+<!-- Window Load-->
+<script type="text/ls-javascript" id="window-load">
+    $(window).on('load', function() {
+        // Post_Toc parent position fixed
+        $('.post-toc-wrap').parent('.mdl-menu__container').css('position', 'fixed');
+    });
+</script>
+
+<!-- MathJax Load-->
+
+<script type="text/ls-javascript" id="lazy-load">
+    // Offer LazyLoad
+    queue.offer(function(){
+        $('.lazy').lazyload({
+            effect : 'show'
+        });
+    });
+
+    // Start Queue
+    $(document).ready(function(){
+        setInterval(function(){
+            queue.execNext();
+        },200);
+    });
+</script>
+
+<!-- Bing Background -->
+
+
+<script>
+    (function(){
+        var scriptList = document.querySelectorAll('script[type="text/ls-javascript"]')
+
+        for (var i = 0; i < scriptList.length; ++i) {
+            var item = scriptList[i];
+            lsloader.runInlineScript(item.id,item.id);
+        }
+    })()
+</script>
+
+                </main>
+            </div>
+        </body>
+    
+</html>
