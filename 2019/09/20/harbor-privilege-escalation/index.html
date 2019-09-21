@@ -12,7 +12,7 @@
     
     <title>
         
-            标签: 后门入侵 | 
+            Harbor 任意管理员注册漏洞 | 
         
         L0gs 4 xF0rk
     </title>
@@ -40,7 +40,7 @@
     <meta name="theme-color" content="#2196F3">
     <meta name="author" content="xF0rk">
     <meta name="description" itemprop="description" content="">
-    <meta name="keywords" content="">
+    <meta name="keywords" content=",漏洞分析">
 
     <!-- Site Verification -->
     
@@ -69,15 +69,18 @@
     <!-- The Open Graph protocol -->
     <meta property="og:url" content="https://l0gs.xf0rk.space">
     <meta property="og:type" content="blog">
-    <meta property="og:title" content="标签: 后门入侵 | L0gs 4 xF0rk">
+    <meta property="og:title" content="Harbor 任意管理员注册漏洞 | L0gs 4 xF0rk">
     <meta property="og:image" content="/img/favicon.jpg">
     <meta property="og:description" content="">
-    
+    <meta property="og:article:tag" content="漏洞分析"> 
 
+    
+        <meta property="article:published_time" content="9月 20, 2019">
+        <meta property="article:modified_time" content="9月 21, 2019">
     
 
     <!-- The Twitter Card protocol -->
-    <meta name="twitter:title" content="标签: 后门入侵 | L0gs 4 xF0rk">
+    <meta name="twitter:title" content="Harbor 任意管理员注册漏洞 | L0gs 4 xF0rk">
     <meta name="twitter:description" content="">
     <meta name="twitter:image" content="/img/favicon.jpg">
     <meta name="twitter:card" content="summary_large_image">
@@ -85,13 +88,43 @@
 
     <!-- Add canonical link for SEO -->
     
-        <link rel="canonical" href="https://l0gs.xf0rk.space/tags/后门入侵/index.html">
+        <link rel="canonical" href="https://l0gs.xf0rk.space/2019/09/20/harbor-privilege-escalation/index.html">
     
 
     <!-- Structured-data for SEO -->
     
         
 
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "L0gs 4 xF0rk",
+        "logo": "/img/favicon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "xF0rk",
+        "image": {
+            "@type": "ImageObject",
+            "url": "/img/favicon.jpg"
+        },
+        "description": "归来仍少年"
+    },
+    "headline": "Harbor 任意管理员注册漏洞",
+    "url": "https://l0gs.xf0rk.space/2019/09/20/harbor-privilege-escalation/index.html",
+    "datePublished": "9月 20, 2019",
+    "dateModified": "9月 21, 2019",
+    "description": "",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://l0gs.xf0rk.space"
+    }
+}
+</script>
 
 
     
@@ -290,94 +323,223 @@
                         </button>
                     
 
-                    <!-- Index Module -->
-<div class="material-index mdl-grid">
-    
-    <div class="locate-thumbnail-symbol"></div>
+                    <!-- Post TOC -->
 
-    <!-- Pin on top -->
+    
+    <!-- Back Button -->
+    <!--
+    <div class="material-back" id="backhome-div" tabindex="0">
+        <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon"
+           href="#" onclick="window.history.back();return false;"
+           target="_self"
+           role="button"
+           data-upgraded=",MaterialButton,MaterialRipple">
+            <i class="material-icons" role="presentation">arrow_back</i>
+            <span class="mdl-button__ripple-container">
+                <span class="mdl-ripple"></span>
+            </span>
+        </a>
+    </div>
+    -->
+
+    <!-- Left aligned menu below button -->
+    <button id="post-toc-trigger-btn" class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">format_list_numbered</i>
+    </button>
+
+    
+    <ul class="post-toc-wrap mdl-menu mdl-menu--bottom-left mdl-js-menu mdl-js-ripple-effect" for="post-toc-trigger-btn" style="max-height:80vh; overflow-y:scroll;">
+        <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#漏洞概述"><span class="post-toc-number">1.</span> <span class="post-toc-text">漏洞概述</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#漏洞分析"><span class="post-toc-number">2.</span> <span class="post-toc-text">漏洞分析</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#漏洞修复"><span class="post-toc-number">3.</span> <span class="post-toc-text">漏洞修复</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#漏洞影响"><span class="post-toc-number">4.</span> <span class="post-toc-text">漏洞影响</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#参考链接"><span class="post-toc-number">5.</span> <span class="post-toc-text">参考链接</span></a></li></ol>
+        <!--
+        <li class="mdl-menu__item">
+            Some Action
+        </li>
+        -->
+    </ul>
     
 
-    <!-- Normal Post -->
-    
-        
-            
-                <!-- Paradox Thumbnail -->
-                <div class="post_entry-module mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col fade out">
-    <!-- Post Thumbnail -->
+
+
+
+
+<!-- Layouts -->
+
+    <!-- Post Module -->
+    <div class="material-post_container">
+
+        <div class="material-post mdl-grid">
+            <div class="mdl-card mdl-shadow--4dp mdl-cell mdl-cell--12-col">
+
+                <!-- Post Header(Thumbnail & Title) -->
+                
+    <!-- Paradox Post Header -->
     
         <!-- Custom Thumbnail -->
-        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50 lazy" data-original="https://l0gs.xf0rk.space/2018/10/04/about-the-backdoor/backdoor_banner.jpg">
+        <div class="post_thumbnail-custom mdl-card__media mdl-color-text--grey-50" style="background-image:url(https://l0gs.xf0rk.space/2019/09/20/harbor_banner.png)">
+    
+            <p class="article-headline-p">
+                Harbor 任意管理员注册漏洞
+            </p>
+        </div>
+
+
+
+
+
+                
+                    <!-- Paradox Post Info -->
+                    <div class="mdl-color-text--grey-700 mdl-card__supporting-text meta">
+
+    <!-- Author Avatar -->
+    <div id="author-avatar">
+        <img src="/img/avatar.png" width="44px" height="44px" alt="Author Avatar">
+    </div>
+    <!-- Author Name & Date -->
+    <div>
+        <strong>xF0rk</strong>
+        <span>9月 20, 2019</span>
+    </div>
+
+    <div class="section-spacer"></div>
+
+    <!-- Favorite -->
+    <!--
+        <button id="article-functions-like-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon btn-like">
+            <i class="material-icons" role="presentation">favorite</i>
+            <span class="visuallyhidden">favorites</span>
+        </button>
+    -->
+
+    <!-- Qrcode -->
     
 
-        <!-- Post Title -->
-        <p class="article-headline-p"><a href="/2018/10/04/about-the-backdoor/">安全应急之后门篇</a></p>
-    </div>
+    <!-- Tags (bookmark) -->
+    
+    <button id="article-functions-viewtags-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+        <i class="material-icons" role="presentation">bookmark</i>
+        <span class="visuallyhidden">bookmark</span>
+    </button>
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-functions-viewtags-button">
+        <li class="mdl-menu__item">
+        <a class="post_tag-link" href="/tags/漏洞分析/">漏洞分析</a>
+    </li></ul>
+    
 
-    <!-- Post Excerpt -->
-    <div class="mdl-color-text--grey-600 mdl-card__supporting-text post_entry-content">
+    <!-- Share -->
+    <button id="article-fuctions-share-button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+    <i class="material-icons" role="presentation">share</i>
+    <span class="visuallyhidden">share</span>
+</button>
+<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="article-fuctions-share-button">
+    
+
+    
         
-            后门是一种绕过认证或系统加密的方法，开发人员会出于某原因，可能为自己的程序构建后门程序。例如，为了提供简单的维护，开发人员引...
+            <!-- Busuanzi Views -->
+            <a class="post_share-link" href="#">
+                <li class="mdl-menu__item">
+                    <span id="busuanzi_container_page_pv">
+                        <span id="busuanzi_value_page_pv"></span>&nbsp;浏览量
+                    </span>
+                </li>
+            </a>
         
-        &nbsp;&nbsp;&nbsp;
-        <span>
-            <a href="/2018/10/04/about-the-backdoor/" target="_self">阅读全文</a>
-        </span>
-    </div>
-    <!-- Post_entry Info-->
-    <div id="post_entry-info">
-        <div id="post_entry-left-info" class="mdl-card__supporting-text meta mdl-color-text--grey-600 ">
-            <!-- Author Avatar -->
-            <div id="author-avatar">
-                <img src="/img/avatar.png" width="44px" height="44px" alt="xF0rk's avatar">
-            </div>
-            <div>
-                <strong>xF0rk</strong>
-                <span>10月 04, 2018</span>
-            </div>
-        </div>
-        <div id="post_entry-right-info">
-            <!-- Category -->
-            <span class="post_entry-category">
-                <a class="post_category-link" href="/categories/安全应急/">安全应急</a>
-            </span>
+    
 
-            
+    <!-- Share Weibo -->
+    
 
-            
+    <!-- Share Twitter -->
+    
+        <a class="post_share-link" href="https://twitter.com/intent/tweet?text=Harbor 任意管理员注册漏洞&url=https://l0gs.xf0rk.space/2019/09/20/harbor-privilege-escalation/index.html&via=xF0rk" target="_blank">
+            <li class="mdl-menu__item">
+                分享到 Twitter
+            </li>
+        </a>
+    
 
-            <!-- Post Views -->
-            <span class="post_entry-views">
-            </span>
-        </div>
-    </div>
+    <!-- Share Facebook -->
+    
+
+    <!-- Share Google+ -->
+    
+
+    <!-- Share LinkedIn -->
+    
+
+    <!-- Share QQ -->
+    
+
+    <!-- Share Telegram -->
+    
+</ul>
+
 </div>
 
-            
-            
-        
+                
+
+                <!-- Post Content -->
+                <div id="post-content" class="mdl-color-text--grey-700 mdl-card__supporting-text fade out">
     
+        <blockquote><p>Harbor 镜像仓库 CVE-2019-16097 漏洞是指若 Harbor 仓库开启了用户注册功能且其为漏洞版本，则存在任意管理员注册漏洞，攻击者可上传写入恶意 Docker 镜像，用来攻击 Docker 主机。</p>
+</blockquote>
+<h2 id="漏洞概述"><a href="#漏洞概述" class="headerlink" title="漏洞概述"></a>漏洞概述</h2><p>Twitter 上出现 Harbor Docker 镜像仓库 CVE-2019-16097 漏洞利用截图，如下图所示，漏洞存在接口为 <code>/api/users</code> 的 <code>POST</code> 方法，当提交的用户参数中包含 <code>has_admin_role: true</code> 时，则可直接注册创建权限为管理员的账号，并且可上传写入恶意 Docker 镜像，进而可直接感染使用此镜像仓库的 Docker 主机。</p>
+<img src="/2019/09/20/harbor-privilege-escalation/harbor_poc_burpsuite.png">
+<h2 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h2><p>Harbor HTTP 接口基于 Beego 框架构建，其所有 API 接口路由在 <code>src/core/router.go</code> 代码文件中注册声明，如下图所示，其接口实现在 <code>api/UserAPI</code> 中</p>
+<img src="/2019/09/20/harbor-privilege-escalation/harbor_api_user_router.png">
+<p>在 <code>UserAPI</code> 的 <code>Post</code> 方法中，<strong>若 Harbor 开启了注册功能（默认该功能开启）</strong>，其直接将用户所提交的用户信息反序列化至 <code>models.User</code> 中</p>
+<img src="/2019/09/20/harbor-privilege-escalation/harbor_api_user_post.png">
+<p>在 <code>models.User</code> 中包含 <code>has_admin_role</code> 字段，其用于标记用户是否有管理员权限</p>
+<img src="/2019/09/20/harbor-privilege-escalation/harbor_api_user_post.png">
+<p>若用户提交的信息中包含 <code>has_admin_role</code>，则反序列化操作将直接赋值到新建的用户 <code>has_admin_role</code>，同时之后代码只对数据进行格式校验</p>
+<img src="/2019/09/20/harbor-privilege-escalation/harbor_validate_user.png">
+<p>校验成功后，将用户信息直接存储之数据库中（<code>common\dao\register.go</code> 代码文件中实现），由于并未对 <code>has_admin_role</code> 进行检查，进而导致可任意注册管理员账号</p>
+<img src="/2019/09/20/harbor-privilege-escalation/harbor_user_save.png">
+<h2 id="漏洞修复"><a href="#漏洞修复" class="headerlink" title="漏洞修复"></a>漏洞修复</h2><p>在任意注册管理员的功能修复中，在创建用户之前，校验当前创建账号的权限是否具有管理员权限，若不具有管理员权限，则直接中断注册操作，进而将漏洞修复成功，其漏洞修复提交 <a href="https://github.com/goharbor/harbor/pull/8917/commits/b6db8a8a106259ec9a2c48be8a380cb3b37cf517" title="代码比对" target="_blank" rel="noopener">链接</a></p>
+<img src="/2019/09/20/harbor-privilege-escalation/harbor_vuln_fixed.png">
+<h2 id="漏洞影响"><a href="#漏洞影响" class="headerlink" title="漏洞影响"></a>漏洞影响</h2><p>Harbor 镜像仓库 CVE-2019-16097 任意管理员注册漏洞影响 <code>1.7.0-1.8.2</code>，当且仅当镜像仓库开启了用户注册功能</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ol>
+<li>Critical Vulnerability in Harbor Enables Privilege Escalation from Zero to Admin (CVE-2019-16097) <a href="https://unit42.paloaltonetworks.com/critical-vulnerability-in-harbor-enables-privilege-escalation-from-zero-to-admin-cve-2019-16097/" title="点击跳转" target="_blank" rel="noopener">链接</a></li>
+<li>漏洞预警 | Harbor任意管理员注册漏洞 <a href="https://www.freebuf.com/vuls/214767.html" title="点击跳转" target="_blank" rel="noopener">链接</a></li>
+</ol>
 
     
-
-    
-        <script type="text/ls-javascript" id="thumbnail-script">
-    var randomNum;
-
-    var locatePost = $('.locate-thumbnail-symbol').next();
-    for(var i = 0; i < 10; i++) {
-        randomNum = Math.floor(Math.random() * 0 + 1);
-
-        locatePost.children('.post_thumbnail-random').attr('id', 'random_thumbnail-'+randomNum);
-        locatePost.children('.post_thumbnail-random').attr('data-original', '/img/random/material-' + randomNum + '.png');
-    $('.post_thumbnail-random').addClass('lazy');
-
-        locatePost = locatePost.next();
-    }
-</script>
 
     
 </div>
+
+
+                
+
+                <!-- Post Comments -->
+                
+                    
+                
+            </div>
+
+            <!-- Post Prev & Next Nav -->
+            <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
+    <!-- Prev Nav -->
+    
+
+    <!-- Section Spacer -->
+    <div class="section-spacer"></div>
+
+    <!-- Next Nav -->
+    
+        <a href="/2019/06/14/about-command-and-control/" id="post_nav-older" class="next-content">
+            旧篇
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_forward</i>
+            </button>
+        </a>
+    
+</nav>
+
+        </div>
+    </div>
+
 
 
                     
@@ -545,6 +707,14 @@
 </aside>
 
                     
+
+                    
+                        <!-- Footer Top Button -->
+                        <div id="back-to-top" class="toTop-wrap">
+    <a href="#top" class="toTop">
+        <i class="material-icons footer_top-i">expand_less</i>
+    </a>
+</div>
 
                     
 
