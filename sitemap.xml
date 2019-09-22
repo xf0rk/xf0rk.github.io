@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://l0gs.xf0rk.space/2019/09/22/cisp-courses-about-information-security/</loc>
+    
+    <lastmod>2019-09-22T15:53:40.955Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://l0gs.xf0rk.space/2019/04/14/develop-secure-web-application/</loc>
+    
+    <lastmod>2019-09-22T15:34:50.234Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://l0gs.xf0rk.space/2018/10/04/about-the-backdoor/</loc>
+    
+    <lastmod>2019-09-22T15:34:44.688Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://l0gs.xf0rk.space/2019/06/14/about-command-and-control/</loc>
+    
+    <lastmod>2019-09-22T15:34:39.464Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://l0gs.xf0rk.space/2019/09/20/harbor-privilege-escalation/</loc>
     
     <lastmod>2019-09-21T12:54:13.699Z</lastmod>
@@ -16,30 +44,9 @@
   </url>
   
   <url>
-    <loc>https://l0gs.xf0rk.space/2018/10/04/about-the-backdoor/</loc>
-    
-    <lastmod>2019-07-27T05:20:26.415Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://l0gs.xf0rk.space/2018/08/25/apache-struts2-cve-2018-11776/</loc>
     
     <lastmod>2019-07-27T05:20:17.409Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://l0gs.xf0rk.space/2019/06/14/about-command-and-control/</loc>
-    
-    <lastmod>2019-07-27T05:20:13.275Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://l0gs.xf0rk.space/2019/04/14/develop-secure-web-application/</loc>
-    
-    <lastmod>2019-06-15T00:25:33.010Z</lastmod>
     
   </url>
   
