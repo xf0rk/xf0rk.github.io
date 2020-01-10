@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://l0gs.xf0rk.space/"/>
-  <updated>2020-01-09T14:41:25.561Z</updated>
+  <updated>2019-10-25T06:35:30.352Z</updated>
   <id>https://l0gs.xf0rk.space/</id>
   
   <author>
@@ -15,35 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>白话企业安全那些事儿</title>
-    <link href="https://l0gs.xf0rk.space/2020/01/10/all-in-security-2020/"/>
-    <id>https://l0gs.xf0rk.space/2020/01/10/all-in-security-2020/</id>
-    <published>2020-01-09T22:00:00.000Z</published>
-    <updated>2020-01-09T14:41:25.561Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>安全</p></blockquote><h2 id="安全需求从哪里来"><a href="#安全需求从哪里来" class="headerlink" title="安全需求从哪里来"></a>安全需求从哪里来</h2><p>企业通过各种生产经营活动创造物质财富，提供满足社会公众物质和文化生活所需要的产品服务，是从事生产、流通与服务等经济活动的 <strong> 营利性 </strong> 组织。企业的首要目的是营利，</p><h2 id="安全建设时候做"><a href="#安全建设时候做" class="headerlink" title="安全建设时候做"></a>安全建设时候做</h2><h2 id="安全建设和谁做"><a href="#安全建设和谁做" class="headerlink" title="安全建设和谁做"></a>安全建设和谁做</h2><h2 id="安全建设怎么做"><a href="#安全建设怎么做" class="headerlink" title="安全建设怎么做"></a>安全建设怎么做</h2><h2 id="安全结果怎么检验"><a href="#安全结果怎么检验" class="headerlink" title="安全结果怎么检验"></a>安全结果怎么检验</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;&lt;p&gt;安全&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;安全需求从哪里来&quot;&gt;&lt;a href=&quot;#安全需求从哪里来&quot; class=&quot;headerlink&quot; title=&quot;安全需求从哪里来&quot;&gt;&lt;/a&gt;安全需求从哪里来&lt;/h2&gt;&lt;p&gt;企业通过各种生产经营
-      
-    
-    </summary>
-    
-      <category term="安全建设" scheme="https://l0gs.xf0rk.space/categories/%E5%AE%89%E5%85%A8%E5%BB%BA%E8%AE%BE/"/>
-    
-    
-      <category term="安全体系" scheme="https://l0gs.xf0rk.space/tags/%E5%AE%89%E5%85%A8%E4%BD%93%E7%B3%BB/"/>
-    
-      <category term="安全保障" scheme="https://l0gs.xf0rk.space/tags/%E5%AE%89%E5%85%A8%E4%BF%9D%E9%9A%9C/"/>
-    
-  </entry>
   
   <entry>
     <title>PHP-FPM + Nginx RCE CVE-2019-11043</title>
