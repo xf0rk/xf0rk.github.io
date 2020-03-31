@@ -492,7 +492,7 @@
 </ul>
 <p>由于国内直接从 <code>IDEA</code> 插件市场下载插件，网络部分受限，所以攻击者可以篡改或者伪造热门插件，并通过社区、技术分享等来实现后门插件的恶意传播。</p>
 <p>笔者将从<code>IDEA</code> 插件开发、插件后门化来进行简单的说明，详细内容如下章节所示</p>
-<h2 id="插件开发"><a href="#插件开发" class="headerlink" title="插件开发"></a>插件开发</h2><p>通过 <code>Gradle</code> 管理插件项目，<code>IDEA</code> 中默认集成插件开发框架，如下所示，直接使用内置的框架创建 <code>IDEA</code> 插件</p>
+<h2 id="插件开发"><a href="#插件开发" class="headerlink" title="插件开发"></a>插件开发</h2><p>通过 <code>Gradle</code> 管理插件项目，<code>IDEA</code> 中默认集成插件开发框架，如下所示，直接使用内置的框架创建 <code>IDEA</code> 插件项目</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/new_idea_plugin_gradle.png">
 <p>根据开发者信息，设置项目开发的基本信息，如下所示（项目以来解析需要较长时间，科学上网会更快一点）</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/new_idea_plugin_dev_info_gradle.png">
@@ -503,7 +503,7 @@
 <p>在 <code>Actions</code> 中实现弹窗的功能，如下所示，并可通过 <code>runIde</code> 来调试插件</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/new_idea_plugin_dev_info_gradle.png">
 <p>再已加载 <code>pluginrce</code> 插件的项目中，通过已 <code>generate</code> 中注册的功能，来测试插件</p>
-<img src="/2020/03/31/backdoor-the-idea-plugins/new_project_generate.png">
+<img src="/2020/03/31/backdoor-the-idea-plugins/action_code_and_run.png">
 <p>选择已注册的 <code>PluginRceAction</code> 功能，如下所示</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/new_project_generate_show.png">
 <p>通过 <code>generate</code> 在目标项目中成功触发 <code>pluginrce</code> 弹窗功能，如下所示</p>
