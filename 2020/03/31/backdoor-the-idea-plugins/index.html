@@ -76,7 +76,7 @@
 
     
         <meta property="article:published_time" content="3月 31, 2020">
-        <meta property="article:modified_time" content="3月 31, 2020">
+        <meta property="article:modified_time" content="4月 01, 2020">
     
 
     <!-- The Twitter Card protocol -->
@@ -117,7 +117,7 @@
     "headline": "供应链攻击之 IDEA 插件植入后门",
     "url": "https://l0gs.xf0rk.space/2020/03/31/backdoor-the-idea-plugins/index.html",
     "datePublished": "3月 31, 2020",
-    "dateModified": "3月 31, 2020",
+    "dateModified": "4月 01, 2020",
     "description": "",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -483,7 +483,7 @@
     
         <blockquote><p>无意中看到一篇 <code>IDEA</code> 插件开发的推文，联想到之前讲得火热的供应链污染攻击，实操确认了下 <code>IDEA</code> 插件开发及植入后门的可行性。</p>
 </blockquote>
-<h2 id="概述说明"><a href="#概述说明" class="headerlink" title="概述说明"></a>概述说明</h2><p><code>IDEA</code> 作为最好用的 <code>Java</code> 开发 <code>IDE</code>，本身功能已经非常强大，但每个人工具使用需求不一致，部分开发者为提高开发效率，通过开发插件来完善 <code>IDEA</code> 功能，并可通过 <code>IDEA</code> 插件市场来实现分享。 <code>IDEA</code> 插件主要包含以下功能：</p>
+<h2 id="概述说明"><a href="#概述说明" class="headerlink" title="概述说明"></a>概述说明</h2><p><code>IDEA</code> 作为最好用的 <code>Java</code> 开发 <code>IDE</code>，本身功能已经非常强大，但每个人工具使用需求不一致，部分开发者通过开发插件来完善 <code>IDEA</code> 功能，同时发布于 <code>IDEA</code> 官方插件市场来实现分享。 <code>IDEA</code> 插件根据其功能项可分为：</p>
 <ul>
 <li>自定义语言支持，通过编写插件，使 <code>IDEA</code> 支持特定语言开发</li>
 <li>框架支持，<code>Java</code> 中 <code>Spring</code>、<code>Struts</code> 等框架支持</li>
@@ -494,7 +494,7 @@
 <p>笔者将从<code>IDEA</code> 插件开发、插件后门化来进行简单的说明，详细内容如下章节所示</p>
 <h2 id="插件开发"><a href="#插件开发" class="headerlink" title="插件开发"></a>插件开发</h2><p>通过 <code>Gradle</code> 管理插件项目，<code>IDEA</code> 中默认集成插件开发框架，如下所示，直接使用内置的框架创建 <code>IDEA</code> 插件项目</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/new_idea_plugin_gradle.png">
-<p>根据开发者信息，设置项目开发的基本信息，如下所示（项目以来解析需要较长时间，科学上网会更快一点）</p>
+<p>根据开发者信息，设置项目开发的基本信息，如下所示（项目依赖解析下载需要较长时间，科学上网会更快一点）</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/new_idea_plugin_dev_info_gradle.png">
 <p>项目创建成功后，为插件项目添加 <code>Action</code>，如下图，<code>Action</code> 是 <code>IDEA</code> 中对事件响应的处理器，属于事件驱动</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/new_action_plugin_gradle.png">
@@ -502,11 +502,11 @@
 <img src="/2020/03/31/backdoor-the-idea-plugins/action_info_plugin_gradle.png">
 <p>在 <code>Action</code> 中实现弹窗的功能，如下所示，并可通过 <code>runIde</code> 来调试插件</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/action_code_and_run.png">
-<p>再已加载 <code>pluginrce</code> 插件的项目中，通过已 <code>generate</code> 中注册的功能，来测试插件</p>
+<p>在已加载插件 <code>pluginrce</code> 的项目中，可通过使用 <code>generate</code> 中已注册的功能来测试插件</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/new_project_generate.png">
 <p>选择已注册的 <code>PluginRceAction</code> 功能，如下所示</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/new_project_generate_show.png">
-<p>通过 <code>generate</code> 在目标项目中成功触发 <code>pluginrce</code> 弹窗功能，如下所示</p>
+<p>使用 <code>generate</code> 在目标项目中成功触发 <code>pluginrce</code> 弹窗功能，如下所示</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/new_project_message_dialog.png">
 <p>在 <code>IDEA</code> 中已安装的插件中可看到 <code>PluginRce</code> 插件信息</p>
 <img src="/2020/03/31/backdoor-the-idea-plugins/idea_plugin_install.png">
