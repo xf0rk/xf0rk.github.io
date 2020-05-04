@@ -40,7 +40,7 @@
     <meta name="theme-color" content="#2196F3">
     <meta name="author" content="xF0rk">
     <meta name="description" itemprop="description" content="">
-    <meta name="keywords" content=",安全建设,运维安全,安全审计">
+    <meta name="keywords" content=",安全建设,安全审计,运维安全">
 
     <!-- Site Verification -->
     
@@ -72,11 +72,11 @@
     <meta property="og:title" content="小议用户操作日志记录 | L0gs 4 xF0rk">
     <meta property="og:image" content="/img/favicon.jpg">
     <meta property="og:description" content="">
-    <meta property="og:article:tag" content="安全建设"> <meta property="og:article:tag" content="运维安全"> <meta property="og:article:tag" content="安全审计"> 
+    <meta property="og:article:tag" content="安全建设"> <meta property="og:article:tag" content="安全审计"> <meta property="og:article:tag" content="运维安全"> 
 
     
         <meta property="article:published_time" content="4月 24, 2020">
-        <meta property="article:modified_time" content="4月 25, 2020">
+        <meta property="article:modified_time" content="5月 04, 2020">
     
 
     <!-- The Twitter Card protocol -->
@@ -117,7 +117,7 @@
     "headline": "小议用户操作日志记录",
     "url": "https://l0gs.xf0rk.space/2020/04/24/talk-about-the-ssh-audit/index.html",
     "datePublished": "4月 24, 2020",
-    "dateModified": "4月 25, 2020",
+    "dateModified": "5月 04, 2020",
     "description": "",
     "mainEntityOfPage": {
         "@type": "WebPage",
@@ -526,7 +526,7 @@ readonly PROMPT_COMMAND
 <h3 id="重编译-SHELL"><a href="#重编译-SHELL" class="headerlink" title="重编译 SHELL"></a>重编译 SHELL</h3><blockquote>
 <p><code>Linux</code> 系统中有多种类型的 <code>SHELL</code> 程序，此处以 <code>bash</code> 为例</p>
 </blockquote>
-<p>下载 <code>bash</code> 源码，<code>bash</code> 从 4.1 版本开始支持 <code>rsyslog</code> 记录，下载 4.4.18 版本 <code>bash</code> <a href="hhttps://ftp.gnu.org/gnu/bash/bash-4.4.18.tar.gz" title="跳转" target="_blank" rel="noopener">源码</a>，修改 <code>config-top.h</code> 代码中 <code>syslog</code> 输出的日志类型及级别</p>
+<p>下载 <code>bash</code> 源码，<code>bash</code> 从 4.1 版本开始支持 <code>rsyslog</code> 记录，下载 4.4.18 版本 <code>bash</code> <a href="https://ftp.gnu.org/gnu/bash/bash-4.4.18.tar.gz" title="跳转" target="_blank" rel="noopener">源码</a>，修改 <code>config-top.h</code> 代码中 <code>syslog</code> 输出的日志类型及级别</p>
 <img src="/2020/04/24/talk-about-the-ssh-audit/ssh_audit_bash_history.png">
 <p>应用编译配置及环境，执行 <code>./configure --prefix=/usr/local/bashaudit</code></p>
 <img src="/2020/04/24/talk-about-the-ssh-audit/ssh_audit_bash_configure.png">
@@ -634,6 +634,14 @@ readonly PROMPT_COMMAND
             <nav class="material-nav mdl-color-text--grey-50 mdl-cell mdl-cell--12-col">
     <!-- Prev Nav -->
     
+        <a href="/2020/05/04/saltstack-rce-your-master-and-minions/" id="post_nav-newer" class="prev-content">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
+                <i class="material-icons">arrow_back</i>
+            </button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            新篇
+        </a>
+    
 
     <!-- Section Spacer -->
     <div class="section-spacer"></div>
@@ -734,7 +742,7 @@ readonly PROMPT_COMMAND
             </a>
             <ul class="dropdown-menu">
             <li>
-                <a class="sidebar_archives-link" href="/archives/2020/04/">四月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/10/">十月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/06/">六月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/04/">四月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/archives/2020/05/">五月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2020/04/">四月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2020/03/">三月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2020/02/">二月 2020<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/10/">十月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/09/">九月 2019<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/06/">六月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2019/04/">四月 2019<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/12/">十二月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/10/">十月 2018<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/08/">八月 2018<span class="sidebar_archives-count">2</span></a></li><li><a class="sidebar_archives-link" href="/archives/2018/07/">七月 2018<span class="sidebar_archives-count">1</span></a>
             </li></ul>
         </li>
         
@@ -752,7 +760,7 @@ readonly PROMPT_COMMAND
             </a>
             <ul class="dropdown-menu">
                 <li>
-                <a class="sidebar_archives-link" href="/categories/安全应急/">安全应急<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/安全建设/">安全建设<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/安全研究/">安全研究<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/漏洞分析/">漏洞分析<span class="sidebar_archives-count">5</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔杂谈/">随笔杂谈<span class="sidebar_archives-count">1</span></a>
+                <a class="sidebar_archives-link" href="/categories/安全应急/">安全应急<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/安全建设/">安全建设<span class="sidebar_archives-count">3</span></a></li><li><a class="sidebar_archives-link" href="/categories/安全研究/">安全研究<span class="sidebar_archives-count">1</span></a></li><li><a class="sidebar_archives-link" href="/categories/漏洞分析/">漏洞分析<span class="sidebar_archives-count">6</span></a></li><li><a class="sidebar_archives-link" href="/categories/随笔杂谈/">随笔杂谈<span class="sidebar_archives-count">1</span></a>
             </li></ul>
         </li>
         
