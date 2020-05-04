@@ -513,7 +513,7 @@
 <blockquote>
 <p><strong> 注意 </strong> 在漏洞复现过程需要注意 saltstack 运行权限，当结合 CVE-2020-11651（读取 root key 信息）进行 CVE-2020-11652 漏洞利用（写入定时任务）时，可能由于用户权限不够导致无法 Shell 成功，出现的错误提示有 {‘error’: {‘name’: ‘UserAuthenticationError’, ‘message’: ‘Authentication failure of type “user” occurred’}}，此时需确认正在进行复现的 Docker 容器中 master 用户配置 /etc/saltstack/master.d/user.conf 中内容是否为 {“user”: “root”}，若不是需修改 /usr/local/bin/saltinit 中启动权限</p>
 </blockquote>
-<h2 id="安全应急"><a href="#安全应急" class="headerlink" title="安全应急"></a>安全应急</h2><p>SaltStack CVE-2020-11651、CVE-2020-11652 两个安全漏洞可直接获取目标系统执行命令权限，在非业务需要的场景下，限制 SaltStack 4505、4506 端口公网访问权限，确保受影响的系统版本升级至无漏洞版本，即保证 SaltStack 版本号高于或等于 3000.3、大于或等于 2019.2.4。</p>
+<h2 id="安全应急"><a href="#安全应急" class="headerlink" title="安全应急"></a>安全应急</h2><p>SaltStack CVE-2020-11651、CVE-2020-11652 两个安全漏洞可直接获取目标系统执行命令权限，在非业务需要的场景下，限制 SaltStack 4505、4506 端口公网访问权限，确保受影响的系统版本升级至无漏洞版本，即保证 SaltStack 版本号高于或等于 3000.2、大于或等于 2019.2.4。</p>
 <img src="/2020/05/04/saltstack-rce-your-master-and-minions/saltstack_aliyun_clean.png">
 <p>若系统已感染挖矿木马，则需要将相关木马文件清理，同时确保系统中不存在相关后门文件，上述为阿里云先知提供的清理脚本，但由于木马已出现变种，需要结合实际情况进行清理，如下已经出现两个版本的木马文件</p>
 <img src="/2020/05/04/saltstack-rce-your-master-and-minions/saltstack_malware_change.png">
