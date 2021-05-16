@@ -517,7 +517,7 @@
 </blockquote>
 <p>Android APP 目标 API（targetSdkVersion）不应低于 23，即 &gt;= 23。Android 6.0 系统（API &gt;= 23）之后，用户在 APP 安装时不会收到任何 APP 权限通知，当 APP 权限请求权限时，会出现权限申请弹窗；而在 Android 6.0 之前，系统在 APP 安装时自动向用户请求授予所有危险权限。</p>
 <img src="/2020/08/08/how-to-audit-the-app-behaviors/app_good_target_sdk_version.png">
-<h3 id="参考清单"><a href="#参考清单" class="headerlink" title="参考清单"></a>参考清单</h3><blockquote><p>不同类型应用 APP 所建议的权限不一样</p>
+<h3 id="参考清单"><a href="#参考清单" class="headerlink" title="参考清单"></a>参考清单</h3><blockquote><p>不同类型应用 APP 所建议的权限不一样，如下为各种不同应用其所建议的权限集合</p>
 </blockquote>
 <p>地图导航、网络约车、即时通信、网络社区、网络支付、新闻资讯、网上购物、短视频、快递物流、餐饮外卖</p>
 <img src="/2020/08/08/how-to-audit-the-app-behaviors/min_dangerous_permission_group_1_1.png">
@@ -560,7 +560,7 @@
 <li>最外层是 Linux 进程，进程链接了动态链接 SO 库，其中有标准 C 函数库、WebKit 库等；</li>
 <li>Linux 进程运行 ART/Davlik 虚拟机，虚拟机包含 ClassLoader、对象管理、线程调度等，虚拟机为 Java 系统运行时环境；</li>
 <li>应用若包含 Native 代码，Native 代码与虚拟机一起在 Linux 进程中运行；</li>
-<li>虚拟中，包含 Java FrameWork、Java 代码两部分；</li>
+<li>虚拟机中，包含 Java FrameWork、Java 代码两部分；</li>
 <li>Android 进程和其他进程交换数据，依赖 Linux 内核提供的 Binder、Socket 等；</li>
 </ul>
 <img src="/2020/08/08/how-to-audit-the-app-behaviors/android_app_hook.png">
@@ -580,10 +580,10 @@
 <p><strong> Hook 日志 </strong></p>
 <p>如下为笔者在进行 APP 行为合规检查过程中 Hook 日志截图，从图中可看到某插件读取定位、WIFI 信息</p>
 <img src="/2020/08/08/how-to-audit-the-app-behaviors/android_hook_api_log.png">
-<p>如下图为某 APP 中集成的第三方插件，在插件功能使用结束后，仍发现其在周期性读取设备的 WIFI 信息，为违规信息</p>
+<p>如下图为某 APP 中集成的第三方插件，在插件功能使用结束后，仍发现其在周期性读取设备的 WIFI 信息，为违规行为</p>
 <img src="/2020/08/08/how-to-audit-the-app-behaviors/bad_plugin_log.png">
 <h2 id="APP-流量检查"><a href="#APP-流量检查" class="headerlink" title="APP 流量检查"></a>APP 流量检查</h2><p>在对 APP 进行合规检查过程中，可以从 APP 的流量中进一步核查 APP 中所集成的第三方 SDK 、同意隐私政策前 SDK 行为等信息。为了检查 APP 流量，可通过使用 Android 系统代理功能，也可使用定制化修改第三方代理库来实现 APP 流量审查。</p>
-<h3 id="系统代理"><a href="#系统代理" class="headerlink" title="系统代理"></a>系统代理</h3><p>在 Android 系统中，若设备通过 WIFI 进行网络连接，可在 WIFI 设置中，通过设置其代理服务器的主机、端口来实现 Android 设备的流量代理，如下图所示；而同时可以通过在代理服务器主机上通过 Burpsuite、Fiddler 等软件开启 HTTP 或 HTTPS 代理服务，实现流量截取、审计。</p>
+<h3 id="系统代理"><a href="#系统代理" class="headerlink" title="系统代理"></a>系统代理</h3><p>在 Android 系统中，若设备通过 WIFI 进行网络连接，可在 WIFI 设置中，通过设置其代理服务器的主机、端口来实现 Android 设备的流量代理，如下图所示；而同时可以在代理服务器主机上通过 Burpsuite、Fiddler 等软件开启 HTTP 或 HTTPS 代理服务，实现 Android APP 流量截取、审计。</p>
 <img src="/2020/08/08/how-to-audit-the-app-behaviors/android_system_proxy.png">
 <p>使用 Android 系统代理，只能审查 HTTP 流量，无法审查 TCP 流量；同时如果 Android 应用代码中设置不使用 Android 系统代理，则无法审查对应代码中的 HTTP 行为。</p>
 <img src="/2020/08/08/how-to-audit-the-app-behaviors/android_system_proxy_only_http.png">
